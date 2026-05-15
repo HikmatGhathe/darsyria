@@ -11,5 +11,25 @@
     "properties": "Properties",
     "knowledgeBase": "Knowledge Base",
     "aiAssistant": "AI Assistant"
+  },
+  "Footer": {
+    "tagline": "Helping the Syrian diaspora navigate real estate in Syria.",
+    "sections": {
+      "platform": "Platform",
+      "resources": "Resources",
+      "legal": "Legal"
+    },
+    "links": {
+      "about": "About",
+      "contact": "Contact",
+      "properties": "Properties",
+      "knowledgeBase": "Knowledge Base",
+      "aiAssistant": "AI Assistant",
+      "terms": "Terms of Service",
+      "privacy": "Privacy Policy",
+      "disclaimer": "Disclaimer"
+    },
+    "disclaimer": "DarSyria provides informational content and platform services only. We do not provide legal advice. Always consult a qualified lawyer before any transaction.",
+    "copyright": "© 2026 DarSyria. All rights reserved."
   }
 }

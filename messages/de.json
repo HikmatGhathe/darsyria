@@ -11,5 +11,25 @@
     "properties": "Immobilien",
     "knowledgeBase": "Wissensdatenbank",
     "aiAssistant": "KI-Assistent"
+  },
+  "Footer": {
+    "tagline": "Wir unterstützen die syrische Diaspora bei Immobilien in Syrien.",
+    "sections": {
+      "platform": "Plattform",
+      "resources": "Ressourcen",
+      "legal": "Rechtliches"
+    },
+    "links": {
+      "about": "Über uns",
+      "contact": "Kontakt",
+      "properties": "Immobilien",
+      "knowledgeBase": "Wissensdatenbank",
+      "aiAssistant": "KI-Assistent",
+      "terms": "Nutzungsbedingungen",
+      "privacy": "Datenschutz",
+      "disclaimer": "Haftungsausschluss"
+    },
+    "disclaimer": "DarSyria bietet ausschließlich informative Inhalte und Plattformdienste. Wir bieten keine Rechtsberatung. Konsultieren Sie vor jeder Transaktion einen qualifizierten Anwalt.",
+    "copyright": "© 2026 DarSyria. Alle Rechte vorbehalten."
   }
 }

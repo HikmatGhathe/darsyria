@@ -4,7 +4,7 @@ export default function HomePage() {
   const t = useTranslations('HomePage');
 
   return (
-    <main className="min-h-[calc(100vh-73px)] flex flex-col items-center justify-center p-8">
+    <div className="flex flex-col items-center justify-center p-8 py-24">
       <div className="max-w-2xl text-center space-y-6">
         <h1 className="text-5xl font-bold">{t('title')}</h1>
         <p className="text-2xl text-gray-700">{t('tagline')}</p>
@@ -19,6 +19,6 @@ export default function HomePage() {
           </button>
         </div>
       </div>
-    </main>
+    </div>
   );
 }
