@@ -59,5 +59,40 @@
       "fraud": "Was sind die wichtigsten Risiken von Immobilienbetrug?",
       "banking": "Wie überweise ich Geld nach Syrien nach der Aufhebung der Sanktionen?"
     }
+  },
+  "Properties": {
+    "title": "Immobilien",
+    "subtitle": "Durchsuchen Sie Immobilien zum Verkauf in ganz Syrien. Jede Anzeige zeigt ihren Verifizierungsstatus.",
+    "filters": {
+      "all": "Alle",
+      "verified": "Nur verifiziert"
+    },
+    "verification": {
+      "verified": "Verifiziert",
+      "pending": "Verifizierung ausstehend",
+      "unverified": "Nicht verifiziert"
+    },
+    "types": {
+      "apartment": "Wohnung",
+      "house": "Haus",
+      "land": "Grundstück",
+      "commercial": "Gewerbe"
+    },
+    "status": {
+      "for_sale": "Zu verkaufen",
+      "for_rent": "Zu vermieten"
+    },
+    "details": {
+      "area": "Fläche",
+      "bedrooms": "Schlafzimmer",
+      "bathrooms": "Badezimmer",
+      "location": "Lage",
+      "price": "Preis",
+      "description": "Beschreibung",
+      "backToList": "Zurück zu Immobilien"
+    },
+    "contactOwner": "Eigentümer kontaktieren",
+    "contactDisclaimer": "Überprüfen Sie die Dokumentation immer unabhängig vor jeder Transaktion.",
+    "noResults": "Keine Immobilien entsprechen dem aktuellen Filter."
   }
 }

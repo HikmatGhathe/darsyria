@@ -59,5 +59,40 @@
       "fraud": "What are the main property fraud risks?",
       "banking": "How do I transfer money to Syria after sanctions lifted?"
     }
+  },
+  "Properties": {
+    "title": "Properties",
+    "subtitle": "Browse properties for sale across Syria. Each listing shows its verification status.",
+    "filters": {
+      "all": "All",
+      "verified": "Verified only"
+    },
+    "verification": {
+      "verified": "Verified",
+      "pending": "Pending verification",
+      "unverified": "Unverified"
+    },
+    "types": {
+      "apartment": "Apartment",
+      "house": "House",
+      "land": "Land",
+      "commercial": "Commercial"
+    },
+    "status": {
+      "for_sale": "For sale",
+      "for_rent": "For rent"
+    },
+    "details": {
+      "area": "Area",
+      "bedrooms": "Bedrooms",
+      "bathrooms": "Bathrooms",
+      "location": "Location",
+      "price": "Price",
+      "description": "Description",
+      "backToList": "Back to properties"
+    },
+    "contactOwner": "Contact owner",
+    "contactDisclaimer": "Always verify documentation independently before any transaction.",
+    "noResults": "No properties match the current filter."
   }
 }
