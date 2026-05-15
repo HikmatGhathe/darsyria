@@ -31,5 +31,18 @@
     },
     "disclaimer": "DarSyria bietet ausschließlich informative Inhalte und Plattformdienste. Wir bieten keine Rechtsberatung. Konsultieren Sie vor jeder Transaktion einen qualifizierten Anwalt.",
     "copyright": "© 2026 DarSyria. Alle Rechte vorbehalten."
+  },
+  "KnowledgeBase": {
+    "title": "Wissensdatenbank",
+    "subtitle": "Geprüfte Informationen über Immobilien in Syrien — Rechtsverfahren, Finanzen, praktische Hinweise und Risiken.",
+    "backToList": "Zurück zu allen Artikeln",
+    "sources": "Quellen",
+    "disclaimer": "Dieser Artikel dient nur zu Informationszwecken und stellt keine Rechtsberatung dar. Konsultieren Sie immer einen qualifizierten Anwalt.",
+    "categories": {
+      "legal": "Recht",
+      "finance": "Finanzen",
+      "practical": "Praktisch",
+      "risks": "Risiken"
+    }
   }
 }

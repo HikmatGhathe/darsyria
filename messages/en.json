@@ -31,5 +31,18 @@
     },
     "disclaimer": "DarSyria provides informational content and platform services only. We do not provide legal advice. Always consult a qualified lawyer before any transaction.",
     "copyright": "© 2026 DarSyria. All rights reserved."
+  },
+  "KnowledgeBase": {
+    "title": "Knowledge Base",
+    "subtitle": "Curated information on real estate in Syria — legal procedures, finance, practical guidance, and risks.",
+    "backToList": "Back to all articles",
+    "sources": "Sources",
+    "disclaimer": "This article is for informational purposes only and does not constitute legal advice. Always consult a qualified lawyer.",
+    "categories": {
+      "legal": "Legal",
+      "finance": "Finance",
+      "practical": "Practical",
+      "risks": "Risks"
+    }
   }
 }
