@@ -94,5 +94,10 @@
     "contactOwner": "Eigentümer kontaktieren",
     "contactDisclaimer": "Überprüfen Sie die Dokumentation immer unabhängig vor jeder Transaktion.",
     "noResults": "Keine Immobilien entsprechen dem aktuellen Filter."
+  },
+  "NotFound": {
+    "title": "Seite nicht gefunden",
+    "description": "Die gesuchte Seite existiert nicht oder wurde verschoben.",
+    "cta": "Zurück zur Startseite"
   }
 }
