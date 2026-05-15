@@ -44,5 +44,20 @@
       "practical": "Practical",
       "risks": "Risks"
     }
+  },
+  "AIAssistant": {
+    "title": "AI Assistant",
+    "subtitle": "Ask questions about real estate in Syria — legal procedures, finance, neighborhoods, risks.",
+    "placeholder": "Type your question...",
+    "send": "Send",
+    "thinking": "Thinking...",
+    "disclaimer": "This assistant provides general information only and may make mistakes. Always verify with a qualified professional before acting.",
+    "emptyState": "Start a conversation by asking a question below.",
+    "exampleHeading": "Try asking:",
+    "examples": {
+      "ownership": "Can a German citizen buy property in Damascus?",
+      "fraud": "What are the main property fraud risks?",
+      "banking": "How do I transfer money to Syria after sanctions lifted?"
+    }
   }
 }

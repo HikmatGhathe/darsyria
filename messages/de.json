@@ -44,5 +44,20 @@
       "practical": "Praktisch",
       "risks": "Risiken"
     }
+  },
+  "AIAssistant": {
+    "title": "KI-Assistent",
+    "subtitle": "Stellen Sie Fragen zu Immobilien in Syrien — Rechtsverfahren, Finanzen, Nachbarschaften, Risiken.",
+    "placeholder": "Geben Sie Ihre Frage ein...",
+    "send": "Senden",
+    "thinking": "Denkt nach...",
+    "disclaimer": "Dieser Assistent liefert nur allgemeine Informationen und kann Fehler machen. Überprüfen Sie immer mit einem qualifizierten Fachmann, bevor Sie handeln.",
+    "emptyState": "Beginnen Sie ein Gespräch, indem Sie unten eine Frage stellen.",
+    "exampleHeading": "Versuchen Sie zu fragen:",
+    "examples": {
+      "ownership": "Kann ein deutscher Staatsbürger eine Immobilie in Damaskus kaufen?",
+      "fraud": "Was sind die wichtigsten Risiken von Immobilienbetrug?",
+      "banking": "Wie überweise ich Geld nach Syrien nach der Aufhebung der Sanktionen?"
+    }
   }
 }

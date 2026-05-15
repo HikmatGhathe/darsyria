@@ -1,4 +1,5 @@
 import {useTranslations} from 'next-intl';
+import {Link} from '@/i18n/navigation';
 
 export default function HomePage() {
   const t = useTranslations('HomePage');
@@ -11,12 +12,18 @@ export default function HomePage() {
         <p className="text-lg text-gray-600">{t('description')}</p>
 
         <div className="flex gap-4 justify-center pt-4">
-          <button className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+          <Link
+            href="/properties"
+            className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
+          >
             {t('ctaPrimary')}
-          </button>
-          <button className="px-6 py-3 border border-gray-300 rounded-lg hover:bg-gray-50 transition">
+          </Link>
+          <Link
+            href="/assistant"
+            className="px-6 py-3 border border-gray-300 rounded-lg hover:bg-gray-50 transition"
+          >
             {t('ctaSecondary')}
-          </button>
+          </Link>
         </div>
       </div>
     </div>
