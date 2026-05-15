@@ -1,0 +1,15 @@
+{
+  "HomePage": {
+    "title": "DarSyria",
+    "tagline": "Die vertrauenswürdige Immobilienplattform für die syrische Diaspora",
+    "description": "Entdecken, verstehen und kaufen Sie Immobilien in Syrien — für Syrer im Ausland gemacht.",
+    "ctaPrimary": "Immobilien durchsuchen",
+    "ctaSecondary": "KI-Assistenten fragen"
+  },
+  "Navigation": {
+    "home": "Startseite",
+    "properties": "Immobilien",
+    "knowledgeBase": "Wissensdatenbank",
+    "aiAssistant": "KI-Assistent"
+  }
+}

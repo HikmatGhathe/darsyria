@@ -1,0 +1,12 @@
+@import "tailwindcss";
+
+body {
+  background: #ffffff;
+  color: #171717;
+  font-family: system-ui, -apple-system, "Segoe UI", Tahoma, sans-serif;
+}
+
+/* Better Arabic font rendering when in RTL mode */
+html[dir="rtl"] body {
+  font-family: "Segoe UI", Tahoma, "Arial", sans-serif;
+}

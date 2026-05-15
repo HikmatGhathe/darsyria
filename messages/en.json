@@ -1,0 +1,15 @@
+{
+  "HomePage": {
+    "title": "DarSyria",
+    "tagline": "The trusted real estate platform for the Syrian diaspora",
+    "description": "Discover, understand, and transact real estate in Syria — designed for Syrians abroad.",
+    "ctaPrimary": "Browse properties",
+    "ctaSecondary": "Ask the AI assistant"
+  },
+  "Navigation": {
+    "home": "Home",
+    "properties": "Properties",
+    "knowledgeBase": "Knowledge Base",
+    "aiAssistant": "AI Assistant"
+  }
+}
