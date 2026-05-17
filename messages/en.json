@@ -1,16 +1,74 @@
 {
   "HomePage": {
-    "title": "DarSyria",
-    "tagline": "The trusted real estate platform for the Syrian diaspora",
-    "description": "Discover, understand, and transact real estate in Syria — designed for Syrians abroad.",
-    "ctaPrimary": "Browse properties",
-    "ctaSecondary": "Ask the AI assistant"
+    "hero": {
+      "title": "Find your place in Syria",
+      "tagline": "The trusted real estate platform for the Syrian diaspora",
+      "description": "Discover, understand, and transact real estate in Syria — built for Syrians abroad. In Arabic, German, and English.",
+      "ctaPrimary": "Browse properties",
+      "ctaSecondary": "Ask the AI assistant"
+    },
+    "pillars": {
+      "heading": "Three ways we help",
+      "subheading": "A focused platform, not a sprawling marketplace.",
+      "properties": {
+        "title": "Verified property listings",
+        "description": "Browse apartments, houses, land, and commercial property across Syria. Every listing shows its verification status — no hidden risk.",
+        "cta": "Browse properties"
+      },
+      "knowledge": {
+        "title": "Knowledge base",
+        "description": "Curated articles on legal procedures, banking, fraud risks, and neighborhood guides. Every claim is sourced — no rumors, no shortcuts.",
+        "cta": "Read the knowledge base"
+      },
+      "ai": {
+        "title": "AI assistant",
+        "description": "Ask questions in Arabic, German, or English. Get answers grounded in real Syrian law — and clear admissions when the AI doesn't know.",
+        "cta": "Try the assistant"
+      }
+    },
+    "trust": {
+      "heading": "We are honest about what is hard",
+      "description": "Buying property in Syria today is not simple. Records were falsified during the previous regime. Foreign ownership requires Interior Ministry approval. Banking is still being rebuilt. A specialized property court opens in 2026. We do not hide these realities — we help you navigate them.",
+      "cta": "Read the risks"
+    },
+    "footerCta": {
+      "heading": "Ready to start?",
+      "description": "Browse listings, search the knowledge base, or ask the AI assistant your first question.",
+      "ctaPrimary": "Browse properties",
+      "ctaSecondary": "Open the assistant"
+    }
   },
   "Navigation": {
     "home": "Home",
     "properties": "Properties",
     "knowledgeBase": "Knowledge Base",
     "aiAssistant": "AI Assistant"
+  },
+  "Auth": {
+    "login": {
+      "title": "Sign in to DarSyria",
+      "subtitle": "Enter your email to receive a magic link, or sign in with Google.",
+      "emailLabel": "Email address",
+      "emailPlaceholder": "you@example.com",
+      "sendMagicLink": "Send magic link",
+      "sending": "Sending...",
+      "orDivider": "or",
+      "googleSignIn": "Sign in with Google",
+      "magicLinkSent": "If the email is valid, a login link has been sent. Check your inbox (or your terminal in development mode).",
+      "error": "Something went wrong. Please try again."
+    },
+    "verify": {
+      "verifying": "Signing you in...",
+      "success": "Signed in. Redirecting...",
+      "errorInvalid": "This login link is invalid or has expired. Please request a new one.",
+      "errorGeneric": "Could not complete sign in. Please try again.",
+      "backToLogin": "Back to sign in"
+    },
+    "header": {
+      "signIn": "Sign in",
+      "signOut": "Sign out",
+      "account": "Account"
+    }
   },
   "Footer": {
     "tagline": "Helping the Syrian diaspora navigate real estate in Syria.",

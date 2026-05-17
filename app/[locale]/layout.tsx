@@ -1,5 +1,6 @@
 import {NextIntlClientProvider, hasLocale} from 'next-intl';
 import {notFound} from 'next/navigation';
+import {AuthProvider} from '@/components/AuthProvider';
 import Footer from '@/components/Footer';
 import Header from '@/components/Header';
 import {routing} from '@/i18n/routing';
@@ -23,9 +24,11 @@ export default async function LocaleLayout({
     <html lang={locale} dir={isRtl ? 'rtl' : 'ltr'} suppressHydrationWarning>
       <body className="bg-white text-gray-900 flex flex-col min-h-screen">
         <NextIntlClientProvider>
-          <Header />
-          <main className="flex-1">{children}</main>
-          <Footer />
+          <AuthProvider>
+            <Header />
+            <main className="flex-1">{children}</main>
+            <Footer />
+          </AuthProvider>
         </NextIntlClientProvider>
       </body>
     </html>

@@ -1,16 +1,74 @@
 {
   "HomePage": {
-    "title": "DarSyria",
-    "tagline": "Die vertrauenswürdige Immobilienplattform für die syrische Diaspora",
-    "description": "Entdecken, verstehen und kaufen Sie Immobilien in Syrien — für Syrer im Ausland gemacht.",
-    "ctaPrimary": "Immobilien durchsuchen",
-    "ctaSecondary": "KI-Assistenten fragen"
+    "hero": {
+      "title": "Finden Sie Ihren Platz in Syrien",
+      "tagline": "Die vertrauenswürdige Immobilienplattform für die syrische Diaspora",
+      "description": "Entdecken, verstehen und kaufen Sie Immobilien in Syrien — gemacht für Syrer im Ausland. Auf Arabisch, Deutsch und Englisch.",
+      "ctaPrimary": "Immobilien durchsuchen",
+      "ctaSecondary": "KI-Assistenten fragen"
+    },
+    "pillars": {
+      "heading": "Drei Wege, wie wir helfen",
+      "subheading": "Eine fokussierte Plattform, kein weitläufiger Marktplatz.",
+      "properties": {
+        "title": "Geprüfte Immobilienangebote",
+        "description": "Durchsuchen Sie Wohnungen, Häuser, Grundstücke und Gewerbeobjekte in ganz Syrien. Jede Anzeige zeigt ihren Verifizierungsstatus — keine versteckten Risiken.",
+        "cta": "Immobilien durchsuchen"
+      },
+      "knowledge": {
+        "title": "Wissensdatenbank",
+        "description": "Geprüfte Artikel zu Rechtsverfahren, Bankwesen, Betrugsrisiken und Stadtteilen. Jede Aussage ist belegt — keine Gerüchte, keine Abkürzungen.",
+        "cta": "Wissensdatenbank lesen"
+      },
+      "ai": {
+        "title": "KI-Assistent",
+        "description": "Stellen Sie Fragen auf Arabisch, Deutsch oder Englisch. Erhalten Sie Antworten, die auf syrischem Recht basieren — und klare Eingeständnisse, wenn die KI etwas nicht weiß.",
+        "cta": "Assistenten ausprobieren"
+      }
+    },
+    "trust": {
+      "heading": "Wir sind ehrlich darüber, was schwierig ist",
+      "description": "Heute eine Immobilie in Syrien zu kaufen ist nicht einfach. Unter dem vorherigen Regime wurden Aufzeichnungen gefälscht. Ausländisches Eigentum erfordert die Genehmigung des Innenministeriums. Das Bankwesen wird noch aufgebaut. 2026 öffnet ein spezialisiertes Immobiliengericht. Wir verschweigen diese Realitäten nicht — wir helfen Ihnen, sie zu navigieren.",
+      "cta": "Risiken lesen"
+    },
+    "footerCta": {
+      "heading": "Bereit anzufangen?",
+      "description": "Durchsuchen Sie Anzeigen, die Wissensdatenbank, oder stellen Sie dem KI-Assistenten Ihre erste Frage.",
+      "ctaPrimary": "Immobilien durchsuchen",
+      "ctaSecondary": "Assistenten öffnen"
+    }
   },
   "Navigation": {
     "home": "Startseite",
     "properties": "Immobilien",
     "knowledgeBase": "Wissensdatenbank",
     "aiAssistant": "KI-Assistent"
+  },
+  "Auth": {
+    "login": {
+      "title": "Bei DarSyria anmelden",
+      "subtitle": "Geben Sie Ihre E-Mail ein, um einen Magic-Link zu erhalten, oder melden Sie sich mit Google an.",
+      "emailLabel": "E-Mail-Adresse",
+      "emailPlaceholder": "ihre@email.de",
+      "sendMagicLink": "Magic-Link senden",
+      "sending": "Wird gesendet...",
+      "orDivider": "oder",
+      "googleSignIn": "Mit Google anmelden",
+      "magicLinkSent": "Wenn die E-Mail gültig ist, wurde ein Anmeldelink gesendet. Prüfen Sie Ihren Posteingang (oder Ihr Terminal im Entwicklungsmodus).",
+      "error": "Etwas ist schiefgelaufen. Bitte versuchen Sie es erneut."
+    },
+    "verify": {
+      "verifying": "Sie werden angemeldet...",
+      "success": "Angemeldet. Weiterleitung...",
+      "errorInvalid": "Dieser Anmeldelink ist ungültig oder abgelaufen. Bitte fordern Sie einen neuen an.",
+      "errorGeneric": "Anmeldung konnte nicht abgeschlossen werden. Bitte versuchen Sie es erneut.",
+      "backToLogin": "Zurück zur Anmeldung"
+    },
+    "header": {
+      "signIn": "Anmelden",
+      "signOut": "Abmelden",
+      "account": "Konto"
+    }
   },
   "Footer": {
     "tagline": "Wir unterstützen die syrische Diaspora bei Immobilien in Syrien.",
