@@ -15,3 +15,10 @@ export type AuthResponse = {
   token_type: 'bearer';
   user: User;
 };
+
+export type ChatResponse = {
+  conversation_id: string;
+  content: string;
+  model: string;
+  created_at: string;
+};

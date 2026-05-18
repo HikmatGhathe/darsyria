@@ -1,22 +1,8 @@
 'use client';
 
-import {useEffect, useRef, useState} from 'react';
-import {useLocale, useTranslations} from 'next-intl';
+import {useState, useRef, useEffect} from 'react';
+import {useTranslations, useLocale} from 'next-intl';
 import {sendChatMessage, type ChatMessage} from '@/lib/chat';
-
-const exampleKeys = ['ownership', 'fraud', 'banking'] as const;
-
-function createChatMessage(
-  role: ChatMessage['role'],
-  content: string
-): ChatMessage {
-  return {
-    id: crypto.randomUUID(),
-    role,
-    content,
-    timestamp: Date.now()
-  };
-}
 
 export default function AssistantPage() {
   const t = useTranslations('AIAssistant');
@@ -25,9 +11,16 @@ export default function AssistantPage() {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  // One conversation_id per chat session. Generated once when the page loads.
+  const conversationIdRef = useRef<string>('');
+  if (!conversationIdRef.current) {
+    conversationIdRef.current = crypto.randomUUID();
+  }
+
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  // Auto-scroll to bottom when a new message arrives
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({behavior: 'smooth'});
   }, [messages, isLoading]);
@@ -36,18 +29,41 @@ export default function AssistantPage() {
     const text = (messageText ?? input).trim();
     if (!text || isLoading) return;
 
-    const userMsg = createChatMessage('user', text);
+    const userMsg: ChatMessage = {
+      id: crypto.randomUUID(),
+      role: 'user',
+      content: text,
+      timestamp: Date.now()
+    };
 
     setMessages((prev) => [...prev, userMsg]);
     setInput('');
     setIsLoading(true);
+    setError(null);
+
+    // Build history from prior messages (capped at last 10 turns for context)
+    const history = messages.slice(-10).map((m) => ({
+      role: m.role,
+      content: m.content
+    }));
 
     try {
-      const responseText = await sendChatMessage(text, locale);
-      const assistantMsg = createChatMessage('assistant', responseText);
+      const responseText = await sendChatMessage(
+        text,
+        locale,
+        conversationIdRef.current,
+        history
+      );
+      const assistantMsg: ChatMessage = {
+        id: crypto.randomUUID(),
+        role: 'assistant',
+        content: responseText,
+        timestamp: Date.now()
+      };
       setMessages((prev) => [...prev, assistantMsg]);
-    } catch (error) {
-      console.error('Chat error:', error);
+    } catch (e) {
+      console.error('Chat error:', e);
+      setError(t('errorGeneric'));
     } finally {
       setIsLoading(false);
     }
@@ -60,6 +76,8 @@ export default function AssistantPage() {
     }
   }
 
+  const exampleKeys = ['ownership', 'fraud', 'banking'] as const;
+
   return (
     <div className="max-w-3xl mx-auto px-6 py-8 flex flex-col h-[calc(100vh-200px)]">
       <header className="mb-6">
@@ -67,7 +85,6 @@ export default function AssistantPage() {
         <p className="text-gray-600">{t('subtitle')}</p>
       </header>
 
-      {/* Messages area */}
       <div className="flex-1 overflow-y-auto space-y-4 mb-4 pr-2">
         {messages.length === 0 ? (
           <div className="text-center py-12">
@@ -112,10 +129,15 @@ export default function AssistantPage() {
           </div>
         )}
 
+        {error && (
+          <div className="flex justify-center">
+            <p className="text-sm text-red-600">{error}</p>
+          </div>
+        )}
+
         <div ref={messagesEndRef} />
       </div>
 
-      {/* Input area */}
       <div className="border-t border-gray-200 pt-4">
         <div className="flex gap-2">
           <textarea

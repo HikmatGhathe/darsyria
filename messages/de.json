@@ -116,7 +116,8 @@
       "ownership": "Kann ein deutscher Staatsbürger eine Immobilie in Damaskus kaufen?",
       "fraud": "Was sind die wichtigsten Risiken von Immobilienbetrug?",
       "banking": "Wie überweise ich Geld nach Syrien nach der Aufhebung der Sanktionen?"
-    }
+    },
+    "errorGeneric": "Etwas ist schiefgelaufen. Bitte versuchen Sie es erneut."
   },
   "Properties": {
     "title": "Immobilien",
