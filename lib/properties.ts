@@ -1,8 +1,12 @@
+import {apiRequest} from './api';
+
+// ── Static mock data types (used by the existing browse/detail pages) ──────────
+
 export type PropertyType = 'apartment' | 'house' | 'land' | 'commercial';
 export type PropertyStatus = 'for_sale' | 'for_rent';
 export type VerificationStatus = 'verified' | 'pending' | 'unverified';
 
-export type Property = {
+export type StaticProperty = {
   id: string;
   slug: string;
   type: PropertyType;
@@ -20,7 +24,7 @@ export type Property = {
   createdAt: string;
 };
 
-export const properties: Property[] = [
+const staticProperties: StaticProperty[] = [
   {
     id: '1',
     slug: 'malki-3br-renovated',
@@ -121,10 +125,106 @@ export const properties: Property[] = [
   }
 ];
 
-export function getAllProperties(): Property[] {
-  return properties;
+export function getAllProperties(): StaticProperty[] {
+  return staticProperties;
 }
 
-export function getPropertyBySlug(slug: string): Property | undefined {
-  return properties.find((p) => p.slug === slug);
+export function getPropertyBySlug(slug: string): StaticProperty | undefined {
+  return staticProperties.find((p) => p.slug === slug);
+}
+
+// ── API types and helpers (used by the new create/list/detail flow) ───────────
+
+export type PropertyCreateInput = {
+  title: string;
+  description: string;
+  city: string;
+  neighborhood?: string;
+  price_amount: number;
+  price_currency: 'USD' | 'EUR' | 'SYP';
+  property_type: 'apartment' | 'house' | 'land' | 'commercial';
+  rooms?: number;
+  bathrooms?: number;
+  area_sqm?: number;
+  document_status: 'none' | 'claimed' | 'documents_provided';
+};
+
+// API single-property response
+export type ApiProperty = {
+  id: string;
+  owner_id: string;
+  title: string;
+  description: string;
+  country: string;
+  city: string;
+  neighborhood: string | null;
+  price_amount: string;
+  price_currency: string;
+  property_type: string;
+  rooms: number | null;
+  bathrooms: number | null;
+  area_sqm: number | null;
+  status: string;
+  document_status: string;
+  created_at: string;
+  updated_at: string;
+};
+
+// API list-view response (less data)
+export type ApiPropertyListItem = {
+  id: string;
+  title: string;
+  city: string;
+  neighborhood: string | null;
+  price_amount: string;
+  price_currency: string;
+  property_type: string;
+  rooms: number | null;
+  area_sqm: number | null;
+  document_status: string;
+  created_at: string;
+};
+
+export type PropertyFilters = {
+  city?: string;
+  property_type?: string;
+  min_price?: number;
+  max_price?: number;
+  rooms?: number;
+  limit?: number;
+  offset?: number;
+};
+
+export async function createProperty(input: PropertyCreateInput): Promise<ApiProperty> {
+  return apiRequest<ApiProperty>('/properties', {
+    method: 'POST',
+    body: input,
+    authenticated: true
+  });
+}
+
+export async function listProperties(filters: PropertyFilters = {}): Promise<ApiPropertyListItem[]> {
+  const params = new URLSearchParams();
+  if (filters.city) params.set('city', filters.city);
+  if (filters.property_type) params.set('property_type', filters.property_type);
+  if (filters.min_price !== undefined) params.set('min_price', String(filters.min_price));
+  if (filters.max_price !== undefined) params.set('max_price', String(filters.max_price));
+  if (filters.rooms !== undefined) params.set('rooms', String(filters.rooms));
+  if (filters.limit !== undefined) params.set('limit', String(filters.limit));
+  if (filters.offset !== undefined) params.set('offset', String(filters.offset));
+
+  const query = params.toString();
+  const path = query ? `/properties?${query}` : '/properties';
+
+  return apiRequest<ApiPropertyListItem[]>(path, {
+    method: 'GET',
+    authenticated: false
+  });
+}
+
+export async function getApiProperty(id: string): Promise<ApiProperty> {
+  return apiRequest<ApiProperty>(`/properties/${id}`, {
+    method: 'GET',
+    authenticated: false
+  });
 }
