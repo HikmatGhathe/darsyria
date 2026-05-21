@@ -65,7 +65,7 @@ export async function apiRequest<T>(
 
   let parsed: unknown = null;
   const contentType = response.headers.get('content-type') ?? '';
-  if (contentType.includes('application/json')) {
+  if (response.status !== 204 && contentType.includes('application/json')) {
     parsed = await response.json();
   }
 

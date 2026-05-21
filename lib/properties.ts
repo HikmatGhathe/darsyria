@@ -243,6 +243,35 @@ export async function unpublishProperty(id: string): Promise<ApiProperty> {
   });
 }
 
+export type PropertyUpdateInput = {
+  title?: string;
+  description?: string;
+  city?: string;
+  neighborhood?: string;
+  price_amount?: number;
+  price_currency?: 'USD' | 'EUR' | 'SYP';
+  property_type?: 'apartment' | 'house' | 'land' | 'commercial';
+  rooms?: number;
+  bathrooms?: number;
+  area_sqm?: number;
+  document_status?: 'none' | 'claimed' | 'documents_provided';
+};
+
+export async function updateProperty(id: string, input: PropertyUpdateInput): Promise<ApiProperty> {
+  return apiRequest<ApiProperty>(`/properties/${id}`, {
+    method: 'PATCH',
+    body: input,
+    authenticated: true
+  });
+}
+
+export async function deleteProperty(id: string): Promise<void> {
+  await apiRequest<void>(`/properties/${id}`, {
+    method: 'DELETE',
+    authenticated: true
+  });
+}
+
 // Convenience aliases used by detail/browse pages
 export {getApiProperty as getProperty};
 export type {ApiProperty as Property};

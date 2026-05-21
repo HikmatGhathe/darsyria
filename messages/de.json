@@ -187,7 +187,15 @@
     "publishedBannerBody": "Es ist für alle Besucher sichtbar und erscheint in den Suchergebnissen.",
     "unpublish": "Zurückziehen",
     "unpublishing": "Wird zurückgezogen...",
-    "unpublishError": "Inserat konnte nicht zurückgezogen werden. Bitte erneut versuchen."
+    "unpublishError": "Inserat konnte nicht zurückgezogen werden. Bitte erneut versuchen.",
+    "edit": "Inserat bearbeiten",
+    "delete": "Inserat löschen",
+    "deleteConfirmTitle": "Dieses Inserat löschen?",
+    "deleteConfirmBody": "Dies kann nicht rückgängig gemacht werden. Das Inserat und alle Details werden dauerhaft entfernt.",
+    "deleteConfirmAction": "Ja, löschen",
+    "deleteCancel": "Abbrechen",
+    "deleting": "Wird gelöscht...",
+    "deleteError": "Inserat konnte nicht gelöscht werden. Bitte erneut versuchen."
   },
   "PropertyBrowse": {
     "title": "Immobilien durchsuchen",
@@ -249,6 +257,14 @@
     "errorGeneric": "Inserat konnte nicht gespeichert werden. Bitte prüfen Sie die Angaben und versuchen Sie es erneut.",
     "errorAuth": "Bitte melden Sie sich an, um ein Inserat zu erstellen.",
     "successMessage": "Inserat als Entwurf gespeichert."
+  },
+  "EditProperty": {
+    "title": "Inserat bearbeiten",
+    "subtitle": "Aktualisieren Sie beliebige Felder. Änderungen werden sofort sichtbar, wenn das Inserat veröffentlicht ist.",
+    "save": "Änderungen speichern",
+    "saving": "Wird gespeichert...",
+    "cancel": "Abbrechen",
+    "errorGeneric": "Änderungen konnten nicht gespeichert werden. Bitte prüfen Sie Ihre Angaben und versuchen Sie es erneut."
   },
   "NotFound": {
     "title": "Seite nicht gefunden",

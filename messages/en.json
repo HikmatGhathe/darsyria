@@ -187,7 +187,15 @@
     "publishedBannerBody": "It is visible to all visitors and appears in browse results.",
     "unpublish": "Unpublish",
     "unpublishing": "Unpublishing...",
-    "unpublishError": "Could not unpublish the listing. Please try again."
+    "unpublishError": "Could not unpublish the listing. Please try again.",
+    "edit": "Edit listing",
+    "delete": "Delete listing",
+    "deleteConfirmTitle": "Delete this listing?",
+    "deleteConfirmBody": "This cannot be undone. The listing and all its details will be permanently removed.",
+    "deleteConfirmAction": "Yes, delete",
+    "deleteCancel": "Cancel",
+    "deleting": "Deleting...",
+    "deleteError": "Could not delete the listing. Please try again."
   },
   "PropertyBrowse": {
     "title": "Browse properties",
@@ -249,6 +257,14 @@
     "errorGeneric": "Could not save the listing. Please check your details and try again.",
     "errorAuth": "Please sign in before creating a listing.",
     "successMessage": "Listing saved as draft."
+  },
+  "EditProperty": {
+    "title": "Edit listing",
+    "subtitle": "Update any fields. Changes go live immediately if the listing is published.",
+    "save": "Save changes",
+    "saving": "Saving...",
+    "cancel": "Cancel",
+    "errorGeneric": "Could not save changes. Please review your details and try again."
   },
   "NotFound": {
     "title": "Page not found",

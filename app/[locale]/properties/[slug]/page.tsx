@@ -9,6 +9,7 @@ import {
   getProperty,
   publishProperty,
   unpublishProperty,
+  deleteProperty,
   type Property
 } from '@/lib/properties';
 import {
@@ -31,6 +32,8 @@ export default function PropertyDetailPage() {
   const [error, setError] = useState<string | null>(null);
   const [statusAction, setStatusAction] = useState<'publishing' | 'unpublishing' | null>(null);
   const [actionError, setActionError] = useState<string | null>(null);
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
 
   useEffect(() => {
     let cancelled = false;
@@ -66,6 +69,21 @@ export default function PropertyDetailPage() {
       setActionError(t('publishError'));
     } finally {
       setStatusAction(null);
+    }
+  }
+
+  async function handleDelete() {
+    if (!property || isDeleting) return;
+    setIsDeleting(true);
+    setActionError(null);
+    try {
+      await deleteProperty(property.id);
+      window.location.href = `/${locale}/properties`;
+    } catch (e) {
+      console.error('Delete failed:', e);
+      setActionError(t('deleteError'));
+      setIsDeleting(false);
+      setShowDeleteConfirm(false);
     }
   }
 
@@ -167,9 +185,62 @@ export default function PropertyDetailPage() {
         </div>
       )}
 
+      {/* Owner edit/delete controls */}
+      {isOwner && (
+        <div className="mb-6 flex flex-wrap gap-3">
+          <Link
+            href={`/${locale}/properties/${property.id}/edit`}
+            className="px-4 py-2 bg-white border border-gray-300 text-gray-700 text-sm font-medium rounded-md hover:bg-gray-50 transition"
+          >
+            {t('edit')}
+          </Link>
+          <button
+            onClick={() => setShowDeleteConfirm(true)}
+            disabled={isDeleting}
+            className="px-4 py-2 bg-white border border-red-300 text-red-700 text-sm font-medium rounded-md hover:bg-red-50 disabled:cursor-not-allowed transition"
+          >
+            {t('delete')}
+          </button>
+        </div>
+      )}
+
       {actionError && (
         <div className="mb-6 p-3 bg-red-50 border border-red-200 rounded-lg">
           <p className="text-sm text-red-700">{actionError}</p>
+        </div>
+      )}
+
+      {/* Delete confirmation modal */}
+      {showDeleteConfirm && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 px-4"
+          onClick={() => !isDeleting && setShowDeleteConfirm(false)}
+        >
+          <div
+            className="bg-white rounded-lg shadow-xl max-w-md w-full p-6"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <h3 className="text-lg font-semibold text-gray-900 mb-2">
+              {t('deleteConfirmTitle')}
+            </h3>
+            <p className="text-sm text-gray-600 mb-6">{t('deleteConfirmBody')}</p>
+            <div className="flex justify-end gap-3">
+              <button
+                onClick={() => setShowDeleteConfirm(false)}
+                disabled={isDeleting}
+                className="px-4 py-2 bg-white border border-gray-300 text-gray-700 text-sm font-medium rounded-md hover:bg-gray-50 disabled:cursor-not-allowed transition"
+              >
+                {t('deleteCancel')}
+              </button>
+              <button
+                onClick={handleDelete}
+                disabled={isDeleting}
+                className="px-4 py-2 bg-red-600 text-white text-sm font-medium rounded-md hover:bg-red-700 disabled:bg-gray-300 disabled:cursor-not-allowed transition"
+              >
+                {isDeleting ? t('deleting') : t('deleteConfirmAction')}
+              </button>
+            </div>
+          </div>
         </div>
       )}
 
