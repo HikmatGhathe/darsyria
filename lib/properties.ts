@@ -225,6 +225,25 @@ export async function listProperties(filters: PropertyFilters = {}): Promise<Api
 export async function getApiProperty(id: string): Promise<ApiProperty> {
   return apiRequest<ApiProperty>(`/properties/${id}`, {
     method: 'GET',
-    authenticated: false
+    authenticated: true
   });
 }
+
+export async function publishProperty(id: string): Promise<ApiProperty> {
+  return apiRequest<ApiProperty>(`/properties/${id}/publish`, {
+    method: 'POST',
+    authenticated: true
+  });
+}
+
+export async function unpublishProperty(id: string): Promise<ApiProperty> {
+  return apiRequest<ApiProperty>(`/properties/${id}/unpublish`, {
+    method: 'POST',
+    authenticated: true
+  });
+}
+
+// Convenience aliases used by detail/browse pages
+export {getApiProperty as getProperty};
+export type {ApiProperty as Property};
+export type {ApiPropertyListItem as PropertyListItem};
