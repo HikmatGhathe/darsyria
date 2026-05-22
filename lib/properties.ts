@@ -194,6 +194,7 @@ export type ApiPropertyListItem = {
   area_sqm: number | null;
   document_status: string;
   created_at: string;
+  cover_image_url: string | null;
 };
 
 export type PropertyFilters = {

@@ -278,30 +278,60 @@ function PropertyCard({
   return (
     <Link
       href={`/${locale}/properties/${property.id}`}
-      className="block p-5 bg-white border border-gray-200 rounded-lg hover:border-gray-400 hover:shadow-sm transition"
+      className="block bg-white border border-gray-200 rounded-lg hover:border-gray-400 hover:shadow-sm transition overflow-hidden"
     >
-      <div className="flex items-start justify-between gap-3 mb-2">
-        <h3 className="text-base font-semibold text-gray-900 line-clamp-2 flex-1">
-          {property.title}
-        </h3>
+      {/* Cover image or placeholder */}
+      <div className="relative aspect-[4/3] bg-gray-100 overflow-hidden">
+        {property.cover_image_url ? (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={property.cover_image_url}
+            alt={property.title}
+            className="w-full h-full object-cover"
+            loading="lazy"
+          />
+        ) : (
+          <div className="w-full h-full flex items-center justify-center text-gray-400">
+            <svg
+              className="w-12 h-12"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              strokeWidth="1.5"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5H3.75A1.5 1.5 0 0 0 2.25 6v12a1.5 1.5 0 0 0 1.5 1.5Zm10.5-11.25h.008v.008h-.008V8.25Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z"
+              />
+            </svg>
+          </div>
+        )}
         <span
-          className={`shrink-0 inline-block px-2 py-0.5 text-xs font-medium border rounded-full ${badgeColors[docInfo.color]}`}
+          className={`absolute top-2 end-2 inline-block px-2 py-0.5 text-xs font-medium border rounded-full backdrop-blur-sm bg-opacity-90 ${badgeColors[docInfo.color]}`}
         >
           {t(docInfo.key as Parameters<typeof t>[0])}
         </span>
       </div>
-      <p className="text-sm text-gray-600 mb-3">
-        {formatLocation(property.city, property.neighborhood, locale)}
-      </p>
-      <div className="flex items-center justify-between">
-        <span className="text-lg font-bold text-gray-900">
-          {formatPrice(property.price_amount, property.price_currency, locale)}
-        </span>
-        <span className="text-xs text-gray-500">
-          {t(propertyTypeKey(property.property_type) as Parameters<typeof t>[0])}
-          {property.rooms != null && ` · ${t('rooms', {count: property.rooms})}`}
-          {property.area_sqm != null && ` · ${t('areaSqm', {value: property.area_sqm})}`}
-        </span>
+
+      {/* Card body */}
+      <div className="p-4">
+        <h3 className="text-base font-semibold text-gray-900 line-clamp-2 mb-2">
+          {property.title}
+        </h3>
+        <p className="text-sm text-gray-600 mb-3">
+          {formatLocation(property.city, property.neighborhood, locale)}
+        </p>
+        <div className="flex items-center justify-between">
+          <span className="text-lg font-bold text-gray-900">
+            {formatPrice(property.price_amount, property.price_currency, locale)}
+          </span>
+          <span className="text-xs text-gray-500">
+            {t(propertyTypeKey(property.property_type) as Parameters<typeof t>[0])}
+            {property.rooms != null && ` · ${t('rooms', {count: property.rooms})}`}
+            {property.area_sqm != null && ` · ${t('areaSqm', {value: property.area_sqm})}`}
+          </span>
+        </div>
       </div>
     </Link>
   );
