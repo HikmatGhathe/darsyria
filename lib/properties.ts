@@ -1,4 +1,4 @@
-import {apiRequest} from './api';
+import {apiRequest, API_BASE_URL} from './api';
 
 // ── Static mock data types (used by the existing browse/detail pages) ──────────
 
@@ -149,6 +149,16 @@ export type PropertyCreateInput = {
   document_status: 'none' | 'claimed' | 'documents_provided';
 };
 
+export type PropertyImage = {
+  id: string;
+  property_id: string;
+  public_url: string;
+  original_filename: string | null;
+  size_bytes: number;
+  position: number;
+  created_at: string;
+};
+
 // API single-property response
 export type ApiProperty = {
   id: string;
@@ -168,6 +178,7 @@ export type ApiProperty = {
   document_status: string;
   created_at: string;
   updated_at: string;
+  images: PropertyImage[];
 };
 
 // API list-view response (less data)
@@ -276,3 +287,88 @@ export async function deleteProperty(id: string): Promise<void> {
 export {getApiProperty as getProperty};
 export type {ApiProperty as Property};
 export type {ApiPropertyListItem as PropertyListItem};
+
+// ── Image helpers ─────────────────────────────────────────────────────────────
+
+export async function uploadPropertyImage(
+  propertyId: string,
+  file: File,
+  onProgress?: (percent: number) => void
+): Promise<PropertyImage> {
+  return new Promise((resolve, reject) => {
+    const token = typeof window !== 'undefined'
+      ? window.localStorage.getItem('darsyria_access_token')
+      : null;
+    if (!token) {
+      reject(new Error('Not authenticated'));
+      return;
+    }
+
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', `${API_BASE_URL}/properties/${propertyId}/images`);
+    xhr.setRequestHeader('Authorization', `Bearer ${token}`);
+    xhr.timeout = 60000;
+
+    if (onProgress) {
+      xhr.upload.addEventListener('progress', (e) => {
+        if (e.lengthComputable) {
+          onProgress(Math.round((e.loaded / e.total) * 100));
+        }
+      });
+    }
+
+    xhr.onload = () => {
+      if (xhr.status === 201) {
+        try {
+          resolve(JSON.parse(xhr.responseText));
+        } catch {
+          reject(new Error('Invalid response from server'));
+        }
+      } else {
+        let detail = `Upload failed (${xhr.status})`;
+        try {
+          const body = JSON.parse(xhr.responseText);
+          if (body.detail) detail = body.detail;
+        } catch {
+          // keep generic message
+        }
+        reject(new Error(detail));
+      }
+    };
+
+    xhr.onerror = () => reject(new Error('Network error'));
+    xhr.ontimeout = () => reject(new Error('Upload timed out'));
+
+    const formData = new FormData();
+    formData.append('file', file);
+    xhr.send(formData);
+  });
+}
+
+export async function listPropertyImages(propertyId: string): Promise<PropertyImage[]> {
+  return apiRequest<PropertyImage[]>(`/properties/${propertyId}/images`, {
+    method: 'GET',
+    authenticated: false
+  });
+}
+
+export async function deletePropertyImage(
+  propertyId: string,
+  imageId: string
+): Promise<void> {
+  await apiRequest<void>(`/properties/${propertyId}/images/${imageId}`, {
+    method: 'DELETE',
+    authenticated: true
+  });
+}
+
+export async function reorderPropertyImages(
+  propertyId: string,
+  imageIds: string[]
+): Promise<PropertyImage[]> {
+  return apiRequest<PropertyImage[]>(`/properties/${propertyId}/images/reorder`, {
+    method: 'PATCH',
+    body: imageIds,
+    authenticated: true
+  });
+}

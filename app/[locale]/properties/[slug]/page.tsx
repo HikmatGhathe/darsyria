@@ -1,6 +1,6 @@
 'use client';
 
-import {useState, useEffect} from 'react';
+import {useState, useEffect, useCallback} from 'react';
 import {useParams} from 'next/navigation';
 import {useTranslations, useLocale} from 'next-intl';
 import Link from 'next/link';
@@ -10,8 +10,10 @@ import {
   publishProperty,
   unpublishProperty,
   deleteProperty,
-  type Property
+  type Property,
+  type PropertyImage
 } from '@/lib/properties';
+import PropertyImageGallery from '@/components/PropertyImageGallery';
 import {
   formatPrice,
   propertyTypeKey,
@@ -101,6 +103,10 @@ export default function PropertyDetailPage() {
       setStatusAction(null);
     }
   }
+
+  const handleImagesChange = useCallback((images: PropertyImage[]) => {
+    setProperty((prev) => prev ? {...prev, images} : prev);
+  }, []);
 
   if (isLoading) {
     return (
@@ -299,6 +305,40 @@ export default function PropertyDetailPage() {
             </div>
           )}
         </dl>
+      </section>
+
+      {/* Photos */}
+      <section className="mb-8">
+        {isOwner ? (
+          <PropertyImageGallery
+            propertyId={property.id}
+            initialImages={property.images ?? []}
+            onImagesChange={handleImagesChange}
+          />
+        ) : (property.images ?? []).length > 0 ? (
+          <div>
+            <h2 className="text-lg font-semibold text-gray-900 mb-3">
+              {t('imagesSection')}
+            </h2>
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+              {(property.images ?? []).map((img) => (
+                <div key={img.id} className="relative aspect-square bg-gray-100 rounded-lg overflow-hidden">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={img.public_url}
+                    alt={img.original_filename || ''}
+                    className="w-full h-full object-cover"
+                  />
+                  {img.position === 0 && (
+                    <span className="absolute top-2 start-2 px-2 py-0.5 bg-blue-600 text-white text-xs font-medium rounded-full">
+                      {t('coverBadge')}
+                    </span>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        ) : null}
       </section>
 
       {/* Description */}

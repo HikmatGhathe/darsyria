@@ -8,7 +8,7 @@
  * TODO for production: replace localStorage JWT storage with httpOnly cookies.
  */
 
-const API_BASE_URL =
+export const API_BASE_URL =
   process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:8000';
 
 const TOKEN_STORAGE_KEY = 'darsyria_access_token';
