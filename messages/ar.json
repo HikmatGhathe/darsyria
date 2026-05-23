@@ -286,5 +286,21 @@
     "title": "الصفحة غير موجودة",
     "description": "الصفحة التي تبحث عنها غير موجودة أو تم نقلها.",
     "cta": "العودة إلى الرئيسية"
+  },
+  "Inbox": {
+    "pageTitle": "صندوق الوارد",
+    "empty": "لا توجد رسائل بعد. عندما يتواصل المشترون معك بخصوص إعلاناتك، ستظهر الرسائل هنا.",
+    "emptyBuyerHint": "تصفح الإعلانات واضغط على „تواصل مع البائع\" لبدء محادثة.",
+    "browseProperties": "تصفح الإعلانات",
+    "loading": "جاري التحميل...",
+    "loadError": "تعذر تحميل المحادثات. حاول مرة أخرى.",
+    "unreadBadge": "{count} غير مقروءة",
+    "navLink": "صندوق الوارد",
+    "relativeJustNow": "الآن",
+    "relativeMinutesAgo": "منذ {count} د",
+    "relativeHoursAgo": "منذ {count} س",
+    "relativeYesterday": "أمس",
+    "relativeDaysAgo": "منذ {count} يوم",
+    "relativeOlder": "{date}"
   }
 }

@@ -286,5 +286,21 @@
     "title": "Page not found",
     "description": "The page you're looking for doesn't exist or has been moved.",
     "cta": "Back to home"
+  },
+  "Inbox": {
+    "pageTitle": "Inbox",
+    "empty": "No messages yet. When buyers contact you about your listings, they appear here.",
+    "emptyBuyerHint": "Browse listings and click 'Contact seller' to start a conversation.",
+    "browseProperties": "Browse listings",
+    "loading": "Loading...",
+    "loadError": "Could not load your conversations. Please try again.",
+    "unreadBadge": "{count} unread",
+    "navLink": "Inbox",
+    "relativeJustNow": "just now",
+    "relativeMinutesAgo": "{count}m ago",
+    "relativeHoursAgo": "{count}h ago",
+    "relativeYesterday": "yesterday",
+    "relativeDaysAgo": "{count}d ago",
+    "relativeOlder": "{date}"
   }
 }

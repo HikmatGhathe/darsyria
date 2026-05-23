@@ -286,5 +286,21 @@
     "title": "Seite nicht gefunden",
     "description": "Die gesuchte Seite existiert nicht oder wurde verschoben.",
     "cta": "Zurück zur Startseite"
+  },
+  "Inbox": {
+    "pageTitle": "Posteingang",
+    "empty": "Noch keine Nachrichten. Wenn Käufer Sie zu Ihren Inseraten kontaktieren, erscheinen die Nachrichten hier.",
+    "emptyBuyerHint": "Stöbern Sie in Inseraten und klicken Sie auf „Verkäufer kontaktieren\", um eine Konversation zu starten.",
+    "browseProperties": "Inserate ansehen",
+    "loading": "Wird geladen...",
+    "loadError": "Ihre Konversationen konnten nicht geladen werden. Bitte erneut versuchen.",
+    "unreadBadge": "{count} ungelesen",
+    "navLink": "Posteingang",
+    "relativeJustNow": "gerade eben",
+    "relativeMinutesAgo": "vor {count} Min",
+    "relativeHoursAgo": "vor {count} Std",
+    "relativeYesterday": "gestern",
+    "relativeDaysAgo": "vor {count} Tg",
+    "relativeOlder": "{date}"
   }
 }
