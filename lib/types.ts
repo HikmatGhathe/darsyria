@@ -4,6 +4,7 @@ export type User = {
   id: string;
   email: string;
   full_name: string | null;
+  phone: string | null;
   locale: Locale;
   is_admin: boolean;
   subscription_tier: string;

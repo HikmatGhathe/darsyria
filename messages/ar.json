@@ -171,6 +171,15 @@
     "details": "المواصفات",
     "backToListings": "العودة إلى الإعلانات",
     "contactSeller": "تواصل مع البائع",
+    "contactSellerSignedOut": "سجل الدخول للتواصل مع البائع",
+    "openConversation": "افتح المحادثة",
+    "contactModalTitle": "إرسال رسالة",
+    "contactModalSubject": "بخصوص: {propertyTitle}",
+    "contactModalPlaceholder": "مرحباً، أنا مهتم بهذا العقار. هل يمكنك إخباري أكثر عن...",
+    "contactModalSend": "إرسال الرسالة",
+    "contactModalSending": "جاري الإرسال...",
+    "contactModalCancel": "إلغاء",
+    "contactModalError": "تعذر إرسال رسالتك. حاول مرة أخرى.",
     "contactNote": "التواصل غير متاح في هذه النسخة. قريبًا.",
     "notFoundTitle": "العقار غير موجود",
     "notFoundMessage": "ربما تم حذف هذا الإعلان أو لم يُنشر بعد.",
@@ -287,6 +296,26 @@
     "description": "الصفحة التي تبحث عنها غير موجودة أو تم نقلها.",
     "cta": "العودة إلى الرئيسية"
   },
+  "Account": {
+    "pageTitle": "حسابي",
+    "subtitle": "إدارة اسمك ورقم هاتفك ولغتك المفضلة.",
+    "fullName": "الاسم الكامل",
+    "fullNamePlaceholder": "مثال: حكمت غيث",
+    "fullNameHelp": "هذا ما يراه المستخدمون الآخرون عندما تراسلهم.",
+    "phone": "رقم الهاتف",
+    "phonePlaceholder": "+963 9XX XXX XXX",
+    "phoneHelp": "مطلوب إذا أردت مشاركة معلومات الاتصال مع شخص تراسله.",
+    "language": "لغة الرسائل",
+    "languageHelp": "الإشعارات وروابط الدخول تصل بهذه اللغة.",
+    "email": "البريد الإلكتروني",
+    "emailHelp": "بريد تسجيل الدخول. لا يمكن تغييره.",
+    "save": "حفظ التغييرات",
+    "saving": "جاري الحفظ...",
+    "savedSuccess": "تم حفظ التغييرات.",
+    "saveError": "تعذر حفظ التغييرات. حاول مرة أخرى.",
+    "loading": "جاري التحميل...",
+    "loadError": "تعذر تحميل الملف الشخصي."
+  },
   "Inbox": {
     "pageTitle": "صندوق الوارد",
     "empty": "لا توجد رسائل بعد. عندما يتواصل المشترون معك بخصوص إعلاناتك، ستظهر الرسائل هنا.",
@@ -302,5 +331,49 @@
     "relativeYesterday": "أمس",
     "relativeDaysAgo": "منذ {count} يوم",
     "relativeOlder": "{date}"
+  },
+  "Thread": {
+    "loading": "جاري التحميل...",
+    "loadError": "تعذر تحميل المحادثة. حاول مرة أخرى.",
+    "backToInbox": "العودة إلى صندوق الوارد",
+    "messagePlaceholder": "اكتب رسالة...",
+    "send": "إرسال",
+    "sending": "جاري الإرسال...",
+    "sendError": "تعذر إرسال الرسالة. حاول مرة أخرى.",
+    "noMessages": "لا توجد رسائل بعد. أرسل أول رسالة.",
+    "revealTitle": "مشاركة بيانات التواصل",
+    "revealBody": "يجب أن يوافق الطرفان قبل مشاركة أرقام الهاتف. رقمك لن يظهر إلا إذا وافق الطرفان.",
+    "revealButton": "شارك رقم هاتفي",
+    "revealPending": "شاركت رقمك. في انتظار الطرف الآخر.",
+    "revealDone": "تمت مشاركة بيانات التواصل",
+    "theirPhone": "هاتفهم",
+    "revealNeedPhone": "أضف رقم هاتف إلى ملفك الشخصي أولاً.",
+    "goToProfile": "إلى الملف الشخصي",
+    "ctrlEnterHint": "Ctrl+Enter للإرسال"
+  },
+  "Admin": {
+    "navLink": "الإدارة",
+    "pageTitle": "لوحة الإدارة",
+    "subtitle": "أدوات إشراف لدار سوريا.",
+    "accessDenied": "ليس لديك صلاحية الإدارة.",
+    "loading": "جاري التحميل...",
+    "stats": {
+      "totalListings": "إجمالي الإعلانات",
+      "activeListings": "الإعلانات النشطة",
+      "draftListings": "المسودات",
+      "rejectedListings": "المرفوضة",
+      "flaggedListings": "المعلّمة للمراجعة",
+      "totalUsers": "إجمالي المستخدمين",
+      "bannedUsers": "المحظورون",
+      "adminUsers": "المدراء"
+    },
+    "sections": {
+      "listings": "الإعلانات",
+      "listingsDesc": "مراجعة وموافقة ورفض وتعليم إعلانات العقارات.",
+      "users": "المستخدمون",
+      "usersDesc": "إدارة حسابات المستخدمين، حظر المسيئين، ترقية المدراء.",
+      "openListings": "إدارة الإعلانات",
+      "openUsers": "إدارة المستخدمين"
+    }
   }
 }

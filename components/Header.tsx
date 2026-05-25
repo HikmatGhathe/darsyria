@@ -13,6 +13,7 @@ export default function Header() {
   const t = useTranslations('Navigation');
   const tInbox = useTranslations('Inbox');
   const tAuth = useTranslations('Auth.header');
+  const tAdmin = useTranslations('Admin');
   const {user, isLoading, logout} = useAuth();
 
   const [unreadCount, setUnreadCount] = useState(0);
@@ -86,13 +87,24 @@ export default function Header() {
               )}
             </Link>
           )}
+          {user?.is_admin && (
+            <Link
+              href="/admin"
+              className="text-gray-700 hover:text-gray-900 font-medium"
+            >
+              {tAdmin('navLink')}
+            </Link>
+          )}
         </nav>
         <div className="flex min-w-0 items-center gap-4">
           {!isLoading && (user ? (
             <div className="flex min-w-0 items-center gap-3">
-              <span className="max-w-[180px] truncate text-sm text-gray-700">
+              <Link
+                href="/account"
+                className="max-w-[180px] truncate text-sm text-gray-700 hover:text-gray-900 hover:underline"
+              >
                 {user.full_name ?? user.email}
-              </span>
+              </Link>
               <button onClick={logout} className="text-sm text-gray-600 underline hover:text-gray-900">
                 {tAuth('signOut')}
               </button>

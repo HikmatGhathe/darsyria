@@ -14,6 +14,7 @@ import {
   type PropertyImage
 } from '@/lib/properties';
 import PropertyImageGallery from '@/components/PropertyImageGallery';
+import ContactSellerButton from '@/components/ContactSellerButton';
 import {
   formatPrice,
   propertyTypeKey,
@@ -354,16 +355,16 @@ export default function PropertyDetailPage() {
         <p className="text-sm text-amber-900">{t('docDisclaimer')}</p>
       </section>
 
-      {/* Contact (not yet wired) */}
-      <section className="pt-6 border-t border-gray-200">
-        <button
-          disabled
-          className="px-6 py-3 bg-gray-200 text-gray-500 rounded-lg cursor-not-allowed font-medium"
-        >
-          {t('contactSeller')}
-        </button>
-        <p className="text-xs text-gray-500 mt-2 italic">{t('contactNote')}</p>
-      </section>
+      {/* Contact seller */}
+      {!isOwner && (
+        <section className="pt-6 border-t border-gray-200">
+          <ContactSellerButton
+            propertyId={property.id}
+            propertyTitle={property.title}
+            ownerId={property.owner_id}
+          />
+        </section>
+      )}
 
       {/* Listed date */}
       <p className="text-xs text-gray-400 mt-8">

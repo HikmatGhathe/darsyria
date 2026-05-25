@@ -171,6 +171,15 @@
     "details": "Details",
     "backToListings": "Zurück zu den Inseraten",
     "contactSeller": "Verkäufer kontaktieren",
+    "contactSellerSignedOut": "Anmelden, um Verkäufer zu kontaktieren",
+    "openConversation": "Konversation öffnen",
+    "contactModalTitle": "Nachricht senden",
+    "contactModalSubject": "Zu: {propertyTitle}",
+    "contactModalPlaceholder": "Hallo, ich interessiere mich für diese Immobilie. Könnten Sie mir mehr erzählen über...",
+    "contactModalSend": "Nachricht senden",
+    "contactModalSending": "Wird gesendet...",
+    "contactModalCancel": "Abbrechen",
+    "contactModalError": "Ihre Nachricht konnte nicht gesendet werden. Bitte erneut versuchen.",
     "contactNote": "Die Kontaktaufnahme ist in dieser Version noch nicht verfügbar. In Kürze verfügbar.",
     "notFoundTitle": "Immobilie nicht gefunden",
     "notFoundMessage": "Dieses Inserat wurde möglicherweise entfernt oder ist noch nicht veröffentlicht.",
@@ -287,6 +296,26 @@
     "description": "Die gesuchte Seite existiert nicht oder wurde verschoben.",
     "cta": "Zurück zur Startseite"
   },
+  "Account": {
+    "pageTitle": "Mein Konto",
+    "subtitle": "Verwalten Sie Ihren Namen, Ihre Telefonnummer und Ihre bevorzugte Sprache.",
+    "fullName": "Vollständiger Name",
+    "fullNamePlaceholder": "z.B. Hekmat Ghaith",
+    "fullNameHelp": "Diesen Namen sehen andere Nutzer, wenn Sie ihnen Nachrichten senden.",
+    "phone": "Telefonnummer",
+    "phonePlaceholder": "+49 1577 1234567",
+    "phoneHelp": "Erforderlich, wenn Sie Kontaktdaten mit jemandem teilen möchten, mit dem Sie schreiben.",
+    "language": "Sprache für E-Mails",
+    "languageHelp": "Benachrichtigungen und Anmeldelinks kommen in dieser Sprache.",
+    "email": "E-Mail",
+    "emailHelp": "Ihre Anmelde-E-Mail. Kann nicht geändert werden.",
+    "save": "Änderungen speichern",
+    "saving": "Speichern...",
+    "savedSuccess": "Ihre Änderungen wurden gespeichert.",
+    "saveError": "Änderungen konnten nicht gespeichert werden. Bitte erneut versuchen.",
+    "loading": "Wird geladen...",
+    "loadError": "Profil konnte nicht geladen werden."
+  },
   "Inbox": {
     "pageTitle": "Posteingang",
     "empty": "Noch keine Nachrichten. Wenn Käufer Sie zu Ihren Inseraten kontaktieren, erscheinen die Nachrichten hier.",
@@ -302,5 +331,49 @@
     "relativeYesterday": "gestern",
     "relativeDaysAgo": "vor {count} Tg",
     "relativeOlder": "{date}"
+  },
+  "Thread": {
+    "loading": "Wird geladen...",
+    "loadError": "Konversation konnte nicht geladen werden. Bitte erneut versuchen.",
+    "backToInbox": "Zurück zum Posteingang",
+    "messagePlaceholder": "Nachricht eingeben…",
+    "send": "Senden",
+    "sending": "Wird gesendet…",
+    "sendError": "Nachricht konnte nicht gesendet werden. Bitte erneut versuchen.",
+    "noMessages": "Noch keine Nachrichten. Schreibe die erste.",
+    "revealTitle": "Kontaktdaten teilen",
+    "revealBody": "Beide Parteien müssen zustimmen, bevor Telefonnummern geteilt werden. Ihre Nummer ist nur sichtbar, wenn beide einverstanden sind.",
+    "revealButton": "Meine Telefonnummer teilen",
+    "revealPending": "Sie haben Ihre Nummer geteilt. Warten Sie auf die andere Partei.",
+    "revealDone": "Kontaktdaten geteilt",
+    "theirPhone": "Telefon",
+    "revealNeedPhone": "Fügen Sie zuerst eine Telefonnummer zu Ihrem Profil hinzu.",
+    "goToProfile": "Zum Profil",
+    "ctrlEnterHint": "Strg+Eingabe zum Senden"
+  },
+  "Admin": {
+    "navLink": "Admin",
+    "pageTitle": "Admin",
+    "subtitle": "Moderationswerkzeuge für DarSyria.",
+    "accessDenied": "Sie haben keinen Admin-Zugriff.",
+    "loading": "Wird geladen...",
+    "stats": {
+      "totalListings": "Inserate insgesamt",
+      "activeListings": "Aktive Inserate",
+      "draftListings": "Entwürfe",
+      "rejectedListings": "Abgelehnt",
+      "flaggedListings": "Zur Überprüfung markiert",
+      "totalUsers": "Nutzer insgesamt",
+      "bannedUsers": "Gesperrte Nutzer",
+      "adminUsers": "Admins"
+    },
+    "sections": {
+      "listings": "Inserate",
+      "listingsDesc": "Immobilieninserate prüfen, genehmigen, ablehnen und markieren.",
+      "users": "Nutzer",
+      "usersDesc": "Nutzerkonten verwalten, Missbrauch sperren, Admins ernennen.",
+      "openListings": "Inserate verwalten",
+      "openUsers": "Nutzer verwalten"
+    }
   }
 }

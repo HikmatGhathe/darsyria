@@ -1,4 +1,4 @@
-import { apiRequest } from './api';
+import { apiRequest, ApiError } from './api';
 
 // ---------- Types ----------
 
@@ -94,4 +94,26 @@ export async function revealContact(conversationId: string): Promise<Conversatio
     method: 'POST',
     authenticated: true,
   });
+}
+
+/**
+ * Look up the current user's existing conversation about a property.
+ * Returns null if no conversation exists yet, or if the user is the owner.
+ * Returns null (instead of throwing) on 401 — caller treats as "no conversation".
+ */
+export async function getMyConversationForProperty(
+  propertyId: string
+): Promise<Conversation | null> {
+  try {
+    const result = await apiRequest<Conversation | null>(
+      `/conversations/by-property/${propertyId}`,
+      { method: 'GET', authenticated: true }
+    );
+    return result;
+  } catch (err) {
+    if (err instanceof ApiError && err.status === 401) {
+      return null;
+    }
+    throw err;
+  }
 }

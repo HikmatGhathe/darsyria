@@ -1,6 +1,20 @@
 import {apiRequest, clearToken, setToken} from './api';
 import type {AuthResponse, Locale, User} from './types';
 
+export type UserUpdate = {
+  full_name?: string | null;
+  phone?: string | null;
+  locale?: string;
+};
+
+export async function updateMe(updates: UserUpdate): Promise<User> {
+  return apiRequest<User>('/auth/me', {
+    method: 'PATCH',
+    body: updates,
+    authenticated: true,
+  });
+}
+
 export async function requestMagicLink(
   email: string,
   locale: Locale
