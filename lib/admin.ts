@@ -5,13 +5,16 @@ import { apiRequest } from './api';
 export type AdminPropertyListItem = {
   id: string;
   owner_id: string;
+  owner_email: string | null;
   title: string;
   city: string;
+  price_amount: number;
+  price_currency: string;
   status: string;
   document_status: string;
   flagged_at: string | null;
   reviewed_at: string | null;
-  rejection_reason?: string | null;
+  rejection_reason: string | null;
   created_at: string;
 };
 
