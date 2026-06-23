@@ -3,6 +3,7 @@ import {notFound} from 'next/navigation';
 import {AuthProvider} from '@/components/AuthProvider';
 import Footer from '@/components/Footer';
 import Header from '@/components/Header';
+import ThemeInitializer from '@/components/ThemeInitializer';
 import {routing} from '@/i18n/routing';
 
 export default async function LocaleLayout({
@@ -22,15 +23,8 @@ export default async function LocaleLayout({
 
   return (
     <html lang={locale} dir={isRtl ? 'rtl' : 'ltr'} suppressHydrationWarning>
-      <head>
-        <script
-          // eslint-disable-next-line react/no-danger
-          dangerouslySetInnerHTML={{
-            __html: `(function(){try{var t=localStorage.getItem('darsyria-theme');if(t==='dark'||(!t&&window.matchMedia('(prefers-color-scheme: dark)').matches)){document.documentElement.classList.add('dark');}}catch(e){}})();`
-          }}
-        />
-      </head>
       <body className="bg-surface-page text-text-primary flex flex-col min-h-screen">
+        <ThemeInitializer />
         <NextIntlClientProvider>
           <AuthProvider>
             <Header />
