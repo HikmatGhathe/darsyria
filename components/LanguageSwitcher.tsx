@@ -22,12 +22,12 @@ export default function LanguageSwitcher() {
   }
 
   return (
-    <div className="flex gap-2">
+    <div className="flex gap-1">
       {locales.map((loc) => (
         <button
           key={loc.code}
           onClick={() => switchLocale(loc.code)}
-          className={`px-3 py-1 text-sm rounded-lg transition-colors ${
+          className={`px-2 py-1 text-sm rounded-lg transition-colors ${
             currentLocale === loc.code
               ? 'bg-brand-navy text-white'
               : 'text-text-secondary hover:bg-surface-page'

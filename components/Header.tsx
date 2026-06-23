@@ -58,7 +58,7 @@ export default function Header() {
 
   return (
     <header className="border-b border-border-subtle bg-surface-card">
-      <div className="max-w-6xl mx-auto px-6 py-4 flex flex-wrap items-center justify-between gap-4">
+      <div className="max-w-7xl mx-auto px-6 py-4 flex flex-wrap items-center justify-between gap-3">
         <Link href="/" className="flex items-center gap-2 text-xl font-semibold text-text-primary">
           <span className="flex h-6 w-6 items-center justify-center rounded-md bg-brand-navy text-white">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -68,7 +68,7 @@ export default function Header() {
           </span>
           DarSyria
         </Link>
-        <nav className="order-3 flex w-full flex-wrap items-center justify-center gap-4 md:order-none md:w-auto md:gap-6">
+        <nav className="order-3 flex w-full flex-wrap items-center justify-center gap-3 md:order-none md:w-auto md:gap-5">
           <Link href="/" className="text-text-secondary hover:text-text-primary">{t('home')}</Link>
           <Link href="/properties" className="text-text-secondary hover:text-text-primary">{t('properties')}</Link>
           <Link href="/knowledge" className="text-text-secondary hover:text-text-primary">{t('knowledgeBase')}</Link>
@@ -103,12 +103,12 @@ export default function Header() {
             </Link>
           )}
         </nav>
-        <div className="flex min-w-0 items-center gap-3">
+        <div className="flex min-w-0 items-center gap-2">
           {!isLoading && (user ? (
-            <div className="flex min-w-0 items-center gap-3">
+            <div className="flex min-w-0 items-center gap-2">
               <Link
                 href="/account"
-                className="max-w-[180px] truncate text-sm text-text-secondary hover:text-text-primary hover:underline"
+                className="max-w-[120px] truncate text-sm text-text-secondary hover:text-text-primary hover:underline"
               >
                 {user.full_name ?? user.email}
               </Link>
