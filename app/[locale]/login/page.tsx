@@ -42,12 +42,12 @@ export default function LoginPage() {
   return (
     <div className="max-w-md mx-auto px-6 py-16">
       <div className="text-center mb-8">
-        <h1 className="text-3xl font-bold mb-3">{t('title')}</h1>
-        <p className="text-gray-600">{t('subtitle')}</p>
+        <h1 className="text-3xl font-semibold mb-3 text-text-primary">{t('title')}</h1>
+        <p className="text-text-secondary">{t('subtitle')}</p>
       </div>
 
       {status === 'sent' ? (
-        <div className="p-4 bg-green-50 border border-green-200 rounded-lg text-green-800 text-sm">
+        <div className="p-4 bg-accent-verified-bg border border-accent-verified/30 rounded-lg text-accent-verified text-sm">
           {t('magicLinkSent')}
         </div>
       ) : (
@@ -56,7 +56,7 @@ export default function LoginPage() {
             <div>
               <label
                 htmlFor="email"
-                className="block text-sm font-medium text-gray-700 mb-1"
+                className="block text-sm font-medium text-text-secondary mb-1"
               >
                 {t('emailLabel')}
               </label>
@@ -67,30 +67,30 @@ export default function LoginPage() {
                 value={email}
                 onChange={(event) => setEmail(event.target.value)}
                 placeholder={t('emailPlaceholder')}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-4 py-2 bg-surface-card border border-border-subtle rounded-lg text-text-primary focus:outline-none focus:ring-1 focus:ring-brand-navy focus:border-brand-navy"
                 disabled={isSubmitting}
               />
             </div>
             <button
               type="submit"
               disabled={!email.trim() || isSubmitting}
-              className="w-full px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:bg-gray-300 disabled:cursor-not-allowed transition font-medium"
+              className="w-full px-6 py-3 bg-brand-navy text-white rounded-lg hover:bg-brand-navy-hover disabled:opacity-50 disabled:cursor-not-allowed transition-colors font-medium"
             >
               {isSubmitting ? t('sending') : t('sendMagicLink')}
             </button>
           </form>
 
           <div className="my-6 flex items-center gap-3">
-            <div className="flex-1 h-px bg-gray-200" />
-            <span className="text-xs text-gray-500 uppercase tracking-wide">
+            <div className="flex-1 h-px bg-border-subtle" />
+            <span className="text-xs text-text-tertiary uppercase tracking-wide">
               {t('orDivider')}
             </span>
-            <div className="flex-1 h-px bg-gray-200" />
+            <div className="flex-1 h-px bg-border-subtle" />
           </div>
 
           <button
             onClick={handleGoogleSignIn}
-            className="w-full px-6 py-3 border border-gray-300 rounded-lg hover:bg-gray-50 transition font-medium flex items-center justify-center gap-3"
+            className="w-full px-6 py-3 border border-border-subtle text-text-primary rounded-lg hover:bg-surface-page transition-colors font-medium flex items-center justify-center gap-3"
           >
             <svg
               width="18"
@@ -124,7 +124,7 @@ export default function LoginPage() {
       )}
 
       {status === 'error' && (
-        <div className="mt-4 p-3 bg-red-50 border border-red-200 rounded-lg text-red-700 text-sm">
+        <div className="mt-4 p-3 bg-accent-danger-bg border border-accent-danger/30 rounded-lg text-accent-danger text-sm">
           {t('error')}
         </div>
       )}

@@ -1,25 +1,17 @@
-export function formatPrice(
-  amount: string | number,
-  currency: string,
-  locale: string
-): string {
+export function formatPrice(amount: string | number, locale: string): string {
   const num = typeof amount === 'string' ? parseFloat(amount) : amount;
   if (isNaN(num)) return '—';
 
   const formatter = new Intl.NumberFormat(
-    locale === 'ar' ? 'ar' : locale === 'de' ? 'de-DE' : 'en-US',
+    locale === 'ar' ? 'ar' : locale === 'de' ? 'de-DE' : 'en-IE',
     {
       style: 'currency',
-      currency: currency,
+      currency: 'EUR',
       maximumFractionDigits: 0
     }
   );
 
-  try {
-    return formatter.format(num);
-  } catch {
-    return `${num.toLocaleString()} ${currency}`;
-  }
+  return formatter.format(num);
 }
 
 export function propertyTypeKey(type: string): string {

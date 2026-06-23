@@ -44,6 +44,10 @@
     "knowledgeBase": "Knowledge Base",
     "aiAssistant": "AI Assistant"
   },
+  "Theme": {
+    "switchToDark": "Switch to dark mode",
+    "switchToLight": "Switch to light mode"
+  },
   "Auth": {
     "login": {
       "title": "Sign in to DarSyria",

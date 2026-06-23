@@ -44,6 +44,10 @@
     "knowledgeBase": "قاعدة المعرفة",
     "aiAssistant": "المساعد الذكي"
   },
+  "Theme": {
+    "switchToDark": "التبديل إلى الوضع الداكن",
+    "switchToLight": "التبديل إلى الوضع الفاتح"
+  },
   "Auth": {
     "login": {
       "title": "تسجيل الدخول إلى دار سوريا",

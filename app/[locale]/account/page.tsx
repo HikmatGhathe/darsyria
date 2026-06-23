@@ -76,7 +76,7 @@ export default function AccountPage() {
 
   if (isLoading || !user) {
     return (
-      <main className="max-w-xl mx-auto px-6 py-16 text-center text-gray-500">
+      <main className="max-w-xl mx-auto px-6 py-16 text-center text-text-secondary">
         {t('loading')}
       </main>
     );
@@ -84,28 +84,28 @@ export default function AccountPage() {
 
   return (
     <main className="max-w-xl mx-auto px-6 py-10">
-      <h1 className="text-2xl font-bold text-gray-900 mb-1">{t('pageTitle')}</h1>
-      <p className="text-gray-600 mb-8">{t('subtitle')}</p>
+      <h1 className="text-2xl font-semibold text-text-primary mb-1">{t('pageTitle')}</h1>
+      <p className="text-text-secondary mb-8">{t('subtitle')}</p>
 
       <form onSubmit={handleSubmit} noValidate className="space-y-6">
 
         {/* Email — read-only */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
+          <label className="block text-sm font-medium text-text-secondary mb-1">
             {t('email')}
           </label>
           <input
             type="email"
             value={user.email}
             disabled
-            className="w-full rounded-lg border border-gray-300 bg-gray-50 px-3 py-2 text-sm text-gray-500 cursor-not-allowed"
+            className="w-full rounded-lg border border-border-subtle bg-surface-page px-3 py-2 text-sm text-text-tertiary cursor-not-allowed"
           />
-          <p className="mt-1 text-xs text-gray-500">{t('emailHelp')}</p>
+          <p className="mt-1 text-xs text-text-tertiary">{t('emailHelp')}</p>
         </div>
 
         {/* Full name */}
         <div>
-          <label htmlFor="full_name" className="block text-sm font-medium text-gray-700 mb-1">
+          <label htmlFor="full_name" className="block text-sm font-medium text-text-secondary mb-1">
             {t('fullName')}
           </label>
           <input
@@ -116,14 +116,14 @@ export default function AccountPage() {
             onChange={handleChange}
             placeholder={t('fullNamePlaceholder')}
             autoComplete="name"
-            className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+            className="w-full rounded-lg border border-border-subtle bg-surface-card px-3 py-2 text-sm text-text-primary focus:border-brand-navy focus:outline-none focus:ring-1 focus:ring-brand-navy"
           />
-          <p className="mt-1 text-xs text-gray-500">{t('fullNameHelp')}</p>
+          <p className="mt-1 text-xs text-text-tertiary">{t('fullNameHelp')}</p>
         </div>
 
         {/* Phone */}
         <div>
-          <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">
+          <label htmlFor="phone" className="block text-sm font-medium text-text-secondary mb-1">
             {t('phone')}
           </label>
           <input
@@ -134,15 +134,15 @@ export default function AccountPage() {
             onChange={handleChange}
             placeholder={t('phonePlaceholder')}
             autoComplete="tel"
-            className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+            className="w-full rounded-lg border border-border-subtle bg-surface-card px-3 py-2 text-sm text-text-primary focus:border-brand-navy focus:outline-none focus:ring-1 focus:ring-brand-navy"
             dir="ltr"
           />
-          <p className="mt-1 text-xs text-gray-500">{t('phoneHelp')}</p>
+          <p className="mt-1 text-xs text-text-tertiary">{t('phoneHelp')}</p>
         </div>
 
         {/* Language preference */}
         <div>
-          <label htmlFor="locale" className="block text-sm font-medium text-gray-700 mb-1">
+          <label htmlFor="locale" className="block text-sm font-medium text-text-secondary mb-1">
             {t('language')}
           </label>
           <select
@@ -150,23 +150,23 @@ export default function AccountPage() {
             name="locale"
             value={form.locale}
             onChange={handleChange}
-            className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 bg-white"
+            className="w-full rounded-lg border border-border-subtle px-3 py-2 text-sm text-text-primary focus:border-brand-navy focus:outline-none focus:ring-1 focus:ring-brand-navy bg-surface-card"
           >
             <option value="en">English</option>
             <option value="de">Deutsch</option>
             <option value="ar">العربية</option>
           </select>
-          <p className="mt-1 text-xs text-gray-500">{t('languageHelp')}</p>
+          <p className="mt-1 text-xs text-text-tertiary">{t('languageHelp')}</p>
         </div>
 
         {/* Feedback messages */}
         {status === 'saved' && (
-          <p className="text-sm text-green-700 bg-green-50 border border-green-200 rounded-lg px-3 py-2">
+          <p className="text-sm text-accent-verified bg-accent-verified-bg border border-accent-verified/30 rounded-lg px-3 py-2">
             {t('savedSuccess')}
           </p>
         )}
         {status === 'error' && (
-          <p className="text-sm text-red-700 bg-red-50 border border-red-200 rounded-lg px-3 py-2">
+          <p className="text-sm text-accent-danger bg-accent-danger-bg border border-accent-danger/30 rounded-lg px-3 py-2">
             {t('saveError')}
           </p>
         )}
@@ -175,7 +175,7 @@ export default function AccountPage() {
         <button
           type="submit"
           disabled={status === 'saving'}
-          className="w-full rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-700 disabled:opacity-60 transition"
+          className="w-full rounded-lg bg-brand-navy px-4 py-2 text-sm font-semibold text-white hover:bg-brand-navy-hover disabled:opacity-60 transition-colors"
         >
           {status === 'saving' ? t('saving') : t('save')}
         </button>

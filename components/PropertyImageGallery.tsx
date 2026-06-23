@@ -238,14 +238,14 @@ export default function PropertyImageGallery({
   return (
     <section>
       <header className="flex items-center justify-between mb-3">
-        <h2 className="text-lg font-semibold text-gray-900">{t('imagesSection')}</h2>
-        <span className="text-xs text-gray-500">
+        <h2 className="text-lg font-semibold text-text-primary">{t('imagesSection')}</h2>
+        <span className="text-xs text-text-tertiary">
           {images.length} / {MAX_IMAGES}
         </span>
       </header>
 
       {images.length > 1 && (
-        <p className="text-xs text-gray-500 mb-3 italic">{t('reorderHint')}</p>
+        <p className="text-xs text-text-tertiary mb-3 italic">{t('reorderHint')}</p>
       )}
 
       {images.length > 0 && (
@@ -258,10 +258,10 @@ export default function PropertyImageGallery({
               onDragOver={(e) => onImageDragOver(e, img.id)}
               onDrop={(e) => onImageDrop(e, img.id)}
               onDragEnd={onImageDragEnd}
-              className={`relative aspect-square bg-gray-100 rounded-lg overflow-hidden border-2 transition cursor-move ${
+              className={`relative aspect-square bg-surface-page rounded-lg overflow-hidden border-2 transition cursor-move ${
                 draggedImageId === img.id
-                  ? 'border-blue-500 opacity-50'
-                  : 'border-transparent hover:border-gray-300'
+                  ? 'border-brand-navy opacity-50'
+                  : 'border-transparent hover:border-border-strong'
               }`}
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -272,7 +272,7 @@ export default function PropertyImageGallery({
               />
 
               {img.position === 0 && (
-                <span className="absolute top-2 start-2 px-2 py-0.5 bg-blue-600 text-white text-xs font-medium rounded-full">
+                <span className="absolute top-2 start-2 px-2 py-0.5 bg-brand-navy text-white text-xs font-medium rounded-full">
                   {t('coverBadge')}
                 </span>
               )}
@@ -283,7 +283,7 @@ export default function PropertyImageGallery({
                   e.stopPropagation();
                   setDeleteTarget(img);
                 }}
-                className="absolute top-2 end-2 w-7 h-7 bg-white/90 hover:bg-white text-red-600 rounded-full flex items-center justify-center shadow-sm transition"
+                className="absolute top-2 end-2 w-7 h-7 bg-surface-card/90 hover:bg-surface-card text-accent-danger rounded-full flex items-center justify-center shadow-sm transition-colors"
                 aria-label="Delete photo"
               >
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -298,22 +298,22 @@ export default function PropertyImageGallery({
               key={u.id}
               className={`relative aspect-square rounded-lg border-2 flex flex-col items-center justify-center p-3 text-center ${
                 u.error
-                  ? 'bg-red-50 border-red-200'
-                  : 'bg-gray-50 border-gray-200 border-dashed'
+                  ? 'bg-accent-danger-bg border-accent-danger/30'
+                  : 'bg-surface-page border-border-subtle border-dashed'
               }`}
             >
               {u.error ? (
-                <p className="text-xs text-red-700">{u.error}</p>
+                <p className="text-xs text-accent-danger">{u.error}</p>
               ) : (
                 <>
-                  <p className="text-xs text-gray-700 mb-2 break-all">{u.filename}</p>
-                  <div className="w-full bg-gray-200 rounded-full h-1.5 overflow-hidden">
+                  <p className="text-xs text-text-secondary mb-2 break-all">{u.filename}</p>
+                  <div className="w-full bg-border-subtle rounded-full h-1.5 overflow-hidden">
                     <div
-                      className="bg-blue-600 h-full transition-all"
+                      className="bg-brand-navy h-full transition-all"
                       style={{width: `${u.percent}%`}}
                     />
                   </div>
-                  <p className="text-xs text-gray-500 mt-1">{u.percent}%</p>
+                  <p className="text-xs text-text-tertiary mt-1">{u.percent}%</p>
                 </>
               )}
             </div>
@@ -322,8 +322,8 @@ export default function PropertyImageGallery({
       )}
 
       {reorderError && (
-        <div className="mb-3 p-3 bg-red-50 border border-red-200 rounded-lg">
-          <p className="text-sm text-red-700">{reorderError}</p>
+        <div className="mb-3 p-3 bg-accent-danger-bg border border-accent-danger/30 rounded-lg">
+          <p className="text-sm text-accent-danger">{reorderError}</p>
         </div>
       )}
 
@@ -332,17 +332,17 @@ export default function PropertyImageGallery({
           onDragOver={onDragOver}
           onDragLeave={onDragLeave}
           onDrop={onDrop}
-          className={`border-2 border-dashed rounded-lg p-8 text-center transition ${
+          className={`border-2 border-dashed rounded-lg p-8 text-center transition-colors ${
             isDragActive
-              ? 'border-blue-500 bg-blue-50'
-              : 'border-gray-300 bg-gray-50 hover:border-gray-400'
+              ? 'border-brand-navy bg-surface-page'
+              : 'border-border-subtle bg-surface-page hover:border-border-strong'
           }`}
         >
           {images.length === 0 && (
-            <p className="text-sm text-gray-600 mb-3">{t('imagesEmpty')}</p>
+            <p className="text-sm text-text-secondary mb-3">{t('imagesEmpty')}</p>
           )}
           <svg
-            className="w-10 h-10 mx-auto text-gray-400 mb-3"
+            className="w-10 h-10 mx-auto text-text-tertiary mb-3"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -354,17 +354,17 @@ export default function PropertyImageGallery({
               d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5m-13.5-9L12 3m0 0 4.5 4.5M12 3v13.5"
             />
           </svg>
-          <p className="text-sm text-gray-700 mb-1">
+          <p className="text-sm text-text-secondary mb-1">
             {t('uploadDragDrop')}{' '}
             <button
               type="button"
               onClick={() => fileInputRef.current?.click()}
-              className="text-blue-600 hover:underline font-medium"
+              className="text-brand-navy hover:underline font-medium"
             >
               {t('uploadBrowse')}
             </button>
           </p>
-          <p className="text-xs text-gray-500">{t('uploadHint')}</p>
+          <p className="text-xs text-text-tertiary">{t('uploadHint')}</p>
           <input
             ref={fileInputRef}
             type="file"
@@ -382,15 +382,15 @@ export default function PropertyImageGallery({
           onClick={() => !isDeleting && setDeleteTarget(null)}
         >
           <div
-            className="bg-white rounded-lg shadow-xl max-w-md w-full p-6"
+            className="bg-surface-card rounded-xl shadow-xl max-w-md w-full p-6"
             onClick={(e) => e.stopPropagation()}
           >
-            <h3 className="text-lg font-semibold text-gray-900 mb-2">
+            <h3 className="text-lg font-semibold text-text-primary mb-2">
               {t('deleteImageConfirm')}
             </h3>
-            <p className="text-sm text-gray-600 mb-4">{t('deleteImageBody')}</p>
+            <p className="text-sm text-text-secondary mb-4">{t('deleteImageBody')}</p>
 
-            <div className="mb-4 aspect-video bg-gray-100 rounded overflow-hidden">
+            <div className="mb-4 aspect-video bg-surface-page rounded overflow-hidden">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={deleteTarget.public_url}
@@ -400,7 +400,7 @@ export default function PropertyImageGallery({
             </div>
 
             {deleteError && (
-              <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded text-sm text-red-700">
+              <div className="mb-4 p-3 bg-accent-danger-bg border border-accent-danger/30 rounded text-sm text-accent-danger">
                 {deleteError}
               </div>
             )}
@@ -409,14 +409,14 @@ export default function PropertyImageGallery({
               <button
                 onClick={() => setDeleteTarget(null)}
                 disabled={isDeleting}
-                className="px-4 py-2 bg-white border border-gray-300 text-gray-700 text-sm font-medium rounded-md hover:bg-gray-50 disabled:cursor-not-allowed transition"
+                className="px-4 py-2 bg-surface-card border border-border-subtle text-text-primary text-sm font-medium rounded-lg hover:bg-surface-page disabled:cursor-not-allowed transition-colors"
               >
                 Cancel
               </button>
               <button
                 onClick={confirmDelete}
                 disabled={isDeleting}
-                className="px-4 py-2 bg-red-600 text-white text-sm font-medium rounded-md hover:bg-red-700 disabled:bg-gray-300 disabled:cursor-not-allowed transition"
+                className="px-4 py-2 bg-accent-danger text-white text-sm font-medium rounded-lg hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed transition-opacity"
               >
                 {isDeleting ? '...' : t('deleteImageAction')}
               </button>

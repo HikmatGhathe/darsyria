@@ -45,15 +45,15 @@ export default function NewPropertyPage() {
   const [error, setError] = useState<string | null>(null);
 
   if (authLoading) {
-    return <div className="max-w-3xl mx-auto px-6 py-12 text-gray-500">Loading...</div>;
+    return <div className="max-w-3xl mx-auto px-6 py-12 text-text-secondary">Loading...</div>;
   }
   if (!user) {
     return (
       <div className="max-w-3xl mx-auto px-6 py-12">
-        <p className="text-gray-700 mb-4">{t('errorAuth')}</p>
+        <p className="text-text-secondary mb-4">{t('errorAuth')}</p>
         <button
           onClick={() => router.push(`/${locale}/login`)}
-          className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+          className="px-4 py-2 bg-brand-navy text-white rounded-lg hover:bg-brand-navy-hover transition-colors"
         >
           Sign in
         </button>
@@ -99,19 +99,19 @@ export default function NewPropertyPage() {
   return (
     <div className="max-w-3xl mx-auto px-6 py-8">
       <header className="mb-8">
-        <h1 className="text-3xl font-bold mb-2">{t('title')}</h1>
-        <p className="text-gray-600">{t('subtitle')}</p>
+        <h1 className="text-3xl font-semibold mb-2 text-text-primary">{t('title')}</h1>
+        <p className="text-text-secondary">{t('subtitle')}</p>
       </header>
 
       <form onSubmit={handleSubmit} className="space-y-8">
         {/* Section: Basics */}
         <section>
-          <h2 className="text-lg font-semibold text-gray-900 mb-4 pb-2 border-b border-gray-200">
+          <h2 className="text-lg font-semibold text-text-primary mb-4 pb-2 border-b border-border-subtle">
             {t('sectionBasics')}
           </h2>
           <div className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-text-secondary mb-1">
                 {t('labelTitle')} *
               </label>
               <input
@@ -122,11 +122,11 @@ export default function NewPropertyPage() {
                 required
                 minLength={5}
                 maxLength={200}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2 border border-border-subtle rounded-lg focus:outline-none focus:ring-1 focus:ring-brand-navy focus:border-brand-navy bg-surface-card text-text-primary"
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-text-secondary mb-1">
                 {t('labelDescription')} *
               </label>
               <textarea
@@ -137,7 +137,7 @@ export default function NewPropertyPage() {
                 minLength={20}
                 maxLength={10000}
                 rows={6}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 resize-y"
+                className="w-full px-3 py-2 border border-border-subtle rounded-lg focus:outline-none focus:ring-1 focus:ring-brand-navy focus:border-brand-navy bg-surface-card text-text-primary resize-y"
               />
             </div>
           </div>
@@ -145,12 +145,12 @@ export default function NewPropertyPage() {
 
         {/* Section: Location */}
         <section>
-          <h2 className="text-lg font-semibold text-gray-900 mb-4 pb-2 border-b border-gray-200">
+          <h2 className="text-lg font-semibold text-text-primary mb-4 pb-2 border-b border-border-subtle">
             {t('sectionLocation')}
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-text-secondary mb-1">
                 {t('labelCity')} *
               </label>
               <input
@@ -161,11 +161,11 @@ export default function NewPropertyPage() {
                 required
                 minLength={2}
                 maxLength={100}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2 border border-border-subtle rounded-lg focus:outline-none focus:ring-1 focus:ring-brand-navy focus:border-brand-navy bg-surface-card text-text-primary"
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-text-secondary mb-1">
                 {t('labelNeighborhood')}
               </label>
               <input
@@ -174,7 +174,7 @@ export default function NewPropertyPage() {
                 onChange={(e) => update('neighborhood', e.target.value)}
                 placeholder={t('placeholderNeighborhood')}
                 maxLength={150}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2 border border-border-subtle rounded-lg focus:outline-none focus:ring-1 focus:ring-brand-navy focus:border-brand-navy bg-surface-card text-text-primary"
               />
             </div>
           </div>
@@ -182,19 +182,19 @@ export default function NewPropertyPage() {
 
         {/* Section: Attributes */}
         <section>
-          <h2 className="text-lg font-semibold text-gray-900 mb-4 pb-2 border-b border-gray-200">
+          <h2 className="text-lg font-semibold text-text-primary mb-4 pb-2 border-b border-border-subtle">
             {t('sectionAttributes')}
           </h2>
           <div className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-text-secondary mb-1">
                 {t('labelPropertyType')} *
               </label>
               <select
                 value={form.property_type}
                 onChange={(e) => update('property_type', e.target.value as FormState['property_type'])}
                 required
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white"
+                className="w-full px-3 py-2 border border-border-subtle rounded-lg focus:outline-none focus:ring-1 focus:ring-brand-navy focus:border-brand-navy bg-surface-card text-text-primary"
               >
                 <option value="apartment">{t('typeApartment')}</option>
                 <option value="house">{t('typeHouse')}</option>
@@ -204,7 +204,7 @@ export default function NewPropertyPage() {
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-medium text-text-secondary mb-1">
                   {t('labelRooms')}
                 </label>
                 <input
@@ -213,11 +213,11 @@ export default function NewPropertyPage() {
                   onChange={(e) => update('rooms', e.target.value)}
                   min={0}
                   max={50}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-3 py-2 border border-border-subtle rounded-lg focus:outline-none focus:ring-1 focus:ring-brand-navy focus:border-brand-navy bg-surface-card text-text-primary"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-medium text-text-secondary mb-1">
                   {t('labelBathrooms')}
                 </label>
                 <input
@@ -226,11 +226,11 @@ export default function NewPropertyPage() {
                   onChange={(e) => update('bathrooms', e.target.value)}
                   min={0}
                   max={20}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-3 py-2 border border-border-subtle rounded-lg focus:outline-none focus:ring-1 focus:ring-brand-navy focus:border-brand-navy bg-surface-card text-text-primary"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-medium text-text-secondary mb-1">
                   {t('labelArea')}
                 </label>
                 <input
@@ -239,7 +239,7 @@ export default function NewPropertyPage() {
                   onChange={(e) => update('area_sqm', e.target.value)}
                   min={1}
                   max={100000}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-3 py-2 border border-border-subtle rounded-lg focus:outline-none focus:ring-1 focus:ring-brand-navy focus:border-brand-navy bg-surface-card text-text-primary"
                 />
               </div>
             </div>
@@ -248,12 +248,12 @@ export default function NewPropertyPage() {
 
         {/* Section: Price */}
         <section>
-          <h2 className="text-lg font-semibold text-gray-900 mb-4 pb-2 border-b border-gray-200">
+          <h2 className="text-lg font-semibold text-text-primary mb-4 pb-2 border-b border-border-subtle">
             {t('sectionPrice')}
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="md:col-span-2">
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-text-secondary mb-1">
                 {t('labelPriceAmount')} *
               </label>
               <input
@@ -264,18 +264,18 @@ export default function NewPropertyPage() {
                 required
                 min={1}
                 step="0.01"
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2 border border-border-subtle rounded-lg focus:outline-none focus:ring-1 focus:ring-brand-navy focus:border-brand-navy bg-surface-card text-text-primary"
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-text-secondary mb-1">
                 {t('labelPriceCurrency')} *
               </label>
               <select
                 value={form.price_currency}
                 onChange={(e) => update('price_currency', e.target.value as FormState['price_currency'])}
                 required
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white"
+                className="w-full px-3 py-2 border border-border-subtle rounded-lg focus:outline-none focus:ring-1 focus:ring-brand-navy focus:border-brand-navy bg-surface-card text-text-primary"
               >
                 <option value="USD">{t('currencyUSD')}</option>
                 <option value="EUR">{t('currencyEUR')}</option>
@@ -287,11 +287,11 @@ export default function NewPropertyPage() {
 
         {/* Section: Documents */}
         <section>
-          <h2 className="text-lg font-semibold text-gray-900 mb-4 pb-2 border-b border-gray-200">
+          <h2 className="text-lg font-semibold text-text-primary mb-4 pb-2 border-b border-border-subtle">
             {t('sectionDocuments')}
           </h2>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-text-secondary mb-2">
               {t('labelDocumentStatus')} *
             </label>
             <div className="space-y-2">
@@ -303,9 +303,9 @@ export default function NewPropertyPage() {
                     value={value}
                     checked={form.document_status === value}
                     onChange={() => update('document_status', value)}
-                    className="mt-1"
+                    className="mt-1 text-brand-navy focus:ring-brand-navy"
                   />
-                  <span className="text-sm text-gray-700">
+                  <span className="text-sm text-text-secondary">
                     {value === 'none' && t('docNone')}
                     {value === 'claimed' && t('docClaimed')}
                     {value === 'documents_provided' && t('docProvided')}
@@ -313,21 +313,21 @@ export default function NewPropertyPage() {
                 </label>
               ))}
             </div>
-            <p className="text-xs text-gray-500 mt-3 italic">{t('docNote')}</p>
+            <p className="text-xs text-text-tertiary mt-3 italic">{t('docNote')}</p>
           </div>
         </section>
 
         {error && (
-          <div className="p-4 bg-red-50 border border-red-200 rounded-lg">
-            <p className="text-sm text-red-700">{error}</p>
+          <div className="p-4 bg-accent-danger-bg border border-accent-danger/30 rounded-lg">
+            <p className="text-sm text-accent-danger">{error}</p>
           </div>
         )}
 
-        <div className="flex justify-end pt-4 border-t border-gray-200">
+        <div className="flex justify-end pt-4 border-t border-border-subtle">
           <button
             type="submit"
             disabled={isSubmitting}
-            className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:bg-gray-300 disabled:cursor-not-allowed transition font-medium"
+            className="px-6 py-3 bg-brand-navy text-white rounded-lg hover:bg-brand-navy-hover disabled:opacity-50 disabled:cursor-not-allowed transition-colors font-medium"
           >
             {isSubmitting ? t('submitting') : t('submit')}
           </button>

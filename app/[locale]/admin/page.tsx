@@ -68,7 +68,7 @@ export default function AdminLandingPage() {
   if (isLoading) {
     return (
       <main className="max-w-5xl mx-auto px-4 py-8">
-        <p className="text-sm text-gray-500">{t('loading')}</p>
+        <p className="text-sm text-text-secondary">{t('loading')}</p>
       </main>
     );
   }
@@ -80,8 +80,8 @@ export default function AdminLandingPage() {
   if (!user.is_admin) {
     return (
       <main className="max-w-5xl mx-auto px-4 py-8">
-        <div className="p-4 bg-red-50 border border-red-200 rounded-lg">
-          <p className="text-sm text-red-700">{t('accessDenied')}</p>
+        <div className="p-4 bg-accent-danger-bg border border-accent-danger/30 rounded-lg">
+          <p className="text-sm text-accent-danger">{t('accessDenied')}</p>
         </div>
       </main>
     );
@@ -89,8 +89,8 @@ export default function AdminLandingPage() {
 
   return (
     <main className="max-w-5xl mx-auto px-4 py-8">
-      <h1 className="text-2xl font-bold text-gray-900 mb-2">{t('pageTitle')}</h1>
-      <p className="text-sm text-gray-600 mb-8">{t('subtitle')}</p>
+      <h1 className="text-2xl font-semibold text-text-primary mb-2">{t('pageTitle')}</h1>
+      <p className="text-sm text-text-secondary mb-8">{t('subtitle')}</p>
 
       {/* Stats grid */}
       {stats && (
@@ -115,8 +115,8 @@ export default function AdminLandingPage() {
       )}
 
       {loadError && (
-        <div className="p-4 bg-red-50 border border-red-200 rounded-lg mb-6">
-          <p className="text-sm text-red-700">{loadError}</p>
+        <div className="p-4 bg-accent-danger-bg border border-accent-danger/30 rounded-lg mb-6">
+          <p className="text-sm text-accent-danger">{loadError}</p>
         </div>
       )}
 
@@ -167,16 +167,16 @@ function StatCard({
   color?: 'gray' | 'blue' | 'green' | 'amber' | 'red';
 }) {
   const colorClasses = {
-    gray: 'bg-white border-gray-200 text-gray-900',
-    blue: 'bg-blue-50 border-blue-200 text-blue-900',
-    green: 'bg-green-50 border-green-200 text-green-900',
-    amber: 'bg-amber-50 border-amber-200 text-amber-900',
-    red: 'bg-red-50 border-red-200 text-red-900',
+    gray: 'bg-surface-card border-border-subtle text-text-primary',
+    blue: 'bg-surface-card border-brand-navy/30 text-brand-navy',
+    green: 'bg-accent-verified-bg border-accent-verified/30 text-accent-verified',
+    amber: 'bg-accent-warning-bg border-accent-warning/30 text-accent-warning',
+    red: 'bg-accent-danger-bg border-accent-danger/30 text-accent-danger',
   };
   return (
-    <div className={`px-4 py-3 border rounded-lg ${colorClasses[color]}`}>
+    <div className={`px-4 py-3 border rounded-xl ${colorClasses[color]}`}>
       <p className="text-xs uppercase tracking-wide font-medium opacity-75">{label}</p>
-      <p className="text-2xl font-bold mt-1">{value}</p>
+      <p className="text-2xl font-semibold mt-1">{value}</p>
     </div>
   );
 }
@@ -193,12 +193,12 @@ function SectionCard({
   href: string;
 }) {
   return (
-    <div className="p-6 bg-white border border-gray-200 rounded-lg">
-      <h2 className="text-lg font-semibold text-gray-900 mb-2">{title}</h2>
-      <p className="text-sm text-gray-600 mb-4">{description}</p>
+    <div className="p-6 bg-surface-card border border-border-subtle rounded-xl">
+      <h2 className="text-lg font-semibold text-text-primary mb-2">{title}</h2>
+      <p className="text-sm text-text-secondary mb-4">{description}</p>
       <Link
         href={href}
-        className="inline-block px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-md hover:bg-blue-700 transition"
+        className="inline-block px-4 py-2 bg-brand-navy text-white text-sm font-medium rounded-lg hover:bg-brand-navy-hover transition-colors"
       >
         {buttonLabel}
       </Link>

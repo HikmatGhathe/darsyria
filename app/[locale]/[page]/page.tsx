@@ -17,8 +17,8 @@ export default async function StaticPage({params}: Props) {
 
   return (
     <article className="max-w-3xl mx-auto px-6 py-12">
-      <h1 className="text-4xl font-bold mb-8">{content.title[locale]}</h1>
-      <div className="prose prose-lg max-w-none text-gray-800 leading-relaxed whitespace-pre-wrap">
+      <h1 className="text-4xl font-semibold mb-8 text-text-primary">{content.title[locale]}</h1>
+      <div className="prose prose-lg max-w-none text-text-primary leading-relaxed whitespace-pre-wrap">
         {content.body[locale]}
       </div>
     </article>

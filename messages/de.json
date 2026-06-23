@@ -44,6 +44,10 @@
     "knowledgeBase": "Wissensdatenbank",
     "aiAssistant": "KI-Assistent"
   },
+  "Theme": {
+    "switchToDark": "Zu dunklem Modus wechseln",
+    "switchToLight": "Zu hellem Modus wechseln"
+  },
   "Auth": {
     "login": {
       "title": "Bei DarSyria anmelden",

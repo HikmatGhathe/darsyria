@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useTranslations, useLocale } from 'next-intl';
 import { Link } from '@/i18n/navigation';
 import { useAuth } from '@/components/AuthProvider';
+import { formatPrice } from '@/lib/property-display';
 import {
   adminListProperties,
   adminApproveProperty,
@@ -119,7 +120,7 @@ export default function AdminListingsPage() {
   if (authLoading || !user) {
     return (
       <main className="max-w-7xl mx-auto px-4 py-8">
-        <p className="text-sm text-gray-500">{tAdmin('loading')}</p>
+        <p className="text-sm text-text-secondary">{tAdmin('loading')}</p>
       </main>
     );
   }
@@ -127,8 +128,8 @@ export default function AdminListingsPage() {
   if (!user.is_admin) {
     return (
       <main className="max-w-7xl mx-auto px-4 py-8">
-        <div className="p-4 bg-red-50 border border-red-200 rounded-lg">
-          <p className="text-sm text-red-700">{tAdmin('accessDenied')}</p>
+        <div className="p-4 bg-accent-danger-bg border border-accent-danger/30 rounded-lg">
+          <p className="text-sm text-accent-danger">{tAdmin('accessDenied')}</p>
         </div>
       </main>
     );
@@ -138,17 +139,17 @@ export default function AdminListingsPage() {
     <main className="max-w-7xl mx-auto px-4 py-8">
       {/* Header */}
       <div className="mb-6">
-        <Link href="/admin" className="text-sm text-blue-600 hover:underline mb-2 inline-block">
+        <Link href="/admin" className="text-sm text-brand-navy hover:underline mb-2 inline-block">
           ← {tAdmin('pageTitle')}
         </Link>
-        <h1 className="text-2xl font-bold text-gray-900 mb-1">{t('pageTitle')}</h1>
-        <p className="text-sm text-gray-600">{t('subtitle')}</p>
+        <h1 className="text-2xl font-semibold text-text-primary mb-1">{t('pageTitle')}</h1>
+        <p className="text-sm text-text-secondary">{t('subtitle')}</p>
       </div>
 
       {/* Filters */}
-      <div className="bg-white border border-gray-200 rounded-lg p-4 mb-4 flex flex-wrap items-end gap-4">
+      <div className="bg-surface-card border border-border-subtle rounded-xl p-4 mb-4 flex flex-wrap items-end gap-4">
         <div className="flex-1 min-w-[200px]">
-          <label className="block text-xs font-medium text-gray-700 mb-1">
+          <label className="block text-xs font-medium text-text-secondary mb-1">
             {t('filterSearch')}
           </label>
           <input
@@ -156,17 +157,17 @@ export default function AdminListingsPage() {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder={t('filterSearchPlaceholder')}
-            className="w-full px-3 py-1.5 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            className="w-full px-3 py-1.5 text-sm bg-surface-card border border-border-subtle rounded-lg text-text-primary focus:outline-none focus:ring-1 focus:ring-brand-navy focus:border-brand-navy"
           />
         </div>
         <div>
-          <label className="block text-xs font-medium text-gray-700 mb-1">
+          <label className="block text-xs font-medium text-text-secondary mb-1">
             {t('filterStatus')}
           </label>
           <select
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value)}
-            className="px-3 py-1.5 text-sm border border-gray-300 rounded-md bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="px-3 py-1.5 text-sm bg-surface-card border border-border-subtle rounded-lg text-text-primary focus:outline-none focus:ring-1 focus:ring-brand-navy focus:border-brand-navy"
           >
             <option value="">{t('filterStatusAll')}</option>
             <option value="active">{t('filterStatusActive')}</option>
@@ -180,45 +181,45 @@ export default function AdminListingsPage() {
             type="checkbox"
             checked={flaggedOnly}
             onChange={(e) => setFlaggedOnly(e.target.checked)}
-            className="h-4 w-4 text-blue-600 rounded focus:ring-blue-500"
+            className="h-4 w-4 text-brand-navy rounded focus:ring-brand-navy"
           />
-          <span className="text-sm text-gray-700">{t('filterFlaggedOnly')}</span>
+          <span className="text-sm text-text-secondary">{t('filterFlaggedOnly')}</span>
         </label>
       </div>
 
       {/* Action error banner */}
       {actionError && (
-        <div className="p-3 bg-red-50 border border-red-200 rounded-md mb-4">
-          <p className="text-sm text-red-700">{actionError}</p>
+        <div className="p-3 bg-accent-danger-bg border border-accent-danger/30 rounded-lg mb-4">
+          <p className="text-sm text-accent-danger">{actionError}</p>
         </div>
       )}
 
       {/* Table */}
       {loadError ? (
-        <div className="p-4 bg-red-50 border border-red-200 rounded-lg">
-          <p className="text-sm text-red-700">{loadError}</p>
+        <div className="p-4 bg-accent-danger-bg border border-accent-danger/30 rounded-xl">
+          <p className="text-sm text-accent-danger">{loadError}</p>
         </div>
       ) : listings === null ? (
-        <p className="text-sm text-gray-500">{t('loading')}</p>
+        <p className="text-sm text-text-secondary">{t('loading')}</p>
       ) : listings.length === 0 ? (
-        <div className="p-8 text-center bg-gray-50 border border-gray-200 rounded-lg">
-          <p className="text-sm text-gray-500">{t('empty')}</p>
+        <div className="p-8 text-center bg-surface-page border border-border-subtle rounded-xl">
+          <p className="text-sm text-text-secondary">{t('empty')}</p>
         </div>
       ) : (
-        <div className="bg-white border border-gray-200 rounded-lg overflow-hidden">
+        <div className="bg-surface-card border border-border-subtle rounded-xl overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
-              <thead className="bg-gray-50 border-b border-gray-200">
+              <thead className="bg-surface-page border-b border-border-subtle">
                 <tr>
-                  <th className="text-start px-4 py-3 font-medium text-gray-700">{t('colTitle')}</th>
-                  <th className="text-start px-4 py-3 font-medium text-gray-700 hidden md:table-cell">{t('colOwner')}</th>
-                  <th className="text-start px-4 py-3 font-medium text-gray-700">{t('colStatus')}</th>
-                  <th className="text-start px-4 py-3 font-medium text-gray-700 hidden lg:table-cell">{t('colPrice')}</th>
-                  <th className="text-start px-4 py-3 font-medium text-gray-700 hidden lg:table-cell">{t('colCreated')}</th>
-                  <th className="text-end px-4 py-3 font-medium text-gray-700">{t('colActions')}</th>
+                  <th className="text-start px-4 py-3 font-medium text-text-secondary">{t('colTitle')}</th>
+                  <th className="text-start px-4 py-3 font-medium text-text-secondary hidden md:table-cell">{t('colOwner')}</th>
+                  <th className="text-start px-4 py-3 font-medium text-text-secondary">{t('colStatus')}</th>
+                  <th className="text-start px-4 py-3 font-medium text-text-secondary hidden lg:table-cell">{t('colPrice')}</th>
+                  <th className="text-start px-4 py-3 font-medium text-text-secondary hidden lg:table-cell">{t('colCreated')}</th>
+                  <th className="text-end px-4 py-3 font-medium text-text-secondary">{t('colActions')}</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gray-200">
+              <tbody className="divide-y divide-border-subtle">
                 {listings.map((p) => (
                   <ListingRow
                     key={p.id}
@@ -244,21 +245,21 @@ export default function AdminListingsPage() {
       {/* Pagination */}
       {listings && listings.length > 0 && (
         <div className="flex items-center justify-between mt-4">
-          <p className="text-xs text-gray-500">
+          <p className="text-xs text-text-tertiary">
             {t('showingPage', { start: offset + 1, end: offset + listings.length })}
           </p>
           <div className="flex gap-2">
             <button
               onClick={() => setOffset(Math.max(0, offset - PAGE_SIZE))}
               disabled={offset === 0}
-              className="px-3 py-1.5 text-sm bg-white border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="px-3 py-1.5 text-sm bg-surface-card border border-border-subtle text-text-primary rounded-lg hover:bg-surface-page disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
             >
               {t('previous')}
             </button>
             <button
               onClick={() => setOffset(offset + PAGE_SIZE)}
               disabled={listings.length < PAGE_SIZE}
-              className="px-3 py-1.5 text-sm bg-white border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="px-3 py-1.5 text-sm bg-surface-card border border-border-subtle text-text-primary rounded-lg hover:bg-surface-page disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
             >
               {t('next')}
             </button>
@@ -273,16 +274,16 @@ export default function AdminListingsPage() {
           onClick={() => !rejecting && setRejectTarget(null)}
         >
           <div
-            className="bg-white rounded-lg shadow-xl max-w-md w-full p-6"
+            className="bg-surface-card rounded-xl shadow-xl max-w-md w-full p-6"
             onClick={(e) => e.stopPropagation()}
           >
-            <h3 className="text-lg font-semibold text-gray-900 mb-1">
+            <h3 className="text-lg font-semibold text-text-primary mb-1">
               {t('rejectModalTitle')}
             </h3>
-            <p className="text-sm text-gray-500 mb-4">
+            <p className="text-sm text-text-secondary mb-4">
               {t('rejectModalSubject', { title: rejectTarget.title })}
             </p>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-text-secondary mb-1">
               {t('rejectModalReason')}
             </label>
             <textarea
@@ -294,28 +295,28 @@ export default function AdminListingsPage() {
               // eslint-disable-next-line jsx-a11y/no-autofocus
               autoFocus
               disabled={rejecting}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 resize-none disabled:bg-gray-50"
+              className="w-full px-3 py-2 bg-surface-card border border-border-subtle rounded-lg text-sm text-text-primary focus:outline-none focus:ring-1 focus:ring-brand-navy focus:border-brand-navy resize-none disabled:bg-surface-page"
             />
-            <p className={`mt-1 text-xs ${rejectReason.trim().length < 10 ? 'text-amber-600' : 'text-gray-500'}`}>
+            <p className={`mt-1 text-xs ${rejectReason.trim().length < 10 ? 'text-accent-warning' : 'text-text-tertiary'}`}>
               {rejectReason.trim().length}/10+ — {t('rejectModalMinChars')}
             </p>
             {rejectError && (
-              <div className="mt-3 p-3 bg-red-50 border border-red-200 rounded-md">
-                <p className="text-sm text-red-700">{rejectError}</p>
+              <div className="mt-3 p-3 bg-accent-danger-bg border border-accent-danger/30 rounded-lg">
+                <p className="text-sm text-accent-danger">{rejectError}</p>
               </div>
             )}
             <div className="mt-4 flex justify-end gap-3">
               <button
                 onClick={() => setRejectTarget(null)}
                 disabled={rejecting}
-                className="px-4 py-2 bg-white border border-gray-300 text-gray-700 text-sm font-medium rounded-md hover:bg-gray-50 disabled:cursor-not-allowed transition"
+                className="px-4 py-2 bg-surface-card border border-border-subtle text-text-primary text-sm font-medium rounded-lg hover:bg-surface-page disabled:cursor-not-allowed transition-colors"
               >
                 {t('rejectModalCancel')}
               </button>
               <button
                 onClick={handleReject}
                 disabled={rejectReason.trim().length < 10 || rejecting}
-                className="px-4 py-2 bg-red-600 text-white text-sm font-medium rounded-md hover:bg-red-700 disabled:bg-gray-300 disabled:cursor-not-allowed transition"
+                className="px-4 py-2 bg-accent-danger text-white text-sm font-medium rounded-lg hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed transition-opacity"
               >
                 {rejecting ? t('rejectModalSending') : t('rejectModalSend')}
               </button>
@@ -350,33 +351,33 @@ function ListingRow({
   const isFlagged = listing.flagged_at !== null;
 
   return (
-    <tr className={isFlagged ? 'bg-amber-50' : ''}>
+    <tr className={isFlagged ? 'bg-accent-warning-bg' : ''}>
       <td className="px-4 py-3">
-        <p className="text-sm font-medium text-gray-900 line-clamp-1">{listing.title}</p>
+        <p className="text-sm font-medium text-text-primary line-clamp-1">{listing.title}</p>
         {isFlagged && (
-          <span className="inline-block mt-1 px-1.5 py-0.5 text-[10px] font-bold bg-amber-200 text-amber-900 rounded">
+          <span className="inline-block mt-1 px-1.5 py-0.5 text-[10px] font-bold bg-accent-warning-bg text-accent-warning rounded">
             {t('flagBadge')}
           </span>
         )}
         {listing.rejection_reason && (
-          <p className="mt-1 text-xs text-red-700 italic line-clamp-2">
+          <p className="mt-1 text-xs text-accent-danger italic line-clamp-2">
             {t('rejectedBadge', { reason: listing.rejection_reason })}
           </p>
         )}
       </td>
       <td className="px-4 py-3 hidden md:table-cell">
-        <p className="text-xs text-gray-600 break-all">{listing.owner_email ?? '—'}</p>
+        <p className="text-xs text-text-secondary break-all">{listing.owner_email ?? '—'}</p>
       </td>
       <td className="px-4 py-3">
         <StatusBadge status={listing.status} />
       </td>
       <td className="px-4 py-3 hidden lg:table-cell">
-        <p className="text-xs text-gray-700">
-          {Number(listing.price_amount).toLocaleString()} {listing.price_currency}
+        <p className="text-xs text-text-secondary">
+          {formatPrice(listing.price_amount, locale)}
         </p>
       </td>
       <td className="px-4 py-3 hidden lg:table-cell">
-        <p className="text-xs text-gray-500">
+        <p className="text-xs text-text-tertiary">
           {new Date(listing.created_at).toLocaleDateString(
             locale === 'de' ? 'de-DE' : locale === 'ar' ? 'ar-SY' : 'en-GB'
           )}
@@ -388,7 +389,7 @@ function ListingRow({
             href={`/${locale}/properties/${listing.id}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="px-2 py-1 text-xs bg-white border border-gray-300 text-gray-700 rounded hover:bg-gray-50"
+            className="px-2 py-1 text-xs bg-surface-card border border-border-subtle text-text-primary rounded hover:bg-surface-page transition-colors"
           >
             {t('actionView')}
           </a>
@@ -396,7 +397,7 @@ function ListingRow({
             <button
               onClick={onUnflag}
               disabled={busy}
-              className="px-2 py-1 text-xs bg-amber-100 border border-amber-300 text-amber-900 rounded hover:bg-amber-200 disabled:opacity-50"
+              className="px-2 py-1 text-xs bg-accent-warning-bg border border-accent-warning/30 text-accent-warning rounded hover:opacity-80 disabled:opacity-50 transition-opacity"
             >
               {t('actionUnflag')}
             </button>
@@ -404,7 +405,7 @@ function ListingRow({
             <button
               onClick={onFlag}
               disabled={busy}
-              className="px-2 py-1 text-xs bg-white border border-gray-300 text-gray-700 rounded hover:bg-gray-50 disabled:opacity-50"
+              className="px-2 py-1 text-xs bg-surface-card border border-border-subtle text-text-primary rounded hover:bg-surface-page disabled:opacity-50 transition-colors"
             >
               {t('actionFlag')}
             </button>
@@ -412,14 +413,14 @@ function ListingRow({
           <button
             onClick={onApprove}
             disabled={busy || listing.status === 'active'}
-            className="px-2 py-1 text-xs bg-white border border-green-300 text-green-700 rounded hover:bg-green-50 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="px-2 py-1 text-xs bg-surface-card border border-accent-verified/40 text-accent-verified rounded hover:bg-accent-verified-bg disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
           >
             {t('actionApprove')}
           </button>
           <button
             onClick={onReject}
             disabled={busy}
-            className="px-2 py-1 text-xs bg-white border border-red-300 text-red-700 rounded hover:bg-red-50 disabled:opacity-50"
+            className="px-2 py-1 text-xs bg-surface-card border border-accent-danger/40 text-accent-danger rounded hover:bg-accent-danger-bg disabled:opacity-50 transition-colors"
           >
             {t('actionReject')}
           </button>
@@ -431,12 +432,12 @@ function ListingRow({
 
 function StatusBadge({ status }: { status: string }) {
   const colors: Record<string, string> = {
-    active: 'bg-green-100 text-green-800 border-green-200',
-    draft: 'bg-gray-100 text-gray-700 border-gray-200',
-    rejected: 'bg-red-100 text-red-800 border-red-200',
-    removed: 'bg-gray-200 text-gray-600 border-gray-300',
+    active: 'bg-accent-verified-bg text-accent-verified border-accent-verified/30',
+    draft: 'bg-surface-page text-text-secondary border-border-subtle',
+    rejected: 'bg-accent-danger-bg text-accent-danger border-accent-danger/30',
+    removed: 'bg-surface-page text-text-tertiary border-border-subtle',
   };
-  const cls = colors[status] ?? 'bg-gray-100 text-gray-700 border-gray-200';
+  const cls = colors[status] ?? 'bg-surface-page text-text-secondary border-border-subtle';
   return (
     <span className={`inline-block px-2 py-0.5 text-[10px] font-bold uppercase border rounded ${cls}`}>
       {status}

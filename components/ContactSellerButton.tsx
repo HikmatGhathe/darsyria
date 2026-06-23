@@ -75,7 +75,7 @@ export default function ContactSellerButton({
     return (
       <button
         disabled
-        className="w-full px-6 py-3 bg-gray-200 text-gray-400 text-sm font-medium rounded-lg cursor-not-allowed"
+        className="w-full px-6 py-3 bg-surface-page text-text-tertiary text-sm font-medium rounded-lg cursor-not-allowed"
       >
         ...
       </button>
@@ -87,7 +87,7 @@ export default function ContactSellerButton({
     return (
       <Link
         href={`/login?next=/properties/${propertyId}`}
-        className="block w-full px-6 py-3 bg-blue-600 text-white text-sm font-semibold rounded-lg hover:bg-blue-700 transition text-center"
+        className="block w-full px-6 py-3 bg-brand-navy text-white text-sm font-semibold rounded-lg hover:bg-brand-navy-hover transition-colors text-center"
       >
         {t('contactSellerSignedOut')}
       </Link>
@@ -99,7 +99,7 @@ export default function ContactSellerButton({
     return (
       <Link
         href={`/inbox/${existingConversation.id}`}
-        className="block w-full px-6 py-3 bg-blue-600 text-white text-sm font-semibold rounded-lg hover:bg-blue-700 transition text-center"
+        className="block w-full px-6 py-3 bg-brand-navy text-white text-sm font-semibold rounded-lg hover:bg-brand-navy-hover transition-colors text-center"
       >
         {t('openConversation')}
       </Link>
@@ -126,7 +126,7 @@ export default function ContactSellerButton({
     <>
       <button
         onClick={() => setModalOpen(true)}
-        className="w-full px-6 py-3 bg-blue-600 text-white text-sm font-semibold rounded-lg hover:bg-blue-700 transition"
+        className="w-full px-6 py-3 bg-brand-navy text-white text-sm font-semibold rounded-lg hover:bg-brand-navy-hover transition-colors"
       >
         {t('contactSeller')}
       </button>
@@ -137,13 +137,13 @@ export default function ContactSellerButton({
           onClick={() => !sending && setModalOpen(false)}
         >
           <div
-            className="bg-white rounded-2xl shadow-xl max-w-md w-full p-6"
+            className="bg-surface-card rounded-xl shadow-xl max-w-md w-full p-6"
             onClick={(e) => e.stopPropagation()}
           >
-            <h3 className="text-lg font-semibold text-gray-900 mb-1">
+            <h3 className="text-lg font-semibold text-text-primary mb-1">
               {t('contactModalTitle')}
             </h3>
-            <p className="text-sm text-gray-500 mb-4">
+            <p className="text-sm text-text-secondary mb-4">
               {t('contactModalSubject', { propertyTitle })}
             </p>
 
@@ -156,12 +156,12 @@ export default function ContactSellerButton({
               // eslint-disable-next-line jsx-a11y/no-autofocus
               autoFocus
               disabled={sending}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 resize-none disabled:bg-gray-50 disabled:cursor-not-allowed"
+              className="w-full px-3 py-2 bg-surface-card border border-border-subtle rounded-lg text-sm text-text-primary focus:outline-none focus:ring-1 focus:ring-brand-navy focus:border-brand-navy resize-none disabled:bg-surface-page disabled:cursor-not-allowed"
             />
 
             {error && (
-              <div className="mt-3 p-3 bg-red-50 border border-red-200 rounded-lg">
-                <p className="text-sm text-red-700">{error}</p>
+              <div className="mt-3 p-3 bg-accent-danger-bg border border-accent-danger/30 rounded-lg">
+                <p className="text-sm text-accent-danger">{error}</p>
               </div>
             )}
 
@@ -169,14 +169,14 @@ export default function ContactSellerButton({
               <button
                 onClick={() => setModalOpen(false)}
                 disabled={sending}
-                className="px-4 py-2 bg-white border border-gray-300 text-gray-700 text-sm font-medium rounded-lg hover:bg-gray-50 disabled:cursor-not-allowed transition"
+                className="px-4 py-2 bg-surface-card border border-border-subtle text-text-primary text-sm font-medium rounded-lg hover:bg-surface-page disabled:cursor-not-allowed transition-colors"
               >
                 {t('contactModalCancel')}
               </button>
               <button
                 onClick={handleSend}
                 disabled={!draft.trim() || sending}
-                className="px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 disabled:bg-gray-300 disabled:cursor-not-allowed transition"
+                className="px-4 py-2 bg-brand-navy text-white text-sm font-medium rounded-lg hover:bg-brand-navy-hover disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
               >
                 {sending ? t('contactModalSending') : t('contactModalSend')}
               </button>

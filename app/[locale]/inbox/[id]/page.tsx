@@ -166,12 +166,12 @@ export default function ThreadPage() {
       <main className="max-w-2xl mx-auto px-4 py-8">
         <Link
           href="/inbox"
-          className="text-sm text-blue-600 hover:underline mb-6 inline-block"
+          className="text-sm text-brand-navy hover:underline mb-6 inline-block"
         >
           ← {t('backToInbox')}
         </Link>
-        <div className="p-4 bg-red-50 border border-red-200 rounded-lg">
-          <p className="text-sm text-red-700">{loadError}</p>
+        <div className="p-4 bg-accent-danger-bg border border-accent-danger/30 rounded-lg">
+          <p className="text-sm text-accent-danger">{loadError}</p>
         </div>
       </main>
     );
@@ -180,7 +180,7 @@ export default function ThreadPage() {
   if (!conversation) {
     return (
       <main className="max-w-2xl mx-auto px-4 py-8">
-        <p className="text-sm text-gray-500">{t('loading')}</p>
+        <p className="text-sm text-text-secondary">{t('loading')}</p>
       </main>
     );
   }
@@ -200,20 +200,20 @@ export default function ThreadPage() {
       <div>
         <Link
           href="/inbox"
-          className="text-sm text-blue-600 hover:underline inline-flex items-center gap-1 mb-3"
+          className="text-sm text-brand-navy hover:underline inline-flex items-center gap-1 mb-3"
         >
           ← {t('backToInbox')}
         </Link>
-        <h1 className="text-xl font-bold text-gray-900 leading-snug">
+        <h1 className="text-xl font-semibold text-text-primary leading-snug">
           {conversation.property_title}
         </h1>
       </div>
 
       {/* Message list */}
-      <div className="bg-white border border-gray-200 rounded-xl overflow-hidden">
+      <div className="bg-surface-card border border-border-subtle rounded-xl overflow-hidden">
         <div className="overflow-y-auto max-h-[55vh] p-4 flex flex-col gap-3">
           {conversation.messages.length === 0 ? (
-            <p className="text-sm text-gray-400 text-center py-8">{t('noMessages')}</p>
+            <p className="text-sm text-text-tertiary text-center py-8">{t('noMessages')}</p>
           ) : (
             conversation.messages.map((msg) => {
               const isOwn = msg.sender_id === user?.id;
@@ -225,8 +225,8 @@ export default function ThreadPage() {
                   <div
                     className={`max-w-[75%] rounded-2xl px-4 py-2.5 text-sm ${
                       isOwn
-                        ? 'bg-blue-600 text-white rounded-br-none'
-                        : 'bg-gray-100 text-gray-900 rounded-bl-none'
+                        ? 'bg-brand-navy text-white rounded-br-none'
+                        : 'bg-surface-page text-text-primary rounded-bl-none'
                     }`}
                   >
                     <p className="whitespace-pre-wrap break-words leading-relaxed">
@@ -234,7 +234,7 @@ export default function ThreadPage() {
                     </p>
                     <p
                       className={`text-[10px] mt-1.5 ${
-                        isOwn ? 'text-blue-200 text-right' : 'text-gray-400'
+                        isOwn ? 'text-white/70 text-right' : 'text-text-tertiary'
                       }`}
                     >
                       {formatRelativeTime(msg.created_at, tInbox, locale)}
@@ -250,12 +250,12 @@ export default function ThreadPage() {
 
       {/* Contact reveal panel */}
       {conversation.both_revealed ? (
-        <div className="bg-green-50 border border-green-200 rounded-xl p-4">
-          <p className="text-sm font-semibold text-green-800 mb-1">
+        <div className="bg-accent-verified-bg border border-accent-verified/30 rounded-xl p-4">
+          <p className="text-sm font-semibold text-accent-verified mb-1">
             {t('revealDone')}
           </p>
           {theirPhone && (
-            <p className="text-sm text-green-700">
+            <p className="text-sm text-accent-verified">
               {t('theirPhone')}:{' '}
               <a
                 href={`tel:${theirPhone}`}
@@ -268,30 +268,30 @@ export default function ThreadPage() {
           )}
         </div>
       ) : (
-        <div className="bg-gray-50 border border-gray-200 rounded-xl p-4">
-          <p className="text-sm font-semibold text-gray-800 mb-1">
+        <div className="bg-surface-page border border-border-subtle rounded-xl p-4">
+          <p className="text-sm font-semibold text-text-primary mb-1">
             {t('revealTitle')}
           </p>
-          <p className="text-xs text-gray-600 mb-3">{t('revealBody')}</p>
+          <p className="text-xs text-text-secondary mb-3">{t('revealBody')}</p>
 
           {myRevealed ? (
-            <p className="text-xs text-amber-700 bg-amber-50 border border-amber-200 rounded-lg px-3 py-2">
+            <p className="text-xs text-accent-warning bg-accent-warning-bg border border-accent-warning/30 rounded-lg px-3 py-2">
               {t('revealPending')}
             </p>
           ) : user?.phone ? (
             <button
               onClick={handleReveal}
               disabled={revealing}
-              className="text-sm px-4 py-2 bg-gray-800 text-white rounded-lg hover:bg-gray-700 disabled:opacity-60 transition"
+              className="text-sm px-4 py-2 bg-brand-navy text-white rounded-lg hover:bg-brand-navy-hover disabled:opacity-60 transition-colors"
             >
               {revealing ? '…' : t('revealButton')}
             </button>
           ) : (
             <div className="flex items-center gap-3 flex-wrap">
-              <p className="text-xs text-gray-600">{t('revealNeedPhone')}</p>
+              <p className="text-xs text-text-secondary">{t('revealNeedPhone')}</p>
               <Link
                 href="/account"
-                className="text-xs text-blue-600 hover:underline font-medium"
+                className="text-xs text-brand-navy hover:underline font-medium"
               >
                 {t('goToProfile')}
               </Link>
@@ -301,9 +301,9 @@ export default function ThreadPage() {
       )}
 
       {/* Composer */}
-      <div className="bg-white border border-gray-200 rounded-xl p-4 flex flex-col gap-3">
+      <div className="bg-surface-card border border-border-subtle rounded-xl p-4 flex flex-col gap-3">
         {sendError && (
-          <p className="text-xs text-red-700">{sendError}</p>
+          <p className="text-xs text-accent-danger">{sendError}</p>
         )}
         <textarea
           value={draft}
@@ -311,16 +311,16 @@ export default function ThreadPage() {
           onKeyDown={handleKeyDown}
           placeholder={t('messagePlaceholder')}
           rows={3}
-          className="w-full resize-none rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+          className="w-full resize-none rounded-lg border border-border-subtle bg-surface-card px-3 py-2 text-sm text-text-primary focus:border-brand-navy focus:outline-none focus:ring-1 focus:ring-brand-navy"
         />
         <div className="flex items-center justify-between gap-3">
-          <p className="text-xs text-gray-400 hidden sm:block">
+          <p className="text-xs text-text-tertiary hidden sm:block">
             {t('ctrlEnterHint')}
           </p>
           <button
             onClick={handleSend}
             disabled={!draft.trim() || sending}
-            className="ms-auto px-5 py-2 bg-blue-600 text-white text-sm font-semibold rounded-lg hover:bg-blue-700 disabled:opacity-50 transition"
+            className="ms-auto px-5 py-2 bg-brand-navy text-white text-sm font-semibold rounded-lg hover:bg-brand-navy-hover disabled:opacity-50 transition-colors"
           >
             {sending ? t('sending') : t('send')}
           </button>

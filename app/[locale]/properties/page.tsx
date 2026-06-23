@@ -102,12 +102,12 @@ export default function PropertiesBrowsePage() {
     <div className="max-w-7xl mx-auto px-6 py-8">
       <header className="mb-8 flex flex-col md:flex-row md:items-end md:justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">{t('title')}</h1>
-          <p className="text-gray-600 max-w-2xl">{t('subtitle')}</p>
+          <h1 className="text-3xl font-semibold text-text-primary mb-2">{t('title')}</h1>
+          <p className="text-text-secondary max-w-2xl">{t('subtitle')}</p>
         </div>
         <Link
           href={`/${locale}/properties/new`}
-          className="px-5 py-2.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition font-medium whitespace-nowrap"
+          className="px-5 py-2.5 bg-brand-navy text-white rounded-lg hover:bg-brand-navy-hover transition-colors font-medium whitespace-nowrap"
         >
           + {t('createListingCTA')}
         </Link>
@@ -118,14 +118,14 @@ export default function PropertiesBrowsePage() {
         <aside className="lg:sticky lg:top-6 lg:self-start">
           <form
             onSubmit={applyFilters}
-            className="p-5 bg-gray-50 border border-gray-200 rounded-lg space-y-4"
+            className="p-5 bg-surface-card border border-border-subtle rounded-xl space-y-4"
           >
-            <h2 className="text-sm font-semibold text-gray-900 uppercase tracking-wide">
+            <h2 className="text-sm font-semibold text-text-primary uppercase tracking-wide">
               {t('filtersHeading')}
             </h2>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-text-secondary mb-1">
                 {t('labelCity')}
               </label>
               <input
@@ -133,18 +133,18 @@ export default function PropertiesBrowsePage() {
                 value={filters.city}
                 onChange={(e) => update('city', e.target.value)}
                 placeholder={t('placeholderCity')}
-                className="w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2 text-sm bg-surface-card border border-border-subtle rounded-lg text-text-primary focus:outline-none focus:ring-1 focus:ring-brand-navy focus:border-brand-navy"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-text-secondary mb-1">
                 {t('labelType')}
               </label>
               <select
                 value={filters.property_type}
                 onChange={(e) => update('property_type', e.target.value)}
-                className="w-full px-3 py-2 text-sm border border-gray-300 rounded-md bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2 text-sm bg-surface-card border border-border-subtle rounded-lg text-text-primary focus:outline-none focus:ring-1 focus:ring-brand-navy focus:border-brand-navy"
               >
                 <option value="">{t('anyType')}</option>
                 {PROPERTY_TYPES.map((type) => (
@@ -157,7 +157,7 @@ export default function PropertiesBrowsePage() {
 
             <div className="grid grid-cols-2 gap-2">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-medium text-text-secondary mb-1">
                   {t('labelMinPrice')}
                 </label>
                 <input
@@ -165,11 +165,11 @@ export default function PropertiesBrowsePage() {
                   value={filters.min_price}
                   onChange={(e) => update('min_price', e.target.value)}
                   min={0}
-                  className="w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-3 py-2 text-sm bg-surface-card border border-border-subtle rounded-lg text-text-primary focus:outline-none focus:ring-1 focus:ring-brand-navy focus:border-brand-navy"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-medium text-text-secondary mb-1">
                   {t('labelMaxPrice')}
                 </label>
                 <input
@@ -177,19 +177,19 @@ export default function PropertiesBrowsePage() {
                   value={filters.max_price}
                   onChange={(e) => update('max_price', e.target.value)}
                   min={0}
-                  className="w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-3 py-2 text-sm bg-surface-card border border-border-subtle rounded-lg text-text-primary focus:outline-none focus:ring-1 focus:ring-brand-navy focus:border-brand-navy"
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-text-secondary mb-1">
                 {t('labelRooms')}
               </label>
               <select
                 value={filters.rooms}
                 onChange={(e) => update('rooms', e.target.value)}
-                className="w-full px-3 py-2 text-sm border border-gray-300 rounded-md bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2 text-sm bg-surface-card border border-border-subtle rounded-lg text-text-primary focus:outline-none focus:ring-1 focus:ring-brand-navy focus:border-brand-navy"
               >
                 <option value="">{t('anyRooms')}</option>
                 {[1, 2, 3, 4, 5].map((n) => (
@@ -203,7 +203,7 @@ export default function PropertiesBrowsePage() {
             <div className="flex gap-2 pt-2">
               <button
                 type="submit"
-                className="flex-1 px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-md hover:bg-blue-700 transition"
+                className="flex-1 px-4 py-2 bg-brand-navy text-white text-sm font-medium rounded-lg hover:bg-brand-navy-hover transition-colors"
               >
                 {t('applyFilters')}
               </button>
@@ -211,7 +211,7 @@ export default function PropertiesBrowsePage() {
                 <button
                   type="button"
                   onClick={clearFilters}
-                  className="px-4 py-2 bg-white border border-gray-300 text-gray-700 text-sm font-medium rounded-md hover:bg-gray-50 transition"
+                  className="px-4 py-2 bg-surface-card border border-border-subtle text-text-primary text-sm font-medium rounded-lg hover:bg-surface-page transition-colors"
                 >
                   {t('clearFilters')}
                 </button>
@@ -223,20 +223,20 @@ export default function PropertiesBrowsePage() {
         {/* Results */}
         <main>
           {isLoading ? (
-            <div className="text-gray-500 py-12 text-center">Loading...</div>
+            <div className="text-text-secondary py-12 text-center">Loading...</div>
           ) : error ? (
-            <div className="p-4 bg-red-50 border border-red-200 rounded-lg text-red-700">
+            <div className="p-4 bg-accent-danger-bg border border-accent-danger/30 rounded-lg text-accent-danger">
               {error}
             </div>
           ) : properties.length === 0 ? (
-            <div className="text-center py-16 px-6 bg-gray-50 border border-gray-200 rounded-lg">
-              <p className="text-gray-700 mb-4">
+            <div className="text-center py-16 px-6 bg-surface-card border border-border-subtle rounded-xl">
+              <p className="text-text-secondary mb-4">
                 {hasFiltersApplied ? t('noResults') : t('emptyState')}
               </p>
               {!hasFiltersApplied && (
                 <Link
                   href={`/${locale}/properties/new`}
-                  className="inline-block px-5 py-2.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition font-medium"
+                  className="inline-block px-5 py-2.5 bg-brand-navy text-white rounded-lg hover:bg-brand-navy-hover transition-colors font-medium"
                 >
                   {t('createListingCTA')}
                 </Link>
@@ -244,7 +244,7 @@ export default function PropertiesBrowsePage() {
             </div>
           ) : (
             <>
-              <p className="text-sm text-gray-500 mb-4">
+              <p className="text-sm text-text-tertiary mb-4">
                 {t('resultCount', {count: properties.length})}
               </p>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -268,20 +268,21 @@ function PropertyCard({
   locale: string;
 }) {
   const t = useTranslations('PropertyDisplay');
+  const tVerify = useTranslations('Properties.verification');
   const docInfo = documentStatusInfo(property.document_status);
   const badgeColors = {
-    blue: 'bg-blue-50 text-blue-700 border-blue-200',
-    amber: 'bg-amber-50 text-amber-800 border-amber-200',
-    gray: 'bg-gray-50 text-gray-700 border-gray-200'
+    blue: 'bg-surface-card text-brand-navy border-brand-navy/30',
+    amber: 'bg-accent-warning-bg text-accent-warning border-accent-warning/30',
+    gray: 'bg-surface-card text-text-secondary border-border-subtle'
   };
 
   return (
     <Link
       href={`/${locale}/properties/${property.id}`}
-      className="block bg-white border border-gray-200 rounded-lg hover:border-gray-400 hover:shadow-sm transition overflow-hidden"
+      className="block bg-surface-card border border-border-subtle rounded-xl hover:border-border-strong hover:-translate-y-0.5 transition overflow-hidden"
     >
       {/* Cover image or placeholder */}
-      <div className="relative aspect-[4/3] bg-gray-100 overflow-hidden">
+      <div className="relative aspect-[4/3] bg-surface-page overflow-hidden">
         {property.cover_image_url ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img
@@ -291,7 +292,7 @@ function PropertyCard({
             loading="lazy"
           />
         ) : (
-          <div className="w-full h-full flex items-center justify-center text-gray-400">
+          <div className="w-full h-full flex items-center justify-center text-text-tertiary">
             <svg
               className="w-12 h-12"
               fill="none"
@@ -307,6 +308,15 @@ function PropertyCard({
             </svg>
           </div>
         )}
+
+        {/* Verified badge — browse endpoint only ever returns active (admin-approved) listings */}
+        <span className="absolute top-2 start-2 inline-flex items-center gap-1 px-2 py-0.5 text-[11px] font-medium text-white bg-accent-verified rounded-full">
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <polyline points="20 6 9 17 4 12" />
+          </svg>
+          {tVerify('verified')}
+        </span>
+
         <span
           className={`absolute top-2 end-2 inline-block px-2 py-0.5 text-xs font-medium border rounded-full backdrop-blur-sm bg-opacity-90 ${badgeColors[docInfo.color]}`}
         >
@@ -316,17 +326,21 @@ function PropertyCard({
 
       {/* Card body */}
       <div className="p-4">
-        <h3 className="text-base font-semibold text-gray-900 line-clamp-2 mb-2">
+        <h3 className="text-base font-semibold text-text-primary line-clamp-2 mb-2">
           {property.title}
         </h3>
-        <p className="text-sm text-gray-600 mb-3">
+        <p className="text-sm text-text-secondary mb-3 flex items-center gap-1">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="shrink-0" aria-hidden="true">
+            <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
+            <circle cx="12" cy="10" r="3" />
+          </svg>
           {formatLocation(property.city, property.neighborhood, locale)}
         </p>
         <div className="flex items-center justify-between">
-          <span className="text-lg font-bold text-gray-900">
-            {formatPrice(property.price_amount, property.price_currency, locale)}
+          <span className="text-lg font-semibold text-text-primary">
+            {formatPrice(property.price_amount, locale)}
           </span>
-          <span className="text-xs text-gray-500">
+          <span className="text-xs text-text-tertiary">
             {t(propertyTypeKey(property.property_type) as Parameters<typeof t>[0])}
             {property.rooms != null && ` · ${t('rooms', {count: property.rooms})}`}
             {property.area_sqm != null && ` · ${t('areaSqm', {value: property.area_sqm})}`}

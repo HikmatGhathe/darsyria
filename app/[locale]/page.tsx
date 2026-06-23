@@ -7,27 +7,27 @@ export default function HomePage() {
   return (
     <>
       {/* Hero */}
-      <section className="relative overflow-hidden bg-gradient-to-b from-blue-50 to-white">
+      <section className="relative overflow-hidden bg-surface-page">
         <div className="max-w-5xl mx-auto px-6 py-24 md:py-32 text-center">
-          <h1 className="text-5xl md:text-6xl font-bold mb-6 text-gray-900">
+          <h1 className="text-5xl md:text-6xl font-semibold mb-6 text-text-primary">
             {t('hero.title')}
           </h1>
-          <p className="text-xl md:text-2xl text-gray-700 mb-4 font-medium">
+          <p className="text-xl md:text-2xl text-text-secondary mb-4 font-medium">
             {t('hero.tagline')}
           </p>
-          <p className="text-base md:text-lg text-gray-600 max-w-2xl mx-auto mb-10">
+          <p className="text-base md:text-lg text-text-secondary max-w-2xl mx-auto mb-10">
             {t('hero.description')}
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Link
               href="/properties"
-              className="px-7 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition font-medium"
+              className="px-7 py-3 bg-brand-navy text-white rounded-lg hover:bg-brand-navy-hover transition-colors font-medium"
             >
               {t('hero.ctaPrimary')}
             </Link>
             <Link
               href="/assistant"
-              className="px-7 py-3 border border-gray-300 bg-white rounded-lg hover:bg-gray-50 transition font-medium"
+              className="px-7 py-3 border border-border-subtle bg-surface-card text-text-primary rounded-lg hover:bg-surface-page transition-colors font-medium"
             >
               {t('hero.ctaSecondary')}
             </Link>
@@ -36,11 +36,11 @@ export default function HomePage() {
       </section>
 
       {/* Three pillars */}
-      <section className="py-20 bg-white">
+      <section className="py-20 bg-surface-card">
         <div className="max-w-6xl mx-auto px-6">
           <div className="text-center mb-14">
-            <h2 className="text-3xl md:text-4xl font-bold mb-3">{t('pillars.heading')}</h2>
-            <p className="text-lg text-gray-600">{t('pillars.subheading')}</p>
+            <h2 className="text-3xl md:text-4xl font-semibold mb-3 text-text-primary">{t('pillars.heading')}</h2>
+            <p className="text-lg text-text-secondary">{t('pillars.subheading')}</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -70,13 +70,13 @@ export default function HomePage() {
       </section>
 
       {/* Trust / honesty section */}
-      <section className="py-20 bg-gray-50">
+      <section className="py-20 bg-surface-page">
         <div className="max-w-3xl mx-auto px-6 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-5">{t('trust.heading')}</h2>
-          <p className="text-lg text-gray-700 leading-relaxed mb-8">{t('trust.description')}</p>
+          <h2 className="text-3xl md:text-4xl font-semibold mb-5 text-text-primary">{t('trust.heading')}</h2>
+          <p className="text-lg text-text-secondary leading-relaxed mb-8">{t('trust.description')}</p>
           <Link
             href="/knowledge/property-fraud-risks"
-            className="inline-block px-6 py-3 border border-gray-300 bg-white rounded-lg hover:bg-gray-100 transition font-medium"
+            className="inline-block px-6 py-3 border border-border-subtle bg-surface-card text-text-primary rounded-lg hover:bg-surface-page transition-colors font-medium"
           >
             {t('trust.cta')}
           </Link>
@@ -84,20 +84,20 @@ export default function HomePage() {
       </section>
 
       {/* Final CTA */}
-      <section className="py-20 bg-white">
+      <section className="py-20 bg-surface-card">
         <div className="max-w-3xl mx-auto px-6 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-3">{t('footerCta.heading')}</h2>
-          <p className="text-lg text-gray-600 mb-8">{t('footerCta.description')}</p>
+          <h2 className="text-3xl md:text-4xl font-semibold mb-3 text-text-primary">{t('footerCta.heading')}</h2>
+          <p className="text-lg text-text-secondary mb-8">{t('footerCta.description')}</p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Link
               href="/properties"
-              className="px-7 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition font-medium"
+              className="px-7 py-3 bg-brand-navy text-white rounded-lg hover:bg-brand-navy-hover transition-colors font-medium"
             >
               {t('footerCta.ctaPrimary')}
             </Link>
             <Link
               href="/assistant"
-              className="px-7 py-3 border border-gray-300 rounded-lg hover:bg-gray-50 transition font-medium"
+              className="px-7 py-3 border border-border-subtle text-text-primary rounded-lg hover:bg-surface-page transition-colors font-medium"
             >
               {t('footerCta.ctaSecondary')}
             </Link>
@@ -122,11 +122,11 @@ function PillarCard({
   href: string;
 }) {
   return (
-    <div className="p-8 bg-white border border-gray-200 rounded-lg hover:shadow-md hover:border-gray-300 transition flex flex-col">
+    <div className="p-8 bg-surface-card border border-border-subtle rounded-xl hover:border-border-strong transition flex flex-col">
       <div className="text-4xl mb-4">{icon}</div>
-      <h3 className="text-xl font-semibold mb-3">{title}</h3>
-      <p className="text-gray-600 leading-relaxed mb-6 flex-1">{description}</p>
-      <Link href={href} className="text-blue-600 font-medium hover:underline text-sm">
+      <h3 className="text-xl font-semibold mb-3 text-text-primary">{title}</h3>
+      <p className="text-text-secondary leading-relaxed mb-6 flex-1">{description}</p>
+      <Link href={href} className="text-brand-navy font-medium hover:underline text-sm">
         {cta} →
       </Link>
     </div>

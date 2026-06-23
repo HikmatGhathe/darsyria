@@ -5,6 +5,7 @@ import {useTranslations} from 'next-intl';
 import {Link} from '@/i18n/navigation';
 import {useAuth} from './AuthProvider';
 import LanguageSwitcher from './LanguageSwitcher';
+import ThemeToggle from './ThemeToggle';
 import {listConversations} from '@/lib/conversations';
 
 const UNREAD_POLL_INTERVAL_MS = 30_000;
@@ -56,20 +57,26 @@ export default function Header() {
   }, [user]);
 
   return (
-    <header className="border-b border-gray-200 bg-white">
+    <header className="border-b border-border-subtle bg-surface-card">
       <div className="max-w-6xl mx-auto px-6 py-4 flex flex-wrap items-center justify-between gap-4">
-        <Link href="/" className="text-xl font-bold text-gray-900">
+        <Link href="/" className="flex items-center gap-2 text-xl font-semibold text-text-primary">
+          <span className="flex h-6 w-6 items-center justify-center rounded-md bg-brand-navy text-white">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <path d="M3 9.5 12 3l9 6.5" />
+              <path d="M5 10v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V10" />
+            </svg>
+          </span>
           DarSyria
         </Link>
         <nav className="order-3 flex w-full flex-wrap items-center justify-center gap-4 md:order-none md:w-auto md:gap-6">
-          <Link href="/" className="text-gray-700 hover:text-gray-900">{t('home')}</Link>
-          <Link href="/properties" className="text-gray-700 hover:text-gray-900">{t('properties')}</Link>
-          <Link href="/knowledge" className="text-gray-700 hover:text-gray-900">{t('knowledgeBase')}</Link>
-          <Link href="/assistant" className="text-gray-700 hover:text-gray-900">{t('aiAssistant')}</Link>
+          <Link href="/" className="text-text-secondary hover:text-text-primary">{t('home')}</Link>
+          <Link href="/properties" className="text-text-secondary hover:text-text-primary">{t('properties')}</Link>
+          <Link href="/knowledge" className="text-text-secondary hover:text-text-primary">{t('knowledgeBase')}</Link>
+          <Link href="/assistant" className="text-text-secondary hover:text-text-primary">{t('aiAssistant')}</Link>
           {user && (
             <Link
               href="/inbox"
-              className="relative text-gray-700 hover:text-gray-900"
+              className="relative text-text-secondary hover:text-text-primary"
               aria-label={
                 unreadCount > 0
                   ? tInbox('unreadBadge', {count: unreadCount})
@@ -79,7 +86,7 @@ export default function Header() {
               {tInbox('navLink')}
               {unreadCount > 0 && (
                 <span
-                  className="absolute -top-2 -end-3 inline-flex items-center justify-center min-w-[18px] h-[18px] px-1 text-[10px] font-bold text-white bg-blue-600 rounded-full"
+                  className="absolute -top-2 -end-3 inline-flex items-center justify-center min-w-[18px] h-[18px] px-1 text-[10px] font-bold text-white bg-brand-navy rounded-full"
                   aria-hidden="true"
                 >
                   {unreadCount > 9 ? '9+' : unreadCount}
@@ -90,30 +97,31 @@ export default function Header() {
           {user?.is_admin && (
             <Link
               href="/admin"
-              className="text-gray-700 hover:text-gray-900 font-medium"
+              className="text-text-secondary hover:text-text-primary font-medium"
             >
               {tAdmin('navLink')}
             </Link>
           )}
         </nav>
-        <div className="flex min-w-0 items-center gap-4">
+        <div className="flex min-w-0 items-center gap-3">
           {!isLoading && (user ? (
             <div className="flex min-w-0 items-center gap-3">
               <Link
                 href="/account"
-                className="max-w-[180px] truncate text-sm text-gray-700 hover:text-gray-900 hover:underline"
+                className="max-w-[180px] truncate text-sm text-text-secondary hover:text-text-primary hover:underline"
               >
                 {user.full_name ?? user.email}
               </Link>
-              <button onClick={logout} className="text-sm text-gray-600 underline hover:text-gray-900">
+              <button onClick={logout} className="text-sm text-text-secondary underline hover:text-text-primary">
                 {tAuth('signOut')}
               </button>
             </div>
           ) : (
-            <Link href="/login" className="text-sm px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+            <Link href="/login" className="text-sm px-4 py-2 bg-brand-navy text-white rounded-lg hover:bg-brand-navy-hover transition-colors">
               {tAuth('signIn')}
             </Link>
           ))}
+          <ThemeToggle />
           <LanguageSwitcher />
         </div>
       </div>

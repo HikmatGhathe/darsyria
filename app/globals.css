@@ -1,9 +1,48 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --color-brand-navy: #0A2540;
+  --color-brand-navy-hover: #0D2E4F;
+  --color-text-primary: #0A2540;
+  --color-text-secondary: #5B6B82;
+  --color-text-tertiary: #8A99AC;
+  --color-surface-page: #F7F9FC;
+  --color-surface-card: #FFFFFF;
+  --color-border-subtle: #E3E8EF;
+  --color-border-strong: #CBD5E1;
+  --color-accent-verified: #1D9E75;
+  --color-accent-verified-bg: #D6EAE0;
+  --color-accent-danger: #E24B4A;
+  --color-accent-danger-bg: #FBE6E6;
+  --color-accent-warning: #BA7517;
+  --color-accent-warning-bg: #F6E8D2;
+}
+
+.dark {
+  --color-brand-navy: #4D8FD6;
+  --color-brand-navy-hover: #6AA3E0;
+  --color-text-primary: #E8EDF4;
+  --color-text-secondary: #A0AEC0;
+  --color-text-tertiary: #6B7A8D;
+  --color-surface-page: #0B1220;
+  --color-surface-card: #131C2E;
+  --color-border-subtle: #243248;
+  --color-border-strong: #35455F;
+  --color-accent-verified: #2FBB8C;
+  --color-accent-verified-bg: #16332A;
+  --color-accent-danger: #F0726F;
+  --color-accent-danger-bg: #3A1F1F;
+  --color-accent-warning: #E0A14A;
+  --color-accent-warning-bg: #3A2E18;
+}
+
 body {
-  background: #ffffff;
-  color: #171717;
+  background: var(--color-surface-page);
+  color: var(--color-text-primary);
   font-family: system-ui, -apple-system, "Segoe UI", Tahoma, sans-serif;
+  transition: background-color 0.15s ease, color 0.15s ease;
 }
 
 /* Better Arabic font rendering when in RTL mode */

@@ -57,18 +57,18 @@ export default function VerifyPage() {
 
   return (
     <div className="max-w-md mx-auto px-6 py-24 text-center">
-      {status === 'verifying' && <p className="text-gray-600">{t('verifying')}</p>}
+      {status === 'verifying' && <p className="text-text-secondary">{t('verifying')}</p>}
       {status === 'success' && (
-        <p className="text-green-700 font-medium">{t('success')}</p>
+        <p className="text-accent-verified font-medium">{t('success')}</p>
       )}
       {(status === 'error_invalid' || status === 'error_generic') && (
         <div className="space-y-4">
-          <p className="text-red-700">
+          <p className="text-accent-danger">
             {status === 'error_invalid' ? t('errorInvalid') : t('errorGeneric')}
           </p>
           <Link
             href="/login"
-            className="inline-block px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
+            className="inline-block px-6 py-2 bg-brand-navy text-white rounded-lg hover:bg-brand-navy-hover transition-colors"
           >
             {t('backToLogin')}
           </Link>

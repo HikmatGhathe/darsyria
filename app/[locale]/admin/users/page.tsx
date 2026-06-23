@@ -20,7 +20,7 @@ import {
 function RoleBadge({ isAdmin, t }: { isAdmin: boolean; t: (k: string) => string }) {
   if (!isAdmin) return null;
   return (
-    <span className="inline-block rounded bg-purple-100 px-1.5 py-0.5 text-xs font-semibold text-purple-800">
+    <span className="inline-block rounded bg-brand-navy/10 px-1.5 py-0.5 text-xs font-semibold text-brand-navy">
       {t('badgeAdmin')}
     </span>
   );
@@ -35,13 +35,13 @@ function StatusBadge({
 }) {
   if (isBanned) {
     return (
-      <span className="inline-block rounded bg-red-100 px-1.5 py-0.5 text-xs font-semibold text-red-800">
+      <span className="inline-block rounded bg-accent-danger-bg px-1.5 py-0.5 text-xs font-semibold text-accent-danger">
         {t('badgeBanned')}
       </span>
     );
   }
   return (
-    <span className="inline-block rounded bg-green-100 px-1.5 py-0.5 text-xs font-semibold text-green-800">
+    <span className="inline-block rounded bg-accent-verified-bg px-1.5 py-0.5 text-xs font-semibold text-accent-verified">
       {t('badgeActive')}
     </span>
   );
@@ -79,38 +79,38 @@ function BanModal({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4">
-      <div className="w-full max-w-md rounded-xl bg-white p-6 shadow-xl">
-        <h2 className="text-lg font-semibold text-gray-900">{t('banModalTitle')}</h2>
-        <p className="mt-1 text-sm text-gray-500">{t('banModalSubject', { email: user.email })}</p>
+      <div className="w-full max-w-md rounded-xl bg-surface-card p-6 shadow-xl">
+        <h2 className="text-lg font-semibold text-text-primary">{t('banModalTitle')}</h2>
+        <p className="mt-1 text-sm text-text-secondary">{t('banModalSubject', { email: user.email })}</p>
 
         <div className="mt-4">
-          <label className="block text-sm font-medium text-gray-700">{t('banModalReason')}</label>
+          <label className="block text-sm font-medium text-text-secondary">{t('banModalReason')}</label>
           <textarea
             rows={4}
             value={reason}
             onChange={(e) => setReason(e.target.value)}
             placeholder={t('banModalReasonPlaceholder')}
-            className="mt-1 w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-red-500 focus:outline-none focus:ring-1 focus:ring-red-500"
+            className="mt-1 w-full rounded-lg border border-border-subtle bg-surface-card px-3 py-2 text-sm text-text-primary focus:border-accent-danger focus:outline-none focus:ring-1 focus:ring-accent-danger"
           />
           {reason.trim().length < 10 && reason.length > 0 && (
-            <p className="mt-1 text-xs text-red-600">{t('banModalMinChars')}</p>
+            <p className="mt-1 text-xs text-accent-danger">{t('banModalMinChars')}</p>
           )}
         </div>
 
-        {error && <p className="mt-3 text-sm text-red-600">{error}</p>}
+        {error && <p className="mt-3 text-sm text-accent-danger">{error}</p>}
 
         <div className="mt-5 flex justify-end gap-3">
           <button
             onClick={onClose}
             disabled={busy}
-            className="rounded-lg border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:opacity-50"
+            className="rounded-lg border border-border-subtle px-4 py-2 text-sm font-medium text-text-primary hover:bg-surface-page disabled:opacity-50 transition-colors"
           >
             {t('banModalCancel')}
           </button>
           <button
             onClick={handleBan}
             disabled={busy || reason.trim().length < 10}
-            className="rounded-lg bg-red-600 px-4 py-2 text-sm font-medium text-white hover:bg-red-700 disabled:opacity-50"
+            className="rounded-lg bg-accent-danger px-4 py-2 text-sm font-medium text-white hover:opacity-90 disabled:opacity-50 transition-opacity"
           >
             {busy ? t('banModalSending') : t('banModalSend')}
           </button>
@@ -149,22 +149,22 @@ function ConfirmModal({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4">
-      <div className="w-full max-w-sm rounded-xl bg-white p-6 shadow-xl">
-        <h2 className="text-lg font-semibold text-gray-900">{title}</h2>
-        <p className="mt-2 text-sm text-gray-600">{body}</p>
+      <div className="w-full max-w-sm rounded-xl bg-surface-card p-6 shadow-xl">
+        <h2 className="text-lg font-semibold text-text-primary">{title}</h2>
+        <p className="mt-2 text-sm text-text-secondary">{body}</p>
         <div className="mt-5 flex justify-end gap-3">
           <button
             onClick={onClose}
             disabled={busy}
-            className="rounded-lg border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:opacity-50"
+            className="rounded-lg border border-border-subtle px-4 py-2 text-sm font-medium text-text-primary hover:bg-surface-page disabled:opacity-50 transition-colors"
           >
             {cancelLabel}
           </button>
           <button
             onClick={handle}
             disabled={busy}
-            className={`rounded-lg px-4 py-2 text-sm font-medium text-white disabled:opacity-50 ${
-              danger ? 'bg-red-600 hover:bg-red-700' : 'bg-indigo-600 hover:bg-indigo-700'
+            className={`rounded-lg px-4 py-2 text-sm font-medium text-white disabled:opacity-50 transition-opacity hover:opacity-90 ${
+              danger ? 'bg-accent-danger' : 'bg-brand-navy'
             }`}
           >
             {confirmLabel}
@@ -205,23 +205,23 @@ function UserRow({
   }
 
   return (
-    <tr className="border-b border-gray-100 hover:bg-gray-50">
+    <tr className="border-b border-border-subtle hover:bg-surface-page">
       {/* User */}
       <td className="px-4 py-3">
         <div className="flex flex-col gap-0.5">
           <div className="flex items-center gap-1.5">
-            <span className="text-sm font-medium text-gray-900">
+            <span className="text-sm font-medium text-text-primary">
               {user.full_name || '—'}
             </span>
             {isSelf && (
-              <span className="inline-block rounded bg-blue-100 px-1.5 py-0.5 text-xs font-bold text-blue-800">
+              <span className="inline-block rounded border border-border-strong px-1.5 py-0.5 text-xs font-bold text-text-secondary">
                 {t('badgeYou')}
               </span>
             )}
           </div>
-          <span className="text-xs text-gray-500">{user.email}</span>
+          <span className="text-xs text-text-tertiary">{user.email}</span>
           {isBanned && user.ban_reason && (
-            <span className="mt-0.5 text-xs text-red-600 italic">
+            <span className="mt-0.5 text-xs text-accent-danger italic">
               {user.ban_reason}
             </span>
           )}
@@ -239,10 +239,10 @@ function UserRow({
       </td>
 
       {/* Joined */}
-      <td className="px-4 py-3 text-sm text-gray-600">{fmt(user.created_at)}</td>
+      <td className="px-4 py-3 text-sm text-text-secondary">{fmt(user.created_at)}</td>
 
       {/* Listings */}
-      <td className="px-4 py-3 text-sm text-gray-600">{user.active_listings_count}</td>
+      <td className="px-4 py-3 text-sm text-text-secondary">{user.active_listings_count}</td>
 
       {/* Actions */}
       <td className="px-4 py-3">
@@ -252,7 +252,7 @@ function UserRow({
             <button
               onClick={() => onUnban(user)}
               disabled={busy || isSelf}
-              className="rounded bg-green-600 px-2.5 py-1 text-xs font-medium text-white hover:bg-green-700 disabled:opacity-40"
+              className="rounded bg-accent-verified px-2.5 py-1 text-xs font-medium text-white hover:opacity-90 disabled:opacity-40 transition-opacity"
             >
               {t('actionUnban')}
             </button>
@@ -260,7 +260,7 @@ function UserRow({
             <button
               onClick={() => onBanClick(user)}
               disabled={busy || isSelf}
-              className="rounded bg-red-600 px-2.5 py-1 text-xs font-medium text-white hover:bg-red-700 disabled:opacity-40"
+              className="rounded bg-accent-danger px-2.5 py-1 text-xs font-medium text-white hover:opacity-90 disabled:opacity-40 transition-opacity"
             >
               {t('actionBan')}
             </button>
@@ -271,7 +271,7 @@ function UserRow({
             <button
               onClick={() => onDemoteClick(user)}
               disabled={busy || isSelf}
-              className="rounded bg-orange-500 px-2.5 py-1 text-xs font-medium text-white hover:bg-orange-600 disabled:opacity-40"
+              className="rounded bg-accent-warning px-2.5 py-1 text-xs font-medium text-white hover:opacity-90 disabled:opacity-40 transition-opacity"
             >
               {t('actionDemote')}
             </button>
@@ -279,7 +279,7 @@ function UserRow({
             <button
               onClick={() => onPromoteClick(user)}
               disabled={busy || isSelf || isBanned}
-              className="rounded bg-indigo-600 px-2.5 py-1 text-xs font-medium text-white hover:bg-indigo-700 disabled:opacity-40"
+              className="rounded bg-brand-navy px-2.5 py-1 text-xs font-medium text-white hover:bg-brand-navy-hover disabled:opacity-40 transition-colors"
             >
               {t('actionPromote')}
             </button>
@@ -438,13 +438,13 @@ export default function AdminUsersPage() {
 
   // ── Guards ────────────────────────────────────────────────────────────────
   if (authLoading) {
-    return <p className="p-8 text-center text-gray-500">{tAdmin('loading')}</p>;
+    return <p className="p-8 text-center text-text-secondary">{tAdmin('loading')}</p>;
   }
   if (!user) return null;
   if (!user.is_admin) {
     return (
       <div className="mx-auto max-w-xl px-4 py-16 text-center">
-        <p className="text-gray-600">{tAdmin('accessDenied')}</p>
+        <p className="text-text-secondary">{tAdmin('accessDenied')}</p>
       </div>
     );
   }
@@ -457,15 +457,15 @@ export default function AdminUsersPage() {
     <div className="mx-auto max-w-7xl px-4 py-8" dir={dir}>
       {/* Header */}
       <div className="mb-6">
-        <div className="flex items-center gap-2 text-sm text-gray-500 mb-2">
-          <Link href="/admin" className="hover:text-gray-700">
+        <div className="flex items-center gap-2 text-sm text-text-tertiary mb-2">
+          <Link href="/admin" className="hover:text-text-primary">
             {tAdmin('pageTitle')}
           </Link>
           <span>/</span>
           <span>{t('pageTitle')}</span>
         </div>
-        <h1 className="text-2xl font-bold text-gray-900">{t('pageTitle')}</h1>
-        <p className="mt-1 text-sm text-gray-500">{t('subtitle')}</p>
+        <h1 className="text-2xl font-semibold text-text-primary">{t('pageTitle')}</h1>
+        <p className="mt-1 text-sm text-text-secondary">{t('subtitle')}</p>
       </div>
 
       {/* Filter bar */}
@@ -475,26 +475,26 @@ export default function AdminUsersPage() {
           value={search}
           onChange={(e) => handleSearchChange(e.target.value)}
           placeholder={t('filterSearchPlaceholder')}
-          className="rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 w-64"
+          className="rounded-lg border border-border-subtle bg-surface-card px-3 py-2 text-sm text-text-primary focus:border-brand-navy focus:outline-none focus:ring-1 focus:ring-brand-navy w-64"
           aria-label={t('filterSearch')}
         />
 
-        <label className="flex items-center gap-2 text-sm text-gray-700 cursor-pointer">
+        <label className="flex items-center gap-2 text-sm text-text-secondary cursor-pointer">
           <input
             type="checkbox"
             checked={bannedOnly}
             onChange={(e) => handleFilterChange(e.target.checked, adminsOnly)}
-            className="rounded border-gray-300 text-red-600 focus:ring-red-500"
+            className="rounded border-border-subtle text-accent-danger focus:ring-accent-danger"
           />
           {t('filterBannedOnly')}
         </label>
 
-        <label className="flex items-center gap-2 text-sm text-gray-700 cursor-pointer">
+        <label className="flex items-center gap-2 text-sm text-text-secondary cursor-pointer">
           <input
             type="checkbox"
             checked={adminsOnly}
             onChange={(e) => handleFilterChange(bannedOnly, e.target.checked)}
-            className="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+            className="rounded border-border-subtle text-brand-navy focus:ring-brand-navy"
           />
           {t('filterAdminsOnly')}
         </label>
@@ -502,15 +502,15 @@ export default function AdminUsersPage() {
 
       {/* Action error */}
       {actionError && (
-        <div className="mb-4 rounded-lg bg-red-50 border border-red-200 px-4 py-3 text-sm text-red-700">
+        <div className="mb-4 rounded-lg bg-accent-danger-bg border border-accent-danger/30 px-4 py-3 text-sm text-accent-danger">
           {actionError}
         </div>
       )}
 
       {/* Table */}
-      <div className="overflow-x-auto rounded-xl border border-gray-200 bg-white shadow-sm">
+      <div className="overflow-x-auto rounded-xl border border-border-subtle bg-surface-card shadow-sm">
         <table className="min-w-full text-left">
-          <thead className="bg-gray-50 text-xs font-semibold uppercase tracking-wide text-gray-500">
+          <thead className="bg-surface-page text-xs font-semibold uppercase tracking-wide text-text-secondary">
             <tr>
               <th className="px-4 py-3">{t('colUser')}</th>
               <th className="px-4 py-3">{t('colRole')}</th>
@@ -523,19 +523,19 @@ export default function AdminUsersPage() {
           <tbody>
             {loading ? (
               <tr>
-                <td colSpan={6} className="px-4 py-12 text-center text-sm text-gray-500">
+                <td colSpan={6} className="px-4 py-12 text-center text-sm text-text-secondary">
                   {t('loading')}
                 </td>
               </tr>
             ) : loadError ? (
               <tr>
-                <td colSpan={6} className="px-4 py-12 text-center text-sm text-red-600">
+                <td colSpan={6} className="px-4 py-12 text-center text-sm text-accent-danger">
                   {loadError}
                 </td>
               </tr>
             ) : users.length === 0 ? (
               <tr>
-                <td colSpan={6} className="px-4 py-12 text-center text-sm text-gray-500">
+                <td colSpan={6} className="px-4 py-12 text-center text-sm text-text-secondary">
                   {t('empty')}
                 </td>
               </tr>
@@ -560,20 +560,20 @@ export default function AdminUsersPage() {
 
       {/* Pagination */}
       {users.length > 0 && (
-        <div className="mt-4 flex items-center justify-between text-sm text-gray-600">
+        <div className="mt-4 flex items-center justify-between text-sm text-text-secondary">
           <span>{t('showingPage', { start: String(start), end: String(end) })}</span>
           <div className="flex gap-2">
             <button
               onClick={() => handlePageChange(Math.max(0, offset - PAGE_SIZE))}
               disabled={offset === 0}
-              className="rounded border border-gray-300 px-3 py-1 hover:bg-gray-50 disabled:opacity-40"
+              className="rounded border border-border-subtle px-3 py-1 hover:bg-surface-page disabled:opacity-40 transition-colors"
             >
               {t('previous')}
             </button>
             <button
               onClick={() => handlePageChange(offset + PAGE_SIZE)}
               disabled={users.length < PAGE_SIZE}
-              className="rounded border border-gray-300 px-3 py-1 hover:bg-gray-50 disabled:opacity-40"
+              className="rounded border border-border-subtle px-3 py-1 hover:bg-surface-page disabled:opacity-40 transition-colors"
             >
               {t('next')}
             </button>

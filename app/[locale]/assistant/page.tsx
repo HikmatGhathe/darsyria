@@ -81,21 +81,21 @@ export default function AssistantPage() {
   return (
     <div className="max-w-3xl mx-auto px-6 py-8 flex flex-col h-[calc(100vh-200px)]">
       <header className="mb-6">
-        <h1 className="text-3xl font-bold mb-2">{t('title')}</h1>
-        <p className="text-gray-600">{t('subtitle')}</p>
+        <h1 className="text-3xl font-semibold mb-2 text-text-primary">{t('title')}</h1>
+        <p className="text-text-secondary">{t('subtitle')}</p>
       </header>
 
       <div className="flex-1 overflow-y-auto space-y-4 mb-4 pr-2">
         {messages.length === 0 ? (
           <div className="text-center py-12">
-            <p className="text-gray-500 mb-6">{t('emptyState')}</p>
-            <p className="text-sm font-semibold text-gray-700 mb-3">{t('exampleHeading')}</p>
+            <p className="text-text-secondary mb-6">{t('emptyState')}</p>
+            <p className="text-sm font-semibold text-text-primary mb-3">{t('exampleHeading')}</p>
             <div className="flex flex-col gap-2 max-w-md mx-auto">
               {exampleKeys.map((key) => (
                 <button
                   key={key}
                   onClick={() => handleSend(t(`examples.${key}`))}
-                  className="text-sm text-start px-4 py-2 border border-gray-200 rounded-lg hover:border-gray-400 hover:bg-gray-50 transition"
+                  className="text-sm text-start px-4 py-2 border border-border-subtle rounded-lg hover:border-border-strong hover:bg-surface-page transition-colors"
                 >
                   {t(`examples.${key}`)}
                 </button>
@@ -111,8 +111,8 @@ export default function AssistantPage() {
               <div
                 className={`max-w-[80%] px-4 py-3 rounded-2xl ${
                   msg.role === 'user'
-                    ? 'bg-blue-600 text-white'
-                    : 'bg-gray-100 text-gray-900'
+                    ? 'bg-brand-navy text-white'
+                    : 'bg-surface-page text-text-primary'
                 }`}
               >
                 <p className="text-sm leading-relaxed whitespace-pre-wrap">{msg.content}</p>
@@ -123,22 +123,22 @@ export default function AssistantPage() {
 
         {isLoading && (
           <div className="flex justify-start">
-            <div className="bg-gray-100 px-4 py-3 rounded-2xl">
-              <p className="text-sm text-gray-500 italic">{t('thinking')}</p>
+            <div className="bg-surface-page px-4 py-3 rounded-2xl">
+              <p className="text-sm text-text-tertiary italic">{t('thinking')}</p>
             </div>
           </div>
         )}
 
         {error && (
           <div className="flex justify-center">
-            <p className="text-sm text-red-600">{error}</p>
+            <p className="text-sm text-accent-danger">{error}</p>
           </div>
         )}
 
         <div ref={messagesEndRef} />
       </div>
 
-      <div className="border-t border-gray-200 pt-4">
+      <div className="border-t border-border-subtle pt-4">
         <div className="flex gap-2">
           <textarea
             value={input}
@@ -146,18 +146,18 @@ export default function AssistantPage() {
             onKeyDown={handleKeyDown}
             placeholder={t('placeholder')}
             rows={2}
-            className="flex-1 px-4 py-2 border border-gray-300 rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="flex-1 px-4 py-2 bg-surface-card border border-border-subtle rounded-lg text-text-primary resize-none focus:outline-none focus:ring-1 focus:ring-brand-navy focus:border-brand-navy"
             disabled={isLoading}
           />
           <button
             onClick={() => handleSend()}
             disabled={!input.trim() || isLoading}
-            className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:bg-gray-300 disabled:cursor-not-allowed transition"
+            className="px-6 py-2 bg-brand-navy text-white rounded-lg hover:bg-brand-navy-hover disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
           >
             {t('send')}
           </button>
         </div>
-        <p className="text-xs text-gray-500 mt-3 text-center">{t('disclaimer')}</p>
+        <p className="text-xs text-text-tertiary mt-3 text-center">{t('disclaimer')}</p>
       </div>
     </div>
   );

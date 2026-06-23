@@ -48,8 +48,8 @@ export default function InboxPage() {
   if (conversations === null && !error) {
     return (
       <main className="max-w-4xl mx-auto px-4 py-8">
-        <h1 className="text-2xl font-bold text-gray-900 mb-6">{t('pageTitle')}</h1>
-        <div className="text-sm text-gray-500">{t('loading')}</div>
+        <h1 className="text-2xl font-semibold text-text-primary mb-6">{t('pageTitle')}</h1>
+        <div className="text-sm text-text-secondary">{t('loading')}</div>
       </main>
     );
   }
@@ -58,9 +58,9 @@ export default function InboxPage() {
   if (error) {
     return (
       <main className="max-w-4xl mx-auto px-4 py-8">
-        <h1 className="text-2xl font-bold text-gray-900 mb-6">{t('pageTitle')}</h1>
-        <div className="p-4 bg-red-50 border border-red-200 rounded-lg">
-          <p className="text-sm text-red-700">{error}</p>
+        <h1 className="text-2xl font-semibold text-text-primary mb-6">{t('pageTitle')}</h1>
+        <div className="p-4 bg-accent-danger-bg border border-accent-danger/30 rounded-lg">
+          <p className="text-sm text-accent-danger">{error}</p>
         </div>
       </main>
     );
@@ -70,10 +70,10 @@ export default function InboxPage() {
   if (conversations && conversations.length === 0) {
     return (
       <main className="max-w-4xl mx-auto px-4 py-8">
-        <h1 className="text-2xl font-bold text-gray-900 mb-6">{t('pageTitle')}</h1>
-        <div className="text-center py-12 px-4 bg-gray-50 rounded-lg border border-gray-200">
+        <h1 className="text-2xl font-semibold text-text-primary mb-6">{t('pageTitle')}</h1>
+        <div className="text-center py-12 px-4 bg-surface-page rounded-xl border border-border-subtle">
           <svg
-            className="w-12 h-12 mx-auto text-gray-400 mb-4"
+            className="w-12 h-12 mx-auto text-text-tertiary mb-4"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -85,11 +85,11 @@ export default function InboxPage() {
               d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75"
             />
           </svg>
-          <p className="text-sm text-gray-600 mb-2">{t('empty')}</p>
-          <p className="text-xs text-gray-500 mb-4">{t('emptyBuyerHint')}</p>
+          <p className="text-sm text-text-secondary mb-2">{t('empty')}</p>
+          <p className="text-xs text-text-tertiary mb-4">{t('emptyBuyerHint')}</p>
           <Link
             href={`/${locale}/properties`}
-            className="inline-block px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-md hover:bg-blue-700 transition"
+            className="inline-block px-4 py-2 bg-brand-navy text-white text-sm font-medium rounded-lg hover:bg-brand-navy-hover transition-colors"
           >
             {t('browseProperties')}
           </Link>
@@ -101,17 +101,17 @@ export default function InboxPage() {
   // Normal state: list of conversations
   return (
     <main className="max-w-4xl mx-auto px-4 py-8">
-      <h1 className="text-2xl font-bold text-gray-900 mb-6">{t('pageTitle')}</h1>
+      <h1 className="text-2xl font-semibold text-text-primary mb-6">{t('pageTitle')}</h1>
 
-      <ul className="divide-y divide-gray-200 bg-white border border-gray-200 rounded-lg overflow-hidden">
+      <ul className="divide-y divide-border-subtle bg-surface-card border border-border-subtle rounded-xl overflow-hidden">
         {conversations!.map((conv) => (
           <li key={conv.id}>
             <Link
               href={`/${locale}/inbox/${conv.id}`}
-              className="flex items-center gap-4 p-4 hover:bg-gray-50 transition"
+              className="flex items-center gap-4 p-4 hover:bg-surface-page transition-colors"
             >
               {/* Property cover thumbnail */}
-              <div className="flex-shrink-0 w-16 h-16 bg-gray-100 rounded-lg overflow-hidden">
+              <div className="flex-shrink-0 w-16 h-16 bg-surface-page rounded-lg overflow-hidden">
                 {conv.property_cover_url ? (
                   // eslint-disable-next-line @next/next/no-img-element
                   <img
@@ -120,7 +120,7 @@ export default function InboxPage() {
                     className="w-full h-full object-cover"
                   />
                 ) : (
-                  <div className="w-full h-full flex items-center justify-center text-gray-400">
+                  <div className="w-full h-full flex items-center justify-center text-text-tertiary">
                     <svg
                       className="w-6 h-6"
                       fill="none"
@@ -141,28 +141,28 @@ export default function InboxPage() {
               {/* Conversation info */}
               <div className="flex-1 min-w-0">
                 <div className="flex items-baseline gap-2 mb-1">
-                  {/* Unread blue dot */}
+                  {/* Unread dot */}
                   {conv.has_unread && (
                     <span
-                      className="flex-shrink-0 w-2 h-2 rounded-full bg-blue-600"
+                      className="flex-shrink-0 w-2 h-2 rounded-full bg-brand-navy"
                       aria-label="Unread"
                     />
                   )}
                   <h2
                     className={`text-sm truncate ${
-                      conv.has_unread ? 'font-semibold text-gray-900' : 'font-medium text-gray-700'
+                      conv.has_unread ? 'font-semibold text-text-primary' : 'font-medium text-text-secondary'
                     }`}
                   >
                     {conv.other_party.name || 'User'}
                   </h2>
-                  <span className="ms-auto flex-shrink-0 text-xs text-gray-500">
+                  <span className="ms-auto flex-shrink-0 text-xs text-text-tertiary">
                     {formatRelativeTime(conv.last_message_at, t, locale)}
                   </span>
                 </div>
-                <p className="text-xs text-gray-500 truncate mb-1">{conv.property_title}</p>
+                <p className="text-xs text-text-tertiary truncate mb-1">{conv.property_title}</p>
                 <p
                   className={`text-sm truncate ${
-                    conv.has_unread ? 'font-medium text-gray-900' : 'text-gray-600'
+                    conv.has_unread ? 'font-medium text-text-primary' : 'text-text-secondary'
                   }`}
                 >
                   {conv.last_message_preview || ''}

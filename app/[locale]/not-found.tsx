@@ -6,12 +6,12 @@ export default function NotFound() {
 
   return (
     <div className="max-w-2xl mx-auto px-6 py-24 text-center">
-      <p className="text-7xl font-bold text-gray-300 mb-4">404</p>
-      <h1 className="text-3xl font-bold mb-3">{t('title')}</h1>
-      <p className="text-gray-600 mb-8">{t('description')}</p>
+      <p className="text-7xl font-semibold text-border-strong mb-4">404</p>
+      <h1 className="text-3xl font-semibold mb-3 text-text-primary">{t('title')}</h1>
+      <p className="text-text-secondary mb-8">{t('description')}</p>
       <Link
         href="/"
-        className="inline-block px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
+        className="inline-block px-6 py-3 bg-brand-navy text-white rounded-lg hover:bg-brand-navy-hover transition-colors"
       >
         {t('cta')}
       </Link>

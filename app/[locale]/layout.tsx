@@ -22,7 +22,15 @@ export default async function LocaleLayout({
 
   return (
     <html lang={locale} dir={isRtl ? 'rtl' : 'ltr'} suppressHydrationWarning>
-      <body className="bg-white text-gray-900 flex flex-col min-h-screen">
+      <head>
+        <script
+          // eslint-disable-next-line react/no-danger
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var t=localStorage.getItem('darsyria-theme');if(t==='dark'||(!t&&window.matchMedia('(prefers-color-scheme: dark)').matches)){document.documentElement.classList.add('dark');}}catch(e){}})();`
+          }}
+        />
+      </head>
+      <body className="bg-surface-page text-text-primary flex flex-col min-h-screen">
         <NextIntlClientProvider>
           <AuthProvider>
             <Header />

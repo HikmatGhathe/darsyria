@@ -27,10 +27,10 @@ export default function LanguageSwitcher() {
         <button
           key={loc.code}
           onClick={() => switchLocale(loc.code)}
-          className={`px-3 py-1 text-sm rounded transition ${
+          className={`px-3 py-1 text-sm rounded-lg transition-colors ${
             currentLocale === loc.code
-              ? 'bg-gray-900 text-white'
-              : 'text-gray-600 hover:bg-gray-100'
+              ? 'bg-brand-navy text-white'
+              : 'text-text-secondary hover:bg-surface-page'
           }`}
         >
           {loc.label}
