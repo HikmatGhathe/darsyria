@@ -172,6 +172,7 @@
     "bathrooms": "{count, plural, =1 {1 Bad} other {# Bäder}}",
     "areaSqm": "{value} m²",
     "listedOn": "Eingestellt am {date}",
+    "postedBy": "Eingestellt von {name}",
     "docBadgeProvided": "Unterlagen vorhanden",
     "docBadgeClaimed": "Unterlagen angegeben",
     "docBadgeNone": "Keine formellen Unterlagen",
@@ -524,5 +525,22 @@
       "next": "Weiter",
       "previous": "Zurück"
     }
+  },
+  "Sellers": {
+    "profileNotFoundTitle": "Verkäufer nicht gefunden",
+    "profileNotFoundMessage": "Dieser Verkäufer existiert möglicherweise nicht mehr oder das Konto wurde entfernt.",
+    "unknownSeller": "Unbekannter Verkäufer",
+    "verifiedSeller": "Verifizierter Verkäufer",
+    "memberSince": "Mitglied seit {date}",
+    "activeListings": "{count, plural, =1 {1 aktives Inserat} other {# aktive Inserate}}",
+    "followers": "{count, plural, =1 {1 Follower} other {# Follower}}",
+    "follow": "Folgen",
+    "following": "Gefolgt",
+    "followSignedOut": "Zum Folgen anmelden",
+    "companyInfoHeading": "Kontakt",
+    "aboutHeading": "Über uns",
+    "website": "Webseite",
+    "listingsHeading": "Inserate",
+    "noListings": "Derzeit keine aktiven Inserate."
   }
 }

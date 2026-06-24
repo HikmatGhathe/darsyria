@@ -15,6 +15,7 @@ import {
 } from '@/lib/properties';
 import PropertyImageGallery from '@/components/PropertyImageGallery';
 import ContactSellerButton from '@/components/ContactSellerButton';
+import FollowButton from '@/components/FollowButton';
 import {
   formatPrice,
   propertyTypeKey,
@@ -160,13 +161,25 @@ export default function PropertyDetailPage() {
             </span>
           )}
         </div>
-        <p className="text-text-secondary flex items-center gap-1">
+        <p className="text-text-secondary flex items-center gap-1 mb-1">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="shrink-0" aria-hidden="true">
             <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
             <circle cx="12" cy="10" r="3" />
           </svg>
           {formatLocation(property.city, property.neighborhood, locale)}
         </p>
+        {property.seller_display_name && (
+          <Link
+            href={`/${locale}/sellers/${property.owner_id}`}
+            className="text-sm text-text-tertiary hover:text-brand-navy flex items-center gap-1 w-fit"
+          >
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="shrink-0" aria-hidden="true">
+              <path d="M16 7a4 4 0 1 1-8 0 4 4 0 0 1 8 0Z" />
+              <path d="M4 21v-2a4 4 0 0 1 4-4h8a4 4 0 0 1 4 4v2" />
+            </svg>
+            {t('postedBy', {name: property.seller_display_name})}
+          </Link>
+        )}
       </div>
 
       {/* Owner-only draft banner */}
@@ -388,12 +401,15 @@ export default function PropertyDetailPage() {
 
       {/* Contact seller */}
       {!isOwner && (
-        <section className="pt-6 border-t border-border-subtle">
-          <ContactSellerButton
-            propertyId={property.id}
-            propertyTitle={property.title}
-            ownerId={property.owner_id}
-          />
+        <section className="pt-6 border-t border-border-subtle flex flex-wrap gap-3 items-start">
+          <div className="flex-1 min-w-[200px]">
+            <ContactSellerButton
+              propertyId={property.id}
+              propertyTitle={property.title}
+              ownerId={property.owner_id}
+            />
+          </div>
+          <FollowButton sellerId={property.owner_id} locale={locale} />
         </section>
       )}
 

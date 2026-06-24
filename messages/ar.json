@@ -172,6 +172,7 @@
     "bathrooms": "{count, plural, =0 {بدون حمام} =1 {حمام واحد} =2 {حمامان} few {# حمامات} many {# حمامًا} other {# حمام}}",
     "areaSqm": "{value} م²",
     "listedOn": "نُشر في {date}",
+    "postedBy": "نشره {name}",
     "docBadgeProvided": "وثائق متوفرة",
     "docBadgeClaimed": "وثائق مذكورة",
     "docBadgeNone": "لا توجد وثائق رسمية",
@@ -524,5 +525,22 @@
       "next": "التالي",
       "previous": "السابق"
     }
+  },
+  "Sellers": {
+    "profileNotFoundTitle": "البائع غير موجود",
+    "profileNotFoundMessage": "قد لا يكون هذا البائع موجودًا أو تمت إزالة حسابه.",
+    "unknownSeller": "بائع غير معروف",
+    "verifiedSeller": "بائع موثّق",
+    "memberSince": "عضو منذ {date}",
+    "activeListings": "{count, plural, =0 {بدون إعلانات نشطة} =1 {إعلان نشط واحد} =2 {إعلانان نشطان} few {# إعلانات نشطة} many {# إعلانًا نشطًا} other {# إعلان نشط}}",
+    "followers": "{count, plural, =0 {بدون متابعين} =1 {متابع واحد} =2 {متابعان} few {# متابعين} many {# متابعًا} other {# متابع}}",
+    "follow": "متابعة",
+    "following": "متابَع",
+    "followSignedOut": "سجّل الدخول للمتابعة",
+    "companyInfoHeading": "التواصل",
+    "aboutHeading": "عن الشركة",
+    "website": "الموقع الإلكتروني",
+    "listingsHeading": "الإعلانات",
+    "noListings": "لا توجد إعلانات نشطة حاليًا."
   }
 }
