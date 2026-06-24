@@ -9,7 +9,6 @@ import {
 } from 'react';
 import type {ReactNode} from 'react';
 import {getCurrentUser, logout as logoutApi} from '@/lib/auth';
-import {clearToken} from '@/lib/api';
 import type {User} from '@/lib/types';
 
 type AuthContextValue = {
@@ -31,7 +30,6 @@ export function AuthProvider({children}: {children: ReactNode}) {
       setUser(me);
     } catch {
       setUser(null);
-      clearToken();
     } finally {
       setIsLoading(false);
     }
@@ -54,7 +52,6 @@ export function AuthProvider({children}: {children: ReactNode}) {
       .catch(() => {
         if (isMounted) {
           setUser(null);
-          clearToken();
         }
       })
       .finally(() => {

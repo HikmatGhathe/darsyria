@@ -1,4 +1,4 @@
-import {apiRequest, clearToken, setToken} from './api';
+import {apiRequest} from './api';
 import type {AuthResponse, Locale, User} from './types';
 
 export type UserUpdate = {
@@ -27,13 +27,13 @@ export async function requestMagicLink(
 }
 
 export async function verifyMagicLink(token: string): Promise<AuthResponse> {
-  const response = await apiRequest<AuthResponse>('/auth/magic-link/verify', {
+  // The backend sets auth cookies directly on this response — nothing
+  // for the client to store.
+  return apiRequest<AuthResponse>('/auth/magic-link/verify', {
     method: 'POST',
     body: {token},
     authenticated: false
   });
-  setToken(response.access_token);
-  return response;
 }
 
 export async function startGoogleLogin(locale: Locale): Promise<string> {
@@ -49,10 +49,6 @@ export async function getCurrentUser(): Promise<User> {
 }
 
 export async function logout(): Promise<void> {
-  try {
-    await apiRequest('/auth/logout', {method: 'POST'});
-  } catch {
-    // Logout is best-effort; clear local state regardless.
-  }
-  clearToken();
+  // The backend revokes the refresh token and clears both cookies.
+  await apiRequest('/auth/logout', {method: 'POST'});
 }

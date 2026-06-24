@@ -297,17 +297,9 @@ export async function uploadPropertyImage(
   onProgress?: (percent: number) => void
 ): Promise<PropertyImage> {
   return new Promise((resolve, reject) => {
-    const token = typeof window !== 'undefined'
-      ? window.localStorage.getItem('darsyria_access_token')
-      : null;
-    if (!token) {
-      reject(new Error('Not authenticated'));
-      return;
-    }
-
     const xhr = new XMLHttpRequest();
     xhr.open('POST', `${API_BASE_URL}/properties/${propertyId}/images`);
-    xhr.setRequestHeader('Authorization', `Bearer ${token}`);
+    xhr.withCredentials = true;
     xhr.timeout = 60000;
 
     if (onProgress) {

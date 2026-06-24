@@ -5,7 +5,6 @@ import {useLocale, useTranslations} from 'next-intl';
 import {useRouter} from 'next/navigation';
 import {useAuth} from '@/components/AuthProvider';
 import {Link} from '@/i18n/navigation';
-import {setToken} from '@/lib/api';
 import {verifyMagicLink} from '@/lib/auth';
 
 type Status = 'verifying' | 'success' | 'error_invalid' | 'error_generic';
@@ -20,17 +19,17 @@ export default function VerifyPage() {
 
   useEffect(() => {
     async function run() {
-      const fragmentParams = new URLSearchParams(window.location.hash.slice(1));
-      const accessToken = fragmentParams.get('access_token');
-      if (accessToken) {
-        setToken(accessToken);
+      const searchParams = new URLSearchParams(window.location.search);
+
+      // Google OAuth: the backend already set the auth cookies before
+      // redirecting here — nothing in the URL to read, just confirm.
+      if (searchParams.get('oauth') === 'success') {
         await refresh();
         setStatus('success');
         window.setTimeout(() => router.push(`/${locale}`), 800);
         return;
       }
 
-      const searchParams = new URLSearchParams(window.location.search);
       const magicToken = searchParams.get('token');
       if (magicToken) {
         try {
@@ -41,11 +40,6 @@ export default function VerifyPage() {
         } catch {
           setStatus('error_invalid');
         }
-        return;
-      }
-
-      if (searchParams.get('error')) {
-        setStatus('error_generic');
         return;
       }
 
