@@ -5,14 +5,20 @@ import {useTranslations, useLocale} from 'next-intl';
 import {useRouter} from '@/i18n/navigation';
 import {useAuth} from '@/components/AuthProvider';
 import {deleteMyAccount, exportMyData, updateMe} from '@/lib/auth';
+import type {UserUpdate} from '@/lib/auth';
 
 type FormState = {
   full_name: string;
   phone: string;
   locale: string;
+  account_type: '' | 'individual' | 'company';
+  company_name: string;
+  company_about: string;
+  company_website: string;
+  company_address: string;
 };
 
-type Status = 'idle' | 'saving' | 'saved' | 'error';
+type Status = 'idle' | 'saving' | 'saved' | 'error' | 'invalid';
 
 export default function AccountPage() {
   const t = useTranslations('Account');
@@ -24,6 +30,11 @@ export default function AccountPage() {
     full_name: '',
     phone: '',
     locale: 'en',
+    account_type: '',
+    company_name: '',
+    company_about: '',
+    company_website: '',
+    company_address: '',
   });
   const [status, setStatus] = useState<Status>('idle');
   const savedTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -42,6 +53,11 @@ export default function AccountPage() {
         full_name: user.full_name ?? '',
         phone: user.phone ?? '',
         locale: user.locale ?? locale,
+        account_type: user.account_type ?? '',
+        company_name: user.company_name ?? '',
+        company_about: user.company_about ?? '',
+        company_website: user.company_website ?? '',
+        company_address: user.company_address ?? '',
       });
     }
   }, [user, locale]);
@@ -54,7 +70,7 @@ export default function AccountPage() {
   }, [isLoading, user, router]);
 
   function handleChange(
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
   ) {
     const {name, value} = e.target;
     setForm((prev) => ({...prev, [name]: value}));
@@ -64,15 +80,33 @@ export default function AccountPage() {
     e.preventDefault();
     if (status === 'saving') return;
 
-    setStatus('saving');
     if (savedTimerRef.current) clearTimeout(savedTimerRef.current);
 
+    const isCompany = form.account_type === 'company';
+    if (isCompany && (!form.company_name.trim() || !form.company_address.trim() || !form.phone.trim())) {
+      setStatus('invalid');
+      return;
+    }
+
+    setStatus('saving');
+
+    const payload: UserUpdate = {
+      full_name: form.full_name.trim() || null,
+      phone: form.phone.trim() || null,
+      locale: form.locale as 'en' | 'de' | 'ar',
+    };
+    if (form.account_type) {
+      payload.account_type = form.account_type;
+    }
+    if (isCompany) {
+      payload.company_name = form.company_name.trim() || null;
+      payload.company_about = form.company_about.trim() || null;
+      payload.company_website = form.company_website.trim() || null;
+      payload.company_address = form.company_address.trim() || null;
+    }
+
     try {
-      await updateMe({
-        full_name: form.full_name.trim() || null,
-        phone: form.phone.trim() || null,
-        locale: form.locale as 'en' | 'de' | 'ar',
-      });
+      await updateMe(payload);
       await refresh();
       setStatus('saved');
       savedTimerRef.current = setTimeout(() => setStatus('idle'), 3000);
@@ -181,6 +215,125 @@ export default function AccountPage() {
           <p className="mt-1 text-xs text-text-tertiary">{t('phoneHelp')}</p>
         </div>
 
+        {/* Seller account type */}
+        <div className="pt-6 border-t border-border-subtle">
+          <h2 className="text-sm font-semibold text-text-secondary uppercase tracking-wide mb-1">
+            {t('sellerSectionHeading')}
+          </h2>
+          <p className="text-sm text-text-secondary mb-4">{t('sellerSectionBody')}</p>
+
+          <div className="flex gap-4 mb-4">
+            <label className="flex items-center gap-2 cursor-pointer">
+              <input
+                type="radio"
+                name="account_type"
+                value="individual"
+                checked={form.account_type === 'individual'}
+                onChange={handleChange}
+                className="text-brand-navy focus:ring-brand-navy"
+              />
+              <span className="text-sm text-text-primary">{t('accountTypeIndividual')}</span>
+            </label>
+            <label className="flex items-center gap-2 cursor-pointer">
+              <input
+                type="radio"
+                name="account_type"
+                value="company"
+                checked={form.account_type === 'company'}
+                onChange={handleChange}
+                className="text-brand-navy focus:ring-brand-navy"
+              />
+              <span className="text-sm text-text-primary">{t('accountTypeCompany')}</span>
+            </label>
+          </div>
+
+          {form.account_type === 'company' && (
+            <div className="space-y-4 p-4 bg-surface-page rounded-lg">
+              <p className="text-xs text-text-tertiary">{t('companyFieldsNote')}</p>
+
+              <div>
+                <label htmlFor="company_name" className="block text-sm font-medium text-text-secondary mb-1">
+                  {t('companyName')} *
+                </label>
+                <input
+                  id="company_name"
+                  name="company_name"
+                  type="text"
+                  value={form.company_name}
+                  onChange={handleChange}
+                  placeholder={t('companyNamePlaceholder')}
+                  className="w-full rounded-lg border border-border-subtle bg-surface-card px-3 py-2 text-sm text-text-primary focus:border-brand-navy focus:outline-none focus:ring-1 focus:ring-brand-navy"
+                />
+              </div>
+
+              <div>
+                <label htmlFor="company_address" className="block text-sm font-medium text-text-secondary mb-1">
+                  {t('companyAddress')} *
+                </label>
+                <textarea
+                  id="company_address"
+                  name="company_address"
+                  value={form.company_address}
+                  onChange={handleChange}
+                  placeholder={t('companyAddressPlaceholder')}
+                  rows={2}
+                  className="w-full rounded-lg border border-border-subtle bg-surface-card px-3 py-2 text-sm text-text-primary focus:border-brand-navy focus:outline-none focus:ring-1 focus:ring-brand-navy resize-y"
+                />
+                <p className="mt-1 text-xs text-text-tertiary">{t('companyAddressHelp')}</p>
+              </div>
+
+              <div>
+                <label htmlFor="company_website" className="block text-sm font-medium text-text-secondary mb-1">
+                  {t('companyWebsite')}
+                </label>
+                <input
+                  id="company_website"
+                  name="company_website"
+                  type="url"
+                  value={form.company_website}
+                  onChange={handleChange}
+                  placeholder={t('companyWebsitePlaceholder')}
+                  dir="ltr"
+                  className="w-full rounded-lg border border-border-subtle bg-surface-card px-3 py-2 text-sm text-text-primary focus:border-brand-navy focus:outline-none focus:ring-1 focus:ring-brand-navy"
+                />
+              </div>
+
+              <div>
+                <label htmlFor="company_about" className="block text-sm font-medium text-text-secondary mb-1">
+                  {t('companyAbout')}
+                </label>
+                <textarea
+                  id="company_about"
+                  name="company_about"
+                  value={form.company_about}
+                  onChange={handleChange}
+                  placeholder={t('companyAboutPlaceholder')}
+                  rows={3}
+                  maxLength={2000}
+                  className="w-full rounded-lg border border-border-subtle bg-surface-card px-3 py-2 text-sm text-text-primary focus:border-brand-navy focus:outline-none focus:ring-1 focus:ring-brand-navy resize-y"
+                />
+              </div>
+
+              <div className="flex items-center gap-2 text-sm">
+                <span className="text-text-secondary">{t('verificationStatusLabel')}:</span>
+                {user.verification_status === 'verified' ? (
+                  <span className="inline-flex items-center gap-1 px-2 py-0.5 text-xs font-medium text-white bg-accent-verified rounded-full">
+                    {t('verificationVerified')}
+                  </span>
+                ) : user.verification_status === 'pending' ? (
+                  <span className="inline-flex items-center px-2 py-0.5 text-xs font-medium text-accent-warning bg-accent-warning-bg border border-accent-warning/30 rounded-full">
+                    {t('verificationPending')}
+                  </span>
+                ) : (
+                  <span className="inline-flex items-center px-2 py-0.5 text-xs font-medium text-text-secondary bg-surface-card border border-border-subtle rounded-full">
+                    {t('verificationUnverified')}
+                  </span>
+                )}
+              </div>
+            </div>
+          )}
+        </div>
+
         {/* Language preference */}
         <div>
           <label htmlFor="locale" className="block text-sm font-medium text-text-secondary mb-1">
@@ -209,6 +362,11 @@ export default function AccountPage() {
         {status === 'error' && (
           <p className="text-sm text-accent-danger bg-accent-danger-bg border border-accent-danger/30 rounded-lg px-3 py-2">
             {t('saveError')}
+          </p>
+        )}
+        {status === 'invalid' && (
+          <p className="text-sm text-accent-danger bg-accent-danger-bg border border-accent-danger/30 rounded-lg px-3 py-2">
+            {t('companyFieldsRequired')}
           </p>
         )}
 

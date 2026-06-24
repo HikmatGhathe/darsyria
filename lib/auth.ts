@@ -5,6 +5,11 @@ export type UserUpdate = {
   full_name?: string | null;
   phone?: string | null;
   locale?: string;
+  account_type?: 'individual' | 'company';
+  company_name?: string | null;
+  company_about?: string | null;
+  company_website?: string | null;
+  company_address?: string | null;
 };
 
 export async function updateMe(updates: UserUpdate): Promise<User> {

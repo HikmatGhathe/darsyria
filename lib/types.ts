@@ -9,6 +9,12 @@ export type User = {
   is_admin: boolean;
   subscription_tier: string;
   created_at: string;
+  account_type: 'individual' | 'company' | null;
+  company_name: string | null;
+  company_about: string | null;
+  company_website: string | null;
+  company_address: string | null;
+  verification_status: 'unverified' | 'pending' | 'verified';
 };
 
 export type AuthResponse = {
