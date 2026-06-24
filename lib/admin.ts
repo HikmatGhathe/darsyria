@@ -30,6 +30,9 @@ export type AdminUserListItem = {
   created_at: string;
   last_login_at: string | null;
   active_listings_count: number;
+  account_type: string | null;
+  company_name: string | null;
+  verification_status: string;
 };
 
 // ---------- Property admin ----------
@@ -96,6 +99,7 @@ export type AdminUsersFilters = {
   search?: string;
   banned_only?: boolean;
   admins_only?: boolean;
+  pending_verification_only?: boolean;
   limit?: number;
   offset?: number;
 };
@@ -107,6 +111,7 @@ export async function adminListUsers(
   if (filters.search) params.set('search', filters.search);
   if (filters.banned_only) params.set('banned_only', 'true');
   if (filters.admins_only) params.set('admins_only', 'true');
+  if (filters.pending_verification_only) params.set('pending_verification_only', 'true');
   if (filters.limit !== undefined) params.set('limit', String(filters.limit));
   if (filters.offset !== undefined) params.set('offset', String(filters.offset));
   const qs = params.toString();
@@ -143,6 +148,20 @@ export async function adminPromoteUser(id: string): Promise<AdminUserListItem> {
 
 export async function adminDemoteUser(id: string): Promise<AdminUserListItem> {
   return apiRequest<AdminUserListItem>(`/admin/users/${id}/demote`, {
+    method: 'POST',
+    authenticated: true,
+  });
+}
+
+export async function adminVerifyUser(id: string): Promise<AdminUserListItem> {
+  return apiRequest<AdminUserListItem>(`/admin/users/${id}/verify`, {
+    method: 'POST',
+    authenticated: true,
+  });
+}
+
+export async function adminUnverifyUser(id: string): Promise<AdminUserListItem> {
+  return apiRequest<AdminUserListItem>(`/admin/users/${id}/unverify`, {
     method: 'POST',
     authenticated: true,
   });

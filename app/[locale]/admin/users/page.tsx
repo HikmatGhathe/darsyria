@@ -13,6 +13,8 @@ import {
   adminUnbanUser,
   adminPromoteUser,
   adminDemoteUser,
+  adminVerifyUser,
+  adminUnverifyUser,
 } from '@/lib/admin';
 
 // ── Sub-components ────────────────────────────────────────────────────────────
@@ -24,6 +26,30 @@ function RoleBadge({ isAdmin, t }: { isAdmin: boolean; t: (k: string) => string 
       {t('badgeAdmin')}
     </span>
   );
+}
+
+function VerificationBadge({
+  status,
+  t,
+}: {
+  status: string;
+  t: (k: string) => string;
+}) {
+  if (status === 'verified') {
+    return (
+      <span className="inline-block rounded bg-accent-verified-bg px-1.5 py-0.5 text-xs font-semibold text-accent-verified">
+        {t('badgeVerified')}
+      </span>
+    );
+  }
+  if (status === 'pending') {
+    return (
+      <span className="inline-block rounded bg-accent-warning-bg px-1.5 py-0.5 text-xs font-semibold text-accent-warning">
+        {t('badgePending')}
+      </span>
+    );
+  }
+  return null;
 }
 
 function StatusBadge({
@@ -185,6 +211,8 @@ function UserRow({
   onUnban,
   onPromoteClick,
   onDemoteClick,
+  onVerifyClick,
+  onUnverifyClick,
   t,
 }: {
   user: AdminUserListItem;
@@ -194,6 +222,8 @@ function UserRow({
   onUnban: (u: AdminUserListItem) => void;
   onPromoteClick: (u: AdminUserListItem) => void;
   onDemoteClick: (u: AdminUserListItem) => void;
+  onVerifyClick: (u: AdminUserListItem) => void;
+  onUnverifyClick: (u: AdminUserListItem) => void;
   t: (k: string) => string;
 }) {
   const isBanned = !user.is_active;
@@ -211,7 +241,9 @@ function UserRow({
         <div className="flex flex-col gap-0.5">
           <div className="flex items-center gap-1.5">
             <span className="text-sm font-medium text-text-primary">
-              {user.full_name || '—'}
+              {user.account_type === 'company' && user.company_name
+                ? user.company_name
+                : user.full_name || '—'}
             </span>
             {isSelf && (
               <span className="inline-block rounded border border-border-strong px-1.5 py-0.5 text-xs font-bold text-text-secondary">
@@ -220,6 +252,11 @@ function UserRow({
             )}
           </div>
           <span className="text-xs text-text-tertiary">{user.email}</span>
+          {user.account_type && (
+            <span className="text-xs text-text-tertiary">
+              {user.account_type === 'company' ? t('badgeCompany') : t('badgeIndividual')}
+            </span>
+          )}
           {isBanned && user.ban_reason && (
             <span className="mt-0.5 text-xs text-accent-danger italic">
               {user.ban_reason}
@@ -230,7 +267,10 @@ function UserRow({
 
       {/* Role */}
       <td className="px-4 py-3">
-        <RoleBadge isAdmin={user.is_admin} t={t} />
+        <div className="flex flex-col gap-1">
+          <RoleBadge isAdmin={user.is_admin} t={t} />
+          <VerificationBadge status={user.verification_status} t={t} />
+        </div>
       </td>
 
       {/* Status */}
@@ -284,6 +324,25 @@ function UserRow({
               {t('actionPromote')}
             </button>
           )}
+
+          {/* Verify / Unverify */}
+          {user.verification_status === 'verified' ? (
+            <button
+              onClick={() => onUnverifyClick(user)}
+              disabled={busy}
+              className="rounded border border-border-subtle bg-surface-card px-2.5 py-1 text-xs font-medium text-text-primary hover:bg-surface-page disabled:opacity-40 transition-colors"
+            >
+              {t('actionUnverify')}
+            </button>
+          ) : (
+            <button
+              onClick={() => onVerifyClick(user)}
+              disabled={busy}
+              className="rounded bg-accent-verified px-2.5 py-1 text-xs font-medium text-white hover:opacity-90 disabled:opacity-40 transition-opacity"
+            >
+              {t('actionVerify')}
+            </button>
+          )}
         </div>
       </td>
     </tr>
@@ -309,6 +368,7 @@ export default function AdminUsersPage() {
   const [search, setSearch] = useState('');
   const [bannedOnly, setBannedOnly] = useState(false);
   const [adminsOnly, setAdminsOnly] = useState(false);
+  const [pendingOnly, setPendingOnly] = useState(false);
 
   // Pagination
   const [offset, setOffset] = useState(0);
@@ -321,6 +381,8 @@ export default function AdminUsersPage() {
   const [banTarget, setBanTarget] = useState<AdminUserListItem | null>(null);
   const [promoteTarget, setPromoteTarget] = useState<AdminUserListItem | null>(null);
   const [demoteTarget, setDemoteTarget] = useState<AdminUserListItem | null>(null);
+  const [verifyTarget, setVerifyTarget] = useState<AdminUserListItem | null>(null);
+  const [unverifyTarget, setUnverifyTarget] = useState<AdminUserListItem | null>(null);
 
   // Debounce ref
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -332,7 +394,7 @@ export default function AdminUsersPage() {
     }
   }, [authLoading, user, router]);
 
-  async function load(searchVal: string, banned: boolean, admins: boolean, off: number) {
+  async function load(searchVal: string, banned: boolean, admins: boolean, pending: boolean, off: number) {
     setLoading(true);
     setLoadError('');
     try {
@@ -340,6 +402,7 @@ export default function AdminUsersPage() {
         search: searchVal || undefined,
         banned_only: banned || undefined,
         admins_only: admins || undefined,
+        pending_verification_only: pending || undefined,
         limit: PAGE_SIZE,
         offset: off,
       });
@@ -354,7 +417,7 @@ export default function AdminUsersPage() {
   // Initial load
   useEffect(() => {
     if (!authLoading && user?.is_admin) {
-      load(search, bannedOnly, adminsOnly, offset);
+      load(search, bannedOnly, adminsOnly, pendingOnly, offset);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [authLoading, user]);
@@ -365,23 +428,25 @@ export default function AdminUsersPage() {
     setOffset(0);
     if (debounceRef.current) clearTimeout(debounceRef.current);
     debounceRef.current = setTimeout(() => {
-      load(val, bannedOnly, adminsOnly, 0);
+      load(val, bannedOnly, adminsOnly, pendingOnly, 0);
     }, 400);
   }
 
   function handleFilterChange(
     newBanned: boolean,
     newAdmins: boolean,
+    newPending: boolean,
   ) {
     setBannedOnly(newBanned);
     setAdminsOnly(newAdmins);
+    setPendingOnly(newPending);
     setOffset(0);
-    load(search, newBanned, newAdmins, 0);
+    load(search, newBanned, newAdmins, newPending, 0);
   }
 
   function handlePageChange(newOffset: number) {
     setOffset(newOffset);
-    load(search, bannedOnly, adminsOnly, newOffset);
+    load(search, bannedOnly, adminsOnly, pendingOnly, newOffset);
   }
 
   // ── Unban (no modal) ──────────────────────────────────────────────────────
@@ -436,6 +501,38 @@ export default function AdminUsersPage() {
     }
   }
 
+  // ── Verify (via confirm modal) ────────────────────────────────────────────
+  async function handleVerify() {
+    if (!verifyTarget) return;
+    setBusyRowId(verifyTarget.id);
+    setActionError('');
+    try {
+      const updated = await adminVerifyUser(verifyTarget.id);
+      setUsers((prev) => prev.map((x) => (x.id === updated.id ? updated : x)));
+    } catch {
+      setActionError(t('actionError'));
+    } finally {
+      setBusyRowId(null);
+      setVerifyTarget(null);
+    }
+  }
+
+  // ── Unverify (via confirm modal) ──────────────────────────────────────────
+  async function handleUnverify() {
+    if (!unverifyTarget) return;
+    setBusyRowId(unverifyTarget.id);
+    setActionError('');
+    try {
+      const updated = await adminUnverifyUser(unverifyTarget.id);
+      setUsers((prev) => prev.map((x) => (x.id === updated.id ? updated : x)));
+    } catch {
+      setActionError(t('actionError'));
+    } finally {
+      setBusyRowId(null);
+      setUnverifyTarget(null);
+    }
+  }
+
   // ── Guards ────────────────────────────────────────────────────────────────
   if (authLoading) {
     return <p className="p-8 text-center text-text-secondary">{tAdmin('loading')}</p>;
@@ -483,7 +580,7 @@ export default function AdminUsersPage() {
           <input
             type="checkbox"
             checked={bannedOnly}
-            onChange={(e) => handleFilterChange(e.target.checked, adminsOnly)}
+            onChange={(e) => handleFilterChange(e.target.checked, adminsOnly, pendingOnly)}
             className="rounded border-border-subtle text-accent-danger focus:ring-accent-danger"
           />
           {t('filterBannedOnly')}
@@ -493,10 +590,20 @@ export default function AdminUsersPage() {
           <input
             type="checkbox"
             checked={adminsOnly}
-            onChange={(e) => handleFilterChange(bannedOnly, e.target.checked)}
+            onChange={(e) => handleFilterChange(bannedOnly, e.target.checked, pendingOnly)}
             className="rounded border-border-subtle text-brand-navy focus:ring-brand-navy"
           />
           {t('filterAdminsOnly')}
+        </label>
+
+        <label className="flex items-center gap-2 text-sm text-text-secondary cursor-pointer">
+          <input
+            type="checkbox"
+            checked={pendingOnly}
+            onChange={(e) => handleFilterChange(bannedOnly, adminsOnly, e.target.checked)}
+            className="rounded border-border-subtle text-accent-warning focus:ring-accent-warning"
+          />
+          {t('filterPendingOnly')}
         </label>
       </div>
 
@@ -550,6 +657,8 @@ export default function AdminUsersPage() {
                   onUnban={handleUnban}
                   onPromoteClick={setPromoteTarget}
                   onDemoteClick={setDemoteTarget}
+                  onVerifyClick={setVerifyTarget}
+                  onUnverifyClick={setUnverifyTarget}
                   t={(k) => t(k as Parameters<typeof t>[0])}
                 />
               ))
@@ -612,6 +721,31 @@ export default function AdminUsersPage() {
           cancelLabel={t('demoteModalCancel')}
           onConfirm={handleDemote}
           onClose={() => setDemoteTarget(null)}
+          danger
+        />
+      )}
+
+      {/* Verify confirm modal */}
+      {verifyTarget && (
+        <ConfirmModal
+          title={t('verifyModalTitle')}
+          body={t('verifyModalBody', { email: verifyTarget.email })}
+          confirmLabel={t('verifyModalConfirm')}
+          cancelLabel={t('verifyModalCancel')}
+          onConfirm={handleVerify}
+          onClose={() => setVerifyTarget(null)}
+        />
+      )}
+
+      {/* Unverify confirm modal */}
+      {unverifyTarget && (
+        <ConfirmModal
+          title={t('unverifyModalTitle')}
+          body={t('unverifyModalBody', { email: unverifyTarget.email })}
+          confirmLabel={t('unverifyModalConfirm')}
+          cancelLabel={t('unverifyModalCancel')}
+          onConfirm={handleUnverify}
+          onClose={() => setUnverifyTarget(null)}
           danger
         />
       )}
