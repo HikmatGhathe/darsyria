@@ -254,6 +254,10 @@
   "PropertyForm": {
     "title": "Immobilie inserieren",
     "subtitle": "Geben Sie genaue Angaben. Ihr Inserat startet als Entwurf, den Sie vor der Veröffentlichung prüfen können.",
+    "sellerSetupHeading": "Sind Sie eine Privatperson oder ein Unternehmen?",
+    "sellerSetupBody": "Wir fragen dies einmal. Unternehmen geben Namen, Adresse und Telefonnummer an, die öffentlich angezeigt werden, damit Käufer Sie finden und kontaktieren können. Sie können dies später in Ihren Kontoeinstellungen ändern.",
+    "sellerSetupRequired": "Bitte wählen Sie Privatperson oder Unternehmen, um fortzufahren.",
+    "sellerSetupError": "Ihre Verkäuferinformationen konnten nicht gespeichert werden. Bitte versuchen Sie es erneut.",
     "sectionBasics": "Grundinformationen",
     "sectionLocation": "Lage",
     "sectionAttributes": "Eigenschaften",

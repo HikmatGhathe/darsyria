@@ -254,6 +254,10 @@
   "PropertyForm": {
     "title": "List your property",
     "subtitle": "Provide accurate details. Your listing will start as a draft you can review before publishing.",
+    "sellerSetupHeading": "Are you an individual or a company?",
+    "sellerSetupBody": "We ask this once. Companies provide a name, address, and phone number that are shown publicly so buyers can find and contact you. You can change this later in your account settings.",
+    "sellerSetupRequired": "Please choose Individual or Company before continuing.",
+    "sellerSetupError": "Could not save your seller info. Please try again.",
     "sectionBasics": "Basic information",
     "sectionLocation": "Location",
     "sectionAttributes": "Property details",

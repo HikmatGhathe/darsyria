@@ -4,6 +4,7 @@ import {useState} from 'react';
 import {useRouter} from 'next/navigation';
 import {useTranslations, useLocale} from 'next-intl';
 import {useAuth} from '@/components/AuthProvider';
+import {updateMe} from '@/lib/auth';
 import {createProperty, type PropertyCreateInput} from '@/lib/properties';
 
 type FormState = {
@@ -20,6 +21,13 @@ type FormState = {
   document_status: PropertyCreateInput['document_status'];
 };
 
+type SellerSetupState = {
+  account_type: '' | 'individual' | 'company';
+  company_name: string;
+  company_address: string;
+  phone: string;
+};
+
 const initialState: FormState = {
   title: '',
   description: '',
@@ -34,15 +42,25 @@ const initialState: FormState = {
   document_status: 'none'
 };
 
+const initialSellerSetup: SellerSetupState = {
+  account_type: '',
+  company_name: '',
+  company_address: '',
+  phone: ''
+};
+
 export default function NewPropertyPage() {
   const t = useTranslations('PropertyForm');
+  const tAccount = useTranslations('Account');
   const locale = useLocale();
   const router = useRouter();
-  const {user, isLoading: authLoading} = useAuth();
+  const {user, isLoading: authLoading, refresh} = useAuth();
 
   const [form, setForm] = useState<FormState>(initialState);
+  const [sellerSetup, setSellerSetup] = useState<SellerSetupState>(initialSellerSetup);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [sellerSetupError, setSellerSetupError] = useState<string | null>(null);
 
   if (authLoading) {
     return <div className="max-w-3xl mx-auto px-6 py-12 text-text-secondary">Loading...</div>;
@@ -61,8 +79,14 @@ export default function NewPropertyPage() {
     );
   }
 
+  const needsSellerSetup = user.account_type == null;
+
   function update<K extends keyof FormState>(key: K, value: FormState[K]) {
     setForm((prev) => ({...prev, [key]: value}));
+  }
+
+  function updateSellerSetup<K extends keyof SellerSetupState>(key: K, value: SellerSetupState[K]) {
+    setSellerSetup((prev) => ({...prev, [key]: value}));
   }
 
   async function handleSubmit(e: React.FormEvent) {
@@ -70,7 +94,44 @@ export default function NewPropertyPage() {
     if (isSubmitting) return;
 
     setError(null);
+    setSellerSetupError(null);
+
+    if (needsSellerSetup) {
+      if (!sellerSetup.account_type) {
+        setSellerSetupError(t('sellerSetupRequired'));
+        return;
+      }
+      if (
+        sellerSetup.account_type === 'company' &&
+        (!sellerSetup.company_name.trim() || !sellerSetup.company_address.trim() || !sellerSetup.phone.trim())
+      ) {
+        setSellerSetupError(tAccount('companyFieldsRequired'));
+        return;
+      }
+    }
+
     setIsSubmitting(true);
+
+    if (needsSellerSetup) {
+      try {
+        if (sellerSetup.account_type === 'company') {
+          await updateMe({
+            account_type: 'company',
+            company_name: sellerSetup.company_name.trim(),
+            company_address: sellerSetup.company_address.trim(),
+            phone: sellerSetup.phone.trim()
+          });
+        } else {
+          await updateMe({account_type: 'individual'});
+        }
+        await refresh();
+      } catch (err) {
+        console.error('Seller setup failed:', err);
+        setSellerSetupError(t('sellerSetupError'));
+        setIsSubmitting(false);
+        return;
+      }
+    }
 
     const payload: PropertyCreateInput = {
       title: form.title.trim(),
@@ -104,6 +165,90 @@ export default function NewPropertyPage() {
       </header>
 
       <form onSubmit={handleSubmit} className="space-y-8">
+        {/* Section: Seller setup — only shown the first time, before account_type is set */}
+        {needsSellerSetup && (
+          <section className="p-5 bg-surface-card border border-brand-navy/30 rounded-xl">
+            <h2 className="text-lg font-semibold text-text-primary mb-1">
+              {t('sellerSetupHeading')}
+            </h2>
+            <p className="text-sm text-text-secondary mb-4">{t('sellerSetupBody')}</p>
+
+            <div className="flex gap-4 mb-4">
+              <label className="flex items-center gap-2 cursor-pointer">
+                <input
+                  type="radio"
+                  name="seller_account_type"
+                  value="individual"
+                  checked={sellerSetup.account_type === 'individual'}
+                  onChange={() => updateSellerSetup('account_type', 'individual')}
+                  className="text-brand-navy focus:ring-brand-navy"
+                />
+                <span className="text-sm text-text-primary">{tAccount('accountTypeIndividual')}</span>
+              </label>
+              <label className="flex items-center gap-2 cursor-pointer">
+                <input
+                  type="radio"
+                  name="seller_account_type"
+                  value="company"
+                  checked={sellerSetup.account_type === 'company'}
+                  onChange={() => updateSellerSetup('account_type', 'company')}
+                  className="text-brand-navy focus:ring-brand-navy"
+                />
+                <span className="text-sm text-text-primary">{tAccount('accountTypeCompany')}</span>
+              </label>
+            </div>
+
+            {sellerSetup.account_type === 'company' && (
+              <div className="space-y-4 p-4 bg-surface-page rounded-lg">
+                <p className="text-xs text-text-tertiary">{tAccount('companyFieldsNote')}</p>
+                <div>
+                  <label className="block text-sm font-medium text-text-secondary mb-1">
+                    {tAccount('companyName')} *
+                  </label>
+                  <input
+                    type="text"
+                    value={sellerSetup.company_name}
+                    onChange={(e) => updateSellerSetup('company_name', e.target.value)}
+                    placeholder={tAccount('companyNamePlaceholder')}
+                    className="w-full px-3 py-2 text-sm bg-surface-card border border-border-subtle rounded-lg text-text-primary focus:outline-none focus:ring-1 focus:ring-brand-navy focus:border-brand-navy"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-text-secondary mb-1">
+                    {tAccount('companyAddress')} *
+                  </label>
+                  <textarea
+                    value={sellerSetup.company_address}
+                    onChange={(e) => updateSellerSetup('company_address', e.target.value)}
+                    placeholder={tAccount('companyAddressPlaceholder')}
+                    rows={2}
+                    className="w-full px-3 py-2 text-sm bg-surface-card border border-border-subtle rounded-lg text-text-primary focus:outline-none focus:ring-1 focus:ring-brand-navy focus:border-brand-navy resize-y"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-text-secondary mb-1">
+                    {tAccount('phone')} *
+                  </label>
+                  <input
+                    type="tel"
+                    value={sellerSetup.phone}
+                    onChange={(e) => updateSellerSetup('phone', e.target.value)}
+                    placeholder={tAccount('phonePlaceholder')}
+                    dir="ltr"
+                    className="w-full px-3 py-2 text-sm bg-surface-card border border-border-subtle rounded-lg text-text-primary focus:outline-none focus:ring-1 focus:ring-brand-navy focus:border-brand-navy"
+                  />
+                </div>
+              </div>
+            )}
+
+            {sellerSetupError && (
+              <p className="mt-4 text-sm text-accent-danger bg-accent-danger-bg border border-accent-danger/30 rounded-lg px-3 py-2">
+                {sellerSetupError}
+              </p>
+            )}
+          </section>
+        )}
+
         {/* Section: Basics */}
         <section>
           <h2 className="text-lg font-semibold text-text-primary mb-4 pb-2 border-b border-border-subtle">
