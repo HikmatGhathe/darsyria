@@ -48,6 +48,11 @@
     "switchToDark": "Zu dunklem Modus wechseln",
     "switchToLight": "Zu hellem Modus wechseln"
   },
+  "CookieNotice": {
+    "message": "Wir verwenden essenzielle Cookies, um Sie angemeldet zu halten. Wir verwenden keine Tracking- oder Analyse-Cookies.",
+    "privacyLink": "Datenschutzerklärung",
+    "dismiss": "Verstanden"
+  },
   "Auth": {
     "login": {
       "title": "Bei DarSyria anmelden",

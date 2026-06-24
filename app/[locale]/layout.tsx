@@ -1,6 +1,7 @@
 import {NextIntlClientProvider, hasLocale} from 'next-intl';
 import {notFound} from 'next/navigation';
 import {AuthProvider} from '@/components/AuthProvider';
+import CookieNotice from '@/components/CookieNotice';
 import Footer from '@/components/Footer';
 import Header from '@/components/Header';
 import ThemeInitializer from '@/components/ThemeInitializer';
@@ -30,6 +31,7 @@ export default async function LocaleLayout({
             <Header />
             <main className="flex-1">{children}</main>
             <Footer />
+            <CookieNotice />
           </AuthProvider>
         </NextIntlClientProvider>
       </body>

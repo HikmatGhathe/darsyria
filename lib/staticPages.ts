@@ -187,7 +187,7 @@ DarSyria respects your privacy. This policy explains what data we collect and ho
 We do not sell your data. We share it only with service providers necessary to operate the platform (hosting, email delivery) and only when legally required.
 
 4. Your rights (under GDPR)
-You can request access, correction, or deletion of your data at any time. Email: privacy@darsyria.com
+You can download a copy of your data or delete your account yourself at any time from your Account page. For anything else, email: privacy@darsyria.com
 
 5. Cookies
 We use essential cookies for authentication and basic functionality. Analytics cookies are optional and require your consent.
@@ -213,7 +213,7 @@ DarSyria respektiert Ihre Privatsphäre. Diese Richtlinie erläutert, welche Dat
 Wir verkaufen Ihre Daten nicht. Wir geben sie nur an Dienstleister weiter, die zum Betrieb der Plattform erforderlich sind (Hosting, E-Mail-Zustellung), und nur, wenn dies gesetzlich vorgeschrieben ist.
 
 4. Ihre Rechte (gemäß DSGVO)
-Sie können jederzeit Zugang, Korrektur oder Löschung Ihrer Daten verlangen. E-Mail: privacy@darsyria.com
+Sie können jederzeit selbst eine Kopie Ihrer Daten herunterladen oder Ihr Konto über Ihre Kontoseite löschen. Für alles andere: privacy@darsyria.com
 
 5. Cookies
 Wir verwenden essenzielle Cookies für Authentifizierung und Grundfunktionen. Analyse-Cookies sind optional und erfordern Ihre Zustimmung.
@@ -239,7 +239,7 @@ Hinweis: Dies ist ein Platzhalter. Die endgültige Datenschutzerklärung muss DS
 نحن لا نبيع بياناتك. نشاركها فقط مع مزودي الخدمات الضروريين لتشغيل المنصة (الاستضافة، توصيل البريد الإلكتروني) وفقط عند الاقتضاء القانوني.
 
 ٤. حقوقك (بموجب اللائحة العامة لحماية البيانات)
-يمكنك طلب الوصول إلى بياناتك أو تصحيحها أو حذفها في أي وقت. البريد الإلكتروني: privacy@darsyria.com
+يمكنك تحميل نسخة من بياناتك أو حذف حسابك بنفسك في أي وقت من صفحة حسابك. لأي طلب آخر: privacy@darsyria.com
 
 ٥. ملفات تعريف الارتباط
 نستخدم ملفات تعريف الارتباط الأساسية للمصادقة والوظائف الأساسية. ملفات تعريف ارتباط التحليلات اختيارية وتتطلب موافقتك.
