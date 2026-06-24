@@ -179,11 +179,15 @@ export type ApiProperty = {
   created_at: string;
   updated_at: string;
   images: PropertyImage[];
+  seller_display_name: string | null;
+  seller_account_type: string | null;
+  seller_verification_status: string | null;
 };
 
 // API list-view response (less data)
 export type ApiPropertyListItem = {
   id: string;
+  owner_id: string;
   title: string;
   city: string;
   neighborhood: string | null;
@@ -195,6 +199,9 @@ export type ApiPropertyListItem = {
   document_status: string;
   created_at: string;
   cover_image_url: string | null;
+  seller_display_name: string | null;
+  seller_account_type: string | null;
+  seller_verification_status: string | null;
 };
 
 export type PropertyFilters = {
@@ -203,6 +210,7 @@ export type PropertyFilters = {
   min_price?: number;
   max_price?: number;
   rooms?: number;
+  seller?: string;
   limit?: number;
   offset?: number;
 };
@@ -222,6 +230,7 @@ export async function listProperties(filters: PropertyFilters = {}): Promise<Api
   if (filters.min_price !== undefined) params.set('min_price', String(filters.min_price));
   if (filters.max_price !== undefined) params.set('max_price', String(filters.max_price));
   if (filters.rooms !== undefined) params.set('rooms', String(filters.rooms));
+  if (filters.seller) params.set('seller', filters.seller);
   if (filters.limit !== undefined) params.set('limit', String(filters.limit));
   if (filters.offset !== undefined) params.set('offset', String(filters.offset));
 
