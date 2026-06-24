@@ -252,7 +252,9 @@
     "emptyState": "Es wurden noch keine Inserate veröffentlicht. Seien Sie die/der Erste.",
     "createListingCTA": "Immobilie inserieren",
     "errorLoading": "Inserate konnten nicht geladen werden. Bitte erneut versuchen.",
-    "resultCount": "{count, plural, =1 {1 Inserat} other {# Inserate}}"
+    "resultCount": "{count, plural, =1 {1 Inserat} other {# Inserate}}",
+    "previous": "Zurück",
+    "next": "Weiter"
   },
   "PropertyForm": {
     "title": "Immobilie inserieren",

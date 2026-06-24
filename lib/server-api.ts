@@ -2,7 +2,7 @@
 // client component is a build error, so it can never leak to the browser.
 import {cache} from 'react';
 import {cookies} from 'next/headers';
-import type {ApiProperty} from './properties';
+import type {ApiProperty, ApiPropertyListItem, PropertyFilters} from './properties';
 import type {SellerProfile} from './sellers';
 
 // Server-side base URL. In dev this is the same localhost:8000 the browser
@@ -50,3 +50,23 @@ export const getSellerServer = cache(
   (id: string): Promise<SellerProfile | null> =>
     serverFetchJson<SellerProfile>(`/sellers/${id}`)
 );
+
+export async function listPropertiesServer(
+  filters: PropertyFilters
+): Promise<ApiPropertyListItem[]> {
+  const params = new URLSearchParams();
+  if (filters.city) params.set('city', filters.city);
+  if (filters.property_type) params.set('property_type', filters.property_type);
+  if (filters.min_price !== undefined) params.set('min_price', String(filters.min_price));
+  if (filters.max_price !== undefined) params.set('max_price', String(filters.max_price));
+  if (filters.rooms !== undefined) params.set('rooms', String(filters.rooms));
+  if (filters.seller) params.set('seller', filters.seller);
+  if (filters.limit !== undefined) params.set('limit', String(filters.limit));
+  if (filters.offset !== undefined) params.set('offset', String(filters.offset));
+
+  const qs = params.toString();
+  const data = await serverFetchJson<ApiPropertyListItem[]>(
+    `/properties${qs ? `?${qs}` : ''}`
+  );
+  return data ?? [];
+}

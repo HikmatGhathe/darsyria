@@ -1,101 +1,91 @@
-'use client';
-
-import {useState, useEffect, useCallback} from 'react';
-import {useTranslations, useLocale} from 'next-intl';
+import type {Metadata} from 'next';
 import Link from 'next/link';
-import {listProperties, type PropertyListItem, type PropertyFilters} from '@/lib/properties';
+import {getTranslations} from 'next-intl/server';
 import PropertyCard from '@/components/PropertyCard';
-import {propertyTypeKey} from '@/lib/property-display';
+import PropertyFilters, {type FilterValues} from '@/components/PropertyFilters';
+import {listPropertiesServer} from '@/lib/server-api';
+import type {PropertyFilters as ApiFilters} from '@/lib/properties';
+import {SITE_URL} from '@/lib/site';
 
-const PROPERTY_TYPES = ['apartment', 'house', 'land', 'commercial'] as const;
+const PAGE_SIZE = 24;
 
-type FilterState = {
-  city: string;
-  property_type: string;
-  min_price: string;
-  max_price: string;
-  rooms: string;
-  seller: string;
-};
+type SearchParams = Promise<{[key: string]: string | string[] | undefined}>;
+type Params = Promise<{locale: string}>;
 
-const initialFilters: FilterState = {
-  city: '',
-  property_type: '',
-  min_price: '',
-  max_price: '',
-  rooms: '',
-  seller: ''
-};
+function str(v: string | string[] | undefined): string {
+  if (Array.isArray(v)) return v[0] ?? '';
+  return v ?? '';
+}
 
-export default function PropertiesBrowsePage() {
-  const t = useTranslations('PropertyBrowse');
-  const tDisplay = useTranslations('PropertyDisplay');
-  const locale = useLocale();
-
-  const [filters, setFilters] = useState<FilterState>(initialFilters);
-  const [appliedFilters, setAppliedFilters] = useState<FilterState>(initialFilters);
-  const [properties, setProperties] = useState<PropertyListItem[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
-  const buildApiFilters = useCallback((f: FilterState): PropertyFilters => {
-    const out: PropertyFilters = {};
-    if (f.city.trim()) out.city = f.city.trim();
-    if (f.property_type) out.property_type = f.property_type;
-    if (f.min_price) {
-      const n = parseFloat(f.min_price);
-      if (!isNaN(n) && n >= 0) out.min_price = n;
-    }
-    if (f.max_price) {
-      const n = parseFloat(f.max_price);
-      if (!isNaN(n) && n >= 0) out.max_price = n;
-    }
-    if (f.rooms) {
-      const n = parseInt(f.rooms, 10);
-      if (!isNaN(n) && n >= 0) out.rooms = n;
-    }
-    if (f.seller.trim()) out.seller = f.seller.trim();
-    return out;
-  }, []);
-
-  useEffect(() => {
-    let cancelled = false;
-    async function load() {
-      setIsLoading(true);
-      setError(null);
-      try {
-        const data = await listProperties(buildApiFilters(appliedFilters));
-        if (!cancelled) setProperties(data);
-      } catch (e) {
-        if (!cancelled) {
-          console.error('List properties failed:', e);
-          setError(t('errorLoading'));
-        }
-      } finally {
-        if (!cancelled) setIsLoading(false);
+export async function generateMetadata({params}: {params: Params}): Promise<Metadata> {
+  const {locale} = await params;
+  const t = await getTranslations({locale, namespace: 'PropertyBrowse'});
+  const base = `${SITE_URL}/${locale}/properties`;
+  return {
+    title: t('title'),
+    description: t('subtitle'),
+    // Canonicalize every filtered/paged variant to the base browse page to
+    // avoid faceted duplicate-content.
+    alternates: {
+      canonical: base,
+      languages: {
+        en: `${SITE_URL}/en/properties`,
+        de: `${SITE_URL}/de/properties`,
+        ar: `${SITE_URL}/ar/properties`
       }
     }
-    load();
-    return () => {
-      cancelled = true;
-    };
-  }, [appliedFilters, buildApiFilters, t]);
+  };
+}
 
-  function update<K extends keyof FilterState>(key: K, value: FilterState[K]) {
-    setFilters((prev) => ({...prev, [key]: value}));
+export default async function PropertiesBrowsePage({
+  params,
+  searchParams
+}: {
+  params: Params;
+  searchParams: SearchParams;
+}) {
+  const {locale} = await params;
+  const sp = await searchParams;
+  const t = await getTranslations({locale, namespace: 'PropertyBrowse'});
+
+  const values: FilterValues = {
+    city: str(sp.city),
+    seller: str(sp.seller),
+    property_type: str(sp.property_type),
+    min_price: str(sp.min_price),
+    max_price: str(sp.max_price),
+    rooms: str(sp.rooms)
+  };
+  const offset = Math.max(0, parseInt(str(sp.offset) || '0', 10) || 0);
+
+  const apiFilters: ApiFilters = {limit: PAGE_SIZE, offset};
+  if (values.city) apiFilters.city = values.city;
+  if (values.seller) apiFilters.seller = values.seller;
+  if (values.property_type) apiFilters.property_type = values.property_type;
+  if (values.min_price && !isNaN(Number(values.min_price))) apiFilters.min_price = Number(values.min_price);
+  if (values.max_price && !isNaN(Number(values.max_price))) apiFilters.max_price = Number(values.max_price);
+  if (values.rooms && !isNaN(Number(values.rooms))) apiFilters.rooms = Number(values.rooms);
+
+  const properties = await listPropertiesServer(apiFilters);
+
+  const hasFilters = Object.values(values).some((v) => v !== '');
+
+  // Preserve active filters when paging.
+  function pageHref(newOffset: number): string {
+    const params = new URLSearchParams();
+    if (values.city) params.set('city', values.city);
+    if (values.seller) params.set('seller', values.seller);
+    if (values.property_type) params.set('property_type', values.property_type);
+    if (values.min_price) params.set('min_price', values.min_price);
+    if (values.max_price) params.set('max_price', values.max_price);
+    if (values.rooms) params.set('rooms', values.rooms);
+    if (newOffset > 0) params.set('offset', String(newOffset));
+    const qs = params.toString();
+    return `/${locale}/properties${qs ? `?${qs}` : ''}`;
   }
 
-  function applyFilters(e: {preventDefault(): void}) {
-    e.preventDefault();
-    setAppliedFilters(filters);
-  }
-
-  function clearFilters() {
-    setFilters(initialFilters);
-    setAppliedFilters(initialFilters);
-  }
-
-  const hasFiltersApplied = Object.values(appliedFilters).some((v) => v !== '');
+  const showPrev = offset > 0;
+  const showNext = properties.length === PAGE_SIZE;
 
   return (
     <div className="max-w-7xl mx-auto px-6 py-8">
@@ -113,139 +103,15 @@ export default function PropertiesBrowsePage() {
       </header>
 
       <div className="grid grid-cols-1 lg:grid-cols-[280px_1fr] gap-8">
-        {/* Filter sidebar */}
         <aside className="lg:sticky lg:top-6 lg:self-start">
-          <form
-            onSubmit={applyFilters}
-            className="p-5 bg-surface-card border border-border-subtle rounded-xl space-y-4"
-          >
-            <h2 className="text-sm font-semibold text-text-primary uppercase tracking-wide">
-              {t('filtersHeading')}
-            </h2>
-
-            <div>
-              <label className="block text-sm font-medium text-text-secondary mb-1">
-                {t('labelCity')}
-              </label>
-              <input
-                type="text"
-                value={filters.city}
-                onChange={(e) => update('city', e.target.value)}
-                placeholder={t('placeholderCity')}
-                className="w-full px-3 py-2 text-sm bg-surface-card border border-border-subtle rounded-lg text-text-primary focus:outline-none focus:ring-1 focus:ring-brand-navy focus:border-brand-navy"
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-text-secondary mb-1">
-                {t('labelSeller')}
-              </label>
-              <input
-                type="text"
-                value={filters.seller}
-                onChange={(e) => update('seller', e.target.value)}
-                placeholder={t('placeholderSeller')}
-                className="w-full px-3 py-2 text-sm bg-surface-card border border-border-subtle rounded-lg text-text-primary focus:outline-none focus:ring-1 focus:ring-brand-navy focus:border-brand-navy"
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-text-secondary mb-1">
-                {t('labelType')}
-              </label>
-              <select
-                value={filters.property_type}
-                onChange={(e) => update('property_type', e.target.value)}
-                className="w-full px-3 py-2 text-sm bg-surface-card border border-border-subtle rounded-lg text-text-primary focus:outline-none focus:ring-1 focus:ring-brand-navy focus:border-brand-navy"
-              >
-                <option value="">{t('anyType')}</option>
-                {PROPERTY_TYPES.map((type) => (
-                  <option key={type} value={type}>
-                    {tDisplay(propertyTypeKey(type) as Parameters<typeof tDisplay>[0])}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            <div className="grid grid-cols-2 gap-2">
-              <div>
-                <label className="block text-sm font-medium text-text-secondary mb-1">
-                  {t('labelMinPrice')}
-                </label>
-                <input
-                  type="number"
-                  value={filters.min_price}
-                  onChange={(e) => update('min_price', e.target.value)}
-                  min={0}
-                  className="w-full px-3 py-2 text-sm bg-surface-card border border-border-subtle rounded-lg text-text-primary focus:outline-none focus:ring-1 focus:ring-brand-navy focus:border-brand-navy"
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-text-secondary mb-1">
-                  {t('labelMaxPrice')}
-                </label>
-                <input
-                  type="number"
-                  value={filters.max_price}
-                  onChange={(e) => update('max_price', e.target.value)}
-                  min={0}
-                  className="w-full px-3 py-2 text-sm bg-surface-card border border-border-subtle rounded-lg text-text-primary focus:outline-none focus:ring-1 focus:ring-brand-navy focus:border-brand-navy"
-                />
-              </div>
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-text-secondary mb-1">
-                {t('labelRooms')}
-              </label>
-              <select
-                value={filters.rooms}
-                onChange={(e) => update('rooms', e.target.value)}
-                className="w-full px-3 py-2 text-sm bg-surface-card border border-border-subtle rounded-lg text-text-primary focus:outline-none focus:ring-1 focus:ring-brand-navy focus:border-brand-navy"
-              >
-                <option value="">{t('anyRooms')}</option>
-                {[1, 2, 3, 4, 5].map((n) => (
-                  <option key={n} value={n}>
-                    {n}+
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            <div className="flex gap-2 pt-2">
-              <button
-                type="submit"
-                className="flex-1 px-4 py-2 bg-brand-navy text-white text-sm font-medium rounded-lg hover:bg-brand-navy-hover transition-colors"
-              >
-                {t('applyFilters')}
-              </button>
-              {hasFiltersApplied && (
-                <button
-                  type="button"
-                  onClick={clearFilters}
-                  className="px-4 py-2 bg-surface-card border border-border-subtle text-text-primary text-sm font-medium rounded-lg hover:bg-surface-page transition-colors"
-                >
-                  {t('clearFilters')}
-                </button>
-              )}
-            </div>
-          </form>
+          <PropertyFilters initial={values} />
         </aside>
 
-        {/* Results */}
         <main>
-          {isLoading ? (
-            <div className="text-text-secondary py-12 text-center">Loading...</div>
-          ) : error ? (
-            <div className="p-4 bg-accent-danger-bg border border-accent-danger/30 rounded-lg text-accent-danger">
-              {error}
-            </div>
-          ) : properties.length === 0 ? (
+          {properties.length === 0 ? (
             <div className="text-center py-16 px-6 bg-surface-card border border-border-subtle rounded-xl">
-              <p className="text-text-secondary mb-4">
-                {hasFiltersApplied ? t('noResults') : t('emptyState')}
-              </p>
-              {!hasFiltersApplied && (
+              <p className="text-text-secondary mb-4">{hasFilters ? t('noResults') : t('emptyState')}</p>
+              {!hasFilters && (
                 <Link
                   href={`/${locale}/properties/new`}
                   className="inline-block px-5 py-2.5 bg-brand-navy text-white rounded-lg hover:bg-brand-navy-hover transition-colors font-medium"
@@ -264,6 +130,29 @@ export default function PropertiesBrowsePage() {
                   <PropertyCard key={p.id} property={p} locale={locale} />
                 ))}
               </div>
+
+              {(showPrev || showNext) && (
+                <div className="mt-8 flex items-center justify-between">
+                  {showPrev ? (
+                    <Link
+                      href={pageHref(Math.max(0, offset - PAGE_SIZE))}
+                      className="px-4 py-2 bg-surface-card border border-border-subtle text-text-primary text-sm font-medium rounded-lg hover:bg-surface-page transition-colors"
+                    >
+                      ← {t('previous')}
+                    </Link>
+                  ) : (
+                    <span />
+                  )}
+                  {showNext && (
+                    <Link
+                      href={pageHref(offset + PAGE_SIZE)}
+                      className="px-4 py-2 bg-surface-card border border-border-subtle text-text-primary text-sm font-medium rounded-lg hover:bg-surface-page transition-colors"
+                    >
+                      {t('next')} →
+                    </Link>
+                  )}
+                </div>
+              )}
             </>
           )}
         </main>

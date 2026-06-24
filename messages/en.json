@@ -252,7 +252,9 @@
     "emptyState": "No listings have been published yet. Be among the first.",
     "createListingCTA": "List your property",
     "errorLoading": "Could not load listings. Please try again.",
-    "resultCount": "{count, plural, =1 {1 listing} other {# listings}}"
+    "resultCount": "{count, plural, =1 {1 listing} other {# listings}}",
+    "previous": "Previous",
+    "next": "Next"
   },
   "PropertyForm": {
     "title": "List your property",
