@@ -1,11 +1,38 @@
+import type {Metadata} from 'next';
 import {notFound} from 'next/navigation';
 import {getTranslations} from 'next-intl/server';
 import {Link} from '@/i18n/navigation';
 import {getArticleBySlug, getAllArticles} from '@/lib/articles';
+import {SITE_URL} from '@/lib/site';
 
 type Props = {
   params: Promise<{locale: 'ar' | 'de' | 'en'; slug: string}>;
 };
+
+export async function generateMetadata({params}: Props): Promise<Metadata> {
+  const {locale, slug} = await params;
+  const article = getArticleBySlug(slug);
+  if (!article) {
+    return {title: 'Not found', robots: {index: false}};
+  }
+  const title = article.title[locale];
+  const description = article.excerpt[locale].replace(/\s+/g, ' ').trim().slice(0, 155);
+  const url = `${SITE_URL}/${locale}/knowledge/${slug}`;
+  return {
+    title,
+    description,
+    alternates: {
+      canonical: url,
+      languages: {
+        en: `${SITE_URL}/en/knowledge/${slug}`,
+        de: `${SITE_URL}/de/knowledge/${slug}`,
+        ar: `${SITE_URL}/ar/knowledge/${slug}`
+      }
+    },
+    openGraph: {type: 'article', url, title, description},
+    twitter: {card: 'summary', title, description}
+  };
+}
 
 export default async function ArticlePage({params}: Props) {
   const {locale, slug} = await params;
