@@ -61,6 +61,9 @@ export default function FollowButton({sellerId, locale}: Props) {
 
   if (authLoading) return null;
 
+  // Don't offer "Follow" to a seller on their own listing/profile.
+  if (user && user.id === sellerId) return null;
+
   if (!user) {
     return (
       <Link
