@@ -238,6 +238,8 @@
     "filtersHeading": "Filter",
     "labelCity": "Stadt",
     "placeholderCity": "Jede Stadt",
+    "labelSeller": "Verkäufer oder Unternehmen",
+    "placeholderSeller": "z. B. Emaar",
     "labelType": "Typ",
     "anyType": "Jeder Typ",
     "labelMinPrice": "Min. Preis",

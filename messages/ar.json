@@ -238,6 +238,8 @@
     "filtersHeading": "عوامل التصفية",
     "labelCity": "المدينة",
     "placeholderCity": "أي مدينة",
+    "labelSeller": "البائع أو الشركة",
+    "placeholderSeller": "مثال: إعمار",
     "labelType": "النوع",
     "anyType": "أي نوع",
     "labelMinPrice": "أقل سعر",

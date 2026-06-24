@@ -15,6 +15,7 @@ type FilterState = {
   min_price: string;
   max_price: string;
   rooms: string;
+  seller: string;
 };
 
 const initialFilters: FilterState = {
@@ -22,7 +23,8 @@ const initialFilters: FilterState = {
   property_type: '',
   min_price: '',
   max_price: '',
-  rooms: ''
+  rooms: '',
+  seller: ''
 };
 
 export default function PropertiesBrowsePage() {
@@ -52,6 +54,7 @@ export default function PropertiesBrowsePage() {
       const n = parseInt(f.rooms, 10);
       if (!isNaN(n) && n >= 0) out.rooms = n;
     }
+    if (f.seller.trim()) out.seller = f.seller.trim();
     return out;
   }, []);
 
@@ -129,6 +132,19 @@ export default function PropertiesBrowsePage() {
                 value={filters.city}
                 onChange={(e) => update('city', e.target.value)}
                 placeholder={t('placeholderCity')}
+                className="w-full px-3 py-2 text-sm bg-surface-card border border-border-subtle rounded-lg text-text-primary focus:outline-none focus:ring-1 focus:ring-brand-navy focus:border-brand-navy"
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-text-secondary mb-1">
+                {t('labelSeller')}
+              </label>
+              <input
+                type="text"
+                value={filters.seller}
+                onChange={(e) => update('seller', e.target.value)}
+                placeholder={t('placeholderSeller')}
                 className="w-full px-3 py-2 text-sm bg-surface-card border border-border-subtle rounded-lg text-text-primary focus:outline-none focus:ring-1 focus:ring-brand-navy focus:border-brand-navy"
               />
             </div>
