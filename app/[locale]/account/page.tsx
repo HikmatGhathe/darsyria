@@ -4,7 +4,7 @@ import {useEffect, useRef, useState} from 'react';
 import {useTranslations, useLocale} from 'next-intl';
 import {useRouter} from '@/i18n/navigation';
 import {useAuth} from '@/components/AuthProvider';
-import {updateMe} from '@/lib/auth';
+import {deleteMyAccount, exportMyData, updateMe} from '@/lib/auth';
 
 type FormState = {
   full_name: string;
@@ -27,6 +27,13 @@ export default function AccountPage() {
   });
   const [status, setStatus] = useState<Status>('idle');
   const savedTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const [exportError, setExportError] = useState(false);
+  const [isExporting, setIsExporting] = useState(false);
+
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [deleteError, setDeleteError] = useState(false);
 
   // Populate form once user loads
   useEffect(() => {
@@ -71,6 +78,40 @@ export default function AccountPage() {
       savedTimerRef.current = setTimeout(() => setStatus('idle'), 3000);
     } catch {
       setStatus('error');
+    }
+  }
+
+  async function handleExport() {
+    if (isExporting) return;
+    setIsExporting(true);
+    setExportError(false);
+    try {
+      const data = await exportMyData();
+      const blob = new Blob([JSON.stringify(data, null, 2)], {type: 'application/json'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'darsyria-my-data.json';
+      a.click();
+      URL.revokeObjectURL(url);
+    } catch {
+      setExportError(true);
+    } finally {
+      setIsExporting(false);
+    }
+  }
+
+  async function handleDeleteAccount() {
+    if (isDeleting) return;
+    setIsDeleting(true);
+    setDeleteError(false);
+    try {
+      await deleteMyAccount();
+      await refresh();
+      router.push('/');
+    } catch {
+      setDeleteError(true);
+      setIsDeleting(false);
     }
   }
 
@@ -180,6 +221,76 @@ export default function AccountPage() {
           {status === 'saving' ? t('saving') : t('save')}
         </button>
       </form>
+
+      {/* Data export + account deletion */}
+      <div className="mt-12 pt-8 border-t border-border-subtle space-y-8">
+        <h2 className="text-sm font-semibold text-text-secondary uppercase tracking-wide">
+          {t('dataSection')}
+        </h2>
+
+        <div>
+          <h3 className="text-base font-medium text-text-primary mb-1">{t('dataExportHeading')}</h3>
+          <p className="text-sm text-text-secondary mb-3">{t('dataExportBody')}</p>
+          {exportError && (
+            <p className="text-sm text-accent-danger mb-3">{t('dataExportError')}</p>
+          )}
+          <button
+            onClick={handleExport}
+            disabled={isExporting}
+            className="rounded-lg border border-border-subtle bg-surface-card px-4 py-2 text-sm font-medium text-text-primary hover:bg-surface-page disabled:opacity-60 transition-colors"
+          >
+            {t('dataExportButton')}
+          </button>
+        </div>
+
+        <div>
+          <h3 className="text-base font-medium text-accent-danger mb-1">{t('deleteAccountHeading')}</h3>
+          <p className="text-sm text-text-secondary mb-3">{t('deleteAccountBody')}</p>
+          <button
+            onClick={() => setShowDeleteConfirm(true)}
+            className="rounded-lg border border-accent-danger/40 bg-surface-card px-4 py-2 text-sm font-medium text-accent-danger hover:bg-accent-danger-bg transition-colors"
+          >
+            {t('deleteAccountButton')}
+          </button>
+        </div>
+      </div>
+
+      {/* Delete confirmation modal */}
+      {showDeleteConfirm && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 px-4"
+          onClick={() => !isDeleting && setShowDeleteConfirm(false)}
+        >
+          <div
+            className="bg-surface-card rounded-xl shadow-xl max-w-md w-full p-6"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <h3 className="text-lg font-semibold text-text-primary mb-2">
+              {t('deleteAccountConfirmTitle')}
+            </h3>
+            <p className="text-sm text-text-secondary mb-4">{t('deleteAccountConfirmBody')}</p>
+            {deleteError && (
+              <p className="text-sm text-accent-danger mb-4">{t('deleteAccountError')}</p>
+            )}
+            <div className="flex justify-end gap-3">
+              <button
+                onClick={() => setShowDeleteConfirm(false)}
+                disabled={isDeleting}
+                className="px-4 py-2 bg-surface-card border border-border-subtle text-text-primary text-sm font-medium rounded-lg hover:bg-surface-page disabled:cursor-not-allowed transition-colors"
+              >
+                {t('deleteAccountCancel')}
+              </button>
+              <button
+                onClick={handleDeleteAccount}
+                disabled={isDeleting}
+                className="px-4 py-2 bg-accent-danger text-white text-sm font-medium rounded-lg hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed transition-opacity"
+              >
+                {isDeleting ? t('deleting') : t('deleteAccountConfirmAction')}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </main>
   );
 }

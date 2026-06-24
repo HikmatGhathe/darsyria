@@ -318,7 +318,21 @@
     "savedSuccess": "Your changes were saved.",
     "saveError": "Could not save your changes. Please try again.",
     "loading": "Loading...",
-    "loadError": "Could not load your profile."
+    "loadError": "Could not load your profile.",
+    "dataSection": "Your data",
+    "dataExportHeading": "Download your data",
+    "dataExportBody": "Get a copy of your profile, listings, and conversations as a JSON file.",
+    "dataExportButton": "Download my data",
+    "dataExportError": "Could not export your data. Please try again.",
+    "deleteAccountHeading": "Delete account",
+    "deleteAccountBody": "Permanently delete your account. Your listings will be unpublished. Messages you've sent will stay visible to people you messaged, but your name and contact details will be removed.",
+    "deleteAccountButton": "Delete my account",
+    "deleteAccountConfirmTitle": "Delete your account?",
+    "deleteAccountConfirmBody": "This cannot be undone. Your profile will be anonymized, your listings unpublished, and you'll be signed out immediately.",
+    "deleteAccountConfirmAction": "Yes, delete my account",
+    "deleteAccountCancel": "Cancel",
+    "deleteAccountError": "Could not delete your account. Please try again.",
+    "deleting": "Deleting..."
   },
   "Inbox": {
     "pageTitle": "Inbox",

@@ -318,7 +318,21 @@
     "savedSuccess": "Ihre Änderungen wurden gespeichert.",
     "saveError": "Änderungen konnten nicht gespeichert werden. Bitte erneut versuchen.",
     "loading": "Wird geladen...",
-    "loadError": "Profil konnte nicht geladen werden."
+    "loadError": "Profil konnte nicht geladen werden.",
+    "dataSection": "Ihre Daten",
+    "dataExportHeading": "Daten herunterladen",
+    "dataExportBody": "Laden Sie eine Kopie Ihres Profils, Ihrer Inserate und Ihrer Konversationen als JSON-Datei herunter.",
+    "dataExportButton": "Meine Daten herunterladen",
+    "dataExportError": "Daten konnten nicht exportiert werden. Bitte erneut versuchen.",
+    "deleteAccountHeading": "Konto löschen",
+    "deleteAccountBody": "Löschen Sie Ihr Konto endgültig. Ihre Inserate werden depubliziert. Von Ihnen gesendete Nachrichten bleiben für die Personen, denen Sie geschrieben haben, sichtbar, aber Ihr Name und Ihre Kontaktdaten werden entfernt.",
+    "deleteAccountButton": "Mein Konto löschen",
+    "deleteAccountConfirmTitle": "Konto löschen?",
+    "deleteAccountConfirmBody": "Dies kann nicht rückgängig gemacht werden. Ihr Profil wird anonymisiert, Ihre Inserate werden depubliziert, und Sie werden sofort abgemeldet.",
+    "deleteAccountConfirmAction": "Ja, mein Konto löschen",
+    "deleteAccountCancel": "Abbrechen",
+    "deleteAccountError": "Konto konnte nicht gelöscht werden. Bitte erneut versuchen.",
+    "deleting": "Wird gelöscht..."
   },
   "Inbox": {
     "pageTitle": "Posteingang",

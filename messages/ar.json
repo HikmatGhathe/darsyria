@@ -318,7 +318,21 @@
     "savedSuccess": "تم حفظ التغييرات.",
     "saveError": "تعذر حفظ التغييرات. حاول مرة أخرى.",
     "loading": "جاري التحميل...",
-    "loadError": "تعذر تحميل الملف الشخصي."
+    "loadError": "تعذر تحميل الملف الشخصي.",
+    "dataSection": "بياناتك",
+    "dataExportHeading": "تحميل بياناتك",
+    "dataExportBody": "احصل على نسخة من ملفك الشخصي وإعلاناتك ومحادثاتك كملف JSON.",
+    "dataExportButton": "تحميل بياناتي",
+    "dataExportError": "تعذر تصدير بياناتك. حاول مرة أخرى.",
+    "deleteAccountHeading": "حذف الحساب",
+    "deleteAccountBody": "حذف حسابك بشكل نهائي. سيتم إلغاء نشر إعلاناتك. الرسائل التي أرسلتها ستبقى مرئية للأشخاص الذين راسلتهم، لكن اسمك وبيانات الاتصال الخاصة بك ستُزال.",
+    "deleteAccountButton": "حذف حسابي",
+    "deleteAccountConfirmTitle": "حذف حسابك؟",
+    "deleteAccountConfirmBody": "لا يمكن التراجع عن هذا الإجراء. سيتم إخفاء هوية ملفك الشخصي، وإلغاء نشر إعلاناتك، وتسجيل خروجك فوراً.",
+    "deleteAccountConfirmAction": "نعم، احذف حسابي",
+    "deleteAccountCancel": "إلغاء",
+    "deleteAccountError": "تعذر حذف حسابك. حاول مرة أخرى.",
+    "deleting": "جاري الحذف..."
   },
   "Inbox": {
     "pageTitle": "صندوق الوارد",

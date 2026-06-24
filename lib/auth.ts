@@ -52,3 +52,11 @@ export async function logout(): Promise<void> {
   // The backend revokes the refresh token and clears both cookies.
   await apiRequest('/auth/logout', {method: 'POST'});
 }
+
+export async function exportMyData(): Promise<unknown> {
+  return apiRequest<unknown>('/auth/me/export', {method: 'GET'});
+}
+
+export async function deleteMyAccount(): Promise<void> {
+  await apiRequest('/auth/me', {method: 'DELETE'});
+}
