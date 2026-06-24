@@ -1,98 +1,84 @@
-'use client';
-
-import {useState, useEffect} from 'react';
-import {useParams} from 'next/navigation';
-import {useTranslations, useLocale} from 'next-intl';
+import type {Metadata} from 'next';
+import {notFound} from 'next/navigation';
 import Link from 'next/link';
-import {useAuth} from '@/components/AuthProvider';
+import {getTranslations} from 'next-intl/server';
 import PropertyCard from '@/components/PropertyCard';
-import {getSeller, followSeller, unfollowSeller, type SellerProfile} from '@/lib/sellers';
+import FollowButton from '@/components/FollowButton';
+import {getSellerServer} from '@/lib/server-api';
 import {formatListedDate} from '@/lib/property-display';
+import {SITE_URL} from '@/lib/site';
 
-export default function SellerProfilePage() {
-  const t = useTranslations('Sellers');
-  const tProperty = useTranslations('PropertyDisplay');
-  const tAccount = useTranslations('Account');
-  const locale = useLocale();
-  const params = useParams();
-  const id = params.id as string;
-  const {user, isLoading: authLoading} = useAuth();
+type Params = Promise<{locale: string; id: string}>;
 
-  const [seller, setSeller] = useState<SellerProfile | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [notFound, setNotFound] = useState(false);
-  const [followBusy, setFollowBusy] = useState(false);
+function localeAlternates(id: string): Record<string, string> {
+  return {
+    en: `${SITE_URL}/en/sellers/${id}`,
+    de: `${SITE_URL}/de/sellers/${id}`,
+    ar: `${SITE_URL}/ar/sellers/${id}`
+  };
+}
 
-  useEffect(() => {
-    let cancelled = false;
-    async function load() {
-      setIsLoading(true);
-      setNotFound(false);
-      try {
-        const data = await getSeller(id);
-        if (!cancelled) setSeller(data);
-      } catch (e) {
-        console.error('Load seller failed:', e);
-        if (!cancelled) setNotFound(true);
-      } finally {
-        if (!cancelled) setIsLoading(false);
-      }
-    }
-    load();
-    return () => {
-      cancelled = true;
-    };
-  }, [id]);
+export async function generateMetadata({params}: {params: Params}): Promise<Metadata> {
+  const {locale, id} = await params;
+  const seller = await getSellerServer(id);
 
-  async function handleFollowToggle() {
-    if (!seller || followBusy) return;
-    setFollowBusy(true);
-    const wasFollowing = seller.is_following;
-    try {
-      if (wasFollowing) {
-        await unfollowSeller(seller.id);
-      } else {
-        await followSeller(seller.id);
-      }
-      setSeller((prev) =>
-        prev
-          ? {
-              ...prev,
-              is_following: !wasFollowing,
-              follower_count: prev.follower_count + (wasFollowing ? -1 : 1)
-            }
-          : prev
-      );
-    } catch (e) {
-      console.error('Follow toggle failed:', e);
-    } finally {
-      setFollowBusy(false);
-    }
+  if (!seller) {
+    const t = await getTranslations({locale, namespace: 'Sellers'});
+    return {title: t('profileNotFoundTitle'), robots: {index: false}};
   }
 
-  if (isLoading || authLoading) {
-    return (
-      <div className="max-w-4xl mx-auto px-6 py-12 text-text-secondary">Loading...</div>
-    );
-  }
+  const t = await getTranslations({locale, namespace: 'Sellers'});
+  const name = seller.display_name ?? t('unknownSeller');
+  const description =
+    seller.company_about?.replace(/\s+/g, ' ').trim().slice(0, 155) ||
+    t('activeListings', {count: seller.active_listing_count});
+  const url = `${SITE_URL}/${locale}/sellers/${seller.id}`;
 
-  if (notFound || !seller) {
-    return (
-      <div className="max-w-4xl mx-auto px-6 py-12">
-        <h1 className="text-2xl font-semibold text-text-primary mb-2">{t('profileNotFoundTitle')}</h1>
-        <p className="text-text-secondary mb-6">{t('profileNotFoundMessage')}</p>
-        <Link href={`/${locale}/properties`} className="text-brand-navy hover:underline">
-          ← {tProperty('backToListings')}
-        </Link>
-      </div>
-    );
-  }
+  return {
+    title: name,
+    description,
+    alternates: {canonical: url, languages: localeAlternates(seller.id)},
+    openGraph: {type: 'profile', url, title: name, description},
+    twitter: {card: 'summary', title: name, description}
+  };
+}
+
+export default async function SellerProfilePage({params}: {params: Params}) {
+  const {locale, id} = await params;
+  const seller = await getSellerServer(id);
+
+  if (!seller) notFound();
+
+  const t = await getTranslations({locale, namespace: 'Sellers'});
+  const tProperty = await getTranslations({locale, namespace: 'PropertyDisplay'});
+  const tAccount = await getTranslations({locale, namespace: 'Account'});
 
   const isCompany = seller.account_type === 'company';
   const isVerified = seller.verification_status === 'verified';
+  const url = `${SITE_URL}/${locale}/sellers/${seller.id}`;
+
+  const jsonLd =
+    isCompany && seller.display_name
+      ? {
+          '@context': 'https://schema.org',
+          '@type': 'RealEstateAgent',
+          name: seller.display_name,
+          url,
+          ...(seller.company_address ? {address: seller.company_address} : {}),
+          ...(seller.phone ? {telephone: seller.phone} : {}),
+          ...(seller.company_website ? {sameAs: [seller.company_website]} : {})
+        }
+      : null;
 
   return (
     <div className="max-w-4xl mx-auto px-6 py-8">
+      {jsonLd && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{__html: JSON.stringify(jsonLd)}}
+        />
+      )}
+
       <Link
         href={`/${locale}/properties`}
         className="text-sm text-text-tertiary hover:text-text-primary mb-3 inline-block"
@@ -128,28 +114,12 @@ export default function SellerProfilePage() {
           <span className="text-sm text-text-secondary">
             {t('followers', {count: seller.follower_count})}
           </span>
-
           {!seller.is_self && (
-            authLoading ? null : !user ? (
-              <Link
-                href={`/${locale}/login`}
-                className="px-4 py-1.5 bg-brand-navy text-white text-sm font-medium rounded-lg hover:bg-brand-navy-hover transition-colors"
-              >
-                {t('followSignedOut')}
-              </Link>
-            ) : (
-              <button
-                onClick={handleFollowToggle}
-                disabled={followBusy}
-                className={
-                  seller.is_following
-                    ? 'px-4 py-1.5 bg-surface-card border border-border-subtle text-text-primary text-sm font-medium rounded-lg hover:bg-surface-page disabled:opacity-50 transition-colors'
-                    : 'px-4 py-1.5 bg-brand-navy text-white text-sm font-medium rounded-lg hover:bg-brand-navy-hover disabled:opacity-50 transition-colors'
-                }
-              >
-                {seller.is_following ? t('following') : t('follow')}
-              </button>
-            )
+            <FollowButton
+              sellerId={seller.id}
+              locale={locale}
+              initialFollowing={seller.is_following}
+            />
           )}
         </div>
       </div>

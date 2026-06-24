@@ -3,26 +3,35 @@
 import {useEffect, useState} from 'react';
 import {useTranslations} from 'next-intl';
 import Link from 'next/link';
+import {useRouter} from '@/i18n/navigation';
 import {useAuth} from './AuthProvider';
 import {getSeller, followSeller, unfollowSeller} from '@/lib/sellers';
 
 type Props = {
   sellerId: string;
   locale: string;
+  // When the parent already knows the follow state (e.g. the server-rendered
+  // seller profile), pass it so the button renders correctly with no extra
+  // fetch or flash. Omitted on the listing page, where it looks itself up.
+  initialFollowing?: boolean;
 };
 
-// Self-contained, like ContactSellerButton: given just a seller id, looks
-// up whether the current viewer already follows them and renders the
-// right state. Used on the property detail page; the seller profile page
-// has its own inline version since it already has this data loaded.
-export default function FollowButton({sellerId, locale}: Props) {
+// Self-contained follow toggle. Given a seller id, renders the right state
+// for the current viewer and keeps server-rendered data (e.g. follower count)
+// in sync via router.refresh() after a successful toggle.
+export default function FollowButton({sellerId, locale, initialFollowing}: Props) {
   const t = useTranslations('Sellers');
+  const router = useRouter();
   const {user, isLoading: authLoading} = useAuth();
 
-  const [isFollowing, setIsFollowing] = useState<boolean | null>(null);
+  const [isFollowing, setIsFollowing] = useState<boolean | null>(
+    initialFollowing ?? null
+  );
   const [busy, setBusy] = useState(false);
 
   useEffect(() => {
+    // If the parent provided the state, trust it — no lookup needed.
+    if (initialFollowing !== undefined) return;
     let cancelled = false;
     if (!user) {
       setIsFollowing(null);
@@ -39,21 +48,23 @@ export default function FollowButton({sellerId, locale}: Props) {
     return () => {
       cancelled = true;
     };
-  }, [sellerId, user]);
+  }, [sellerId, user, initialFollowing]);
 
   async function handleToggle() {
     if (isFollowing === null || busy) return;
     setBusy(true);
     const next = !isFollowing;
+    setIsFollowing(next); // optimistic
     try {
       if (next) {
         await followSeller(sellerId);
       } else {
         await unfollowSeller(sellerId);
       }
-      setIsFollowing(next);
+      router.refresh(); // re-sync server-rendered follower count / state
     } catch (e) {
       console.error('Follow toggle failed:', e);
+      setIsFollowing(!next); // revert
     } finally {
       setBusy(false);
     }
