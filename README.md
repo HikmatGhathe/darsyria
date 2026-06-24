@@ -1,5 +1,7 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+> New to the project? Read [docs/how-it-works.md](docs/how-it-works.md) for an overview of how the platform behaves across the buyer, seller, and admin roles, with a map of where each capability lives in the code.
+
 ## Getting Started
 
 First, run the development server:
