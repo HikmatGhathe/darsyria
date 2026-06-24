@@ -124,10 +124,12 @@ export default async function SellerProfilePage({params}: {params: Params}) {
         </div>
       </div>
 
-      {/* Company contact info — shown plainly, no consent gate, since a
-          business wants to be found. Individuals never expose phone/address
-          here; that stays behind the mutual-consent reveal in conversations. */}
-      {isCompany && (seller.company_address || seller.phone || seller.company_website || seller.company_about) && (
+      {/* Public contact info. A company always shows name/address/phone. An
+          individual only reaches here if they opted in to a public phone — the
+          backend returns phone=null otherwise, and address/website/about stay
+          company-only. Private individuals share via the consent reveal in
+          conversations instead. */}
+      {(seller.phone || seller.company_address || seller.company_website || seller.company_about) && (
         <section className="mb-8 p-5 bg-surface-card border border-border-subtle rounded-xl">
           <h2 className="text-sm font-semibold text-text-secondary uppercase tracking-wide mb-3">
             {t('companyInfoHeading')}

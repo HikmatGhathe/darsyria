@@ -4,6 +4,7 @@ import type {AuthResponse, Locale, User} from './types';
 export type UserUpdate = {
   full_name?: string | null;
   phone?: string | null;
+  phone_public?: boolean;
   locale?: string;
   account_type?: 'individual' | 'company';
   company_name?: string | null;

@@ -10,6 +10,7 @@ import type {UserUpdate} from '@/lib/auth';
 type FormState = {
   full_name: string;
   phone: string;
+  phone_public: boolean;
   locale: string;
   account_type: '' | 'individual' | 'company';
   company_name: string;
@@ -29,6 +30,7 @@ export default function AccountPage() {
   const [form, setForm] = useState<FormState>({
     full_name: '',
     phone: '',
+    phone_public: false,
     locale: 'en',
     account_type: '',
     company_name: '',
@@ -52,6 +54,7 @@ export default function AccountPage() {
       setForm({
         full_name: user.full_name ?? '',
         phone: user.phone ?? '',
+        phone_public: user.phone_public ?? false,
         locale: user.locale ?? locale,
         account_type: user.account_type ?? '',
         company_name: user.company_name ?? '',
@@ -93,6 +96,7 @@ export default function AccountPage() {
     const payload: UserUpdate = {
       full_name: form.full_name.trim() || null,
       phone: form.phone.trim() || null,
+      phone_public: form.phone_public,
       locale: form.locale as 'en' | 'de' | 'ar',
     };
     if (form.account_type) {
@@ -246,6 +250,23 @@ export default function AccountPage() {
               <span className="text-sm text-text-primary">{t('accountTypeCompany')}</span>
             </label>
           </div>
+
+          {form.account_type === 'individual' && (
+            <div className="p-4 bg-surface-page rounded-lg">
+              <label className="flex items-start gap-3 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={form.phone_public}
+                  onChange={(e) => setForm((prev) => ({...prev, phone_public: e.target.checked}))}
+                  className="mt-1 text-brand-navy focus:ring-brand-navy"
+                />
+                <span>
+                  <span className="block text-sm font-medium text-text-primary">{t('phonePublicLabel')}</span>
+                  <span className="block text-xs text-text-tertiary mt-0.5">{t('phonePublicHelp')}</span>
+                </span>
+              </label>
+            </div>
+          )}
 
           {form.account_type === 'company' && (
             <div className="space-y-4 p-4 bg-surface-page rounded-lg">

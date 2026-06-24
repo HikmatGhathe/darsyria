@@ -325,6 +325,8 @@
     "phoneHelp": "Erforderlich, wenn Sie Kontaktdaten mit jemandem teilen möchten, mit dem Sie schreiben.",
     "sellerSectionHeading": "Verkäuferkonto",
     "sellerSectionBody": "Richten Sie dies ein, wenn Sie Immobilien anbieten möchten. Unternehmen müssen Namen, Adresse und Telefonnummer angeben — diese werden öffentlich angezeigt, damit Käufer Sie finden und kontaktieren können.",
+    "phonePublicLabel": "Meine Telefonnummer öffentlich anzeigen",
+    "phonePublicHelp": "Standardmäßig aus. Wenn aktiviert, erscheint Ihre Telefonnummer auf Ihrem öffentlichen Verkäuferprofil, damit Käufer Sie direkt anrufen können. Andernfalls bleibt sie privat und wird nur geteilt, wenn Sie beide in einer Konversation zustimmen. Geben Sie oben eine Telefonnummer ein, damit dies wirksam wird.",
     "accountTypeIndividual": "Privatperson",
     "accountTypeCompany": "Unternehmen",
     "companyFieldsNote": "Wird öffentlich auf Ihrem Verkäuferprofil und Ihren Anzeigen angezeigt — keine Datenschutzsperre, da ein Unternehmen gefunden werden möchte.",

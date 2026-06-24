@@ -325,6 +325,8 @@
     "phoneHelp": "Required if you want to share contact info with someone you're messaging.",
     "sellerSectionHeading": "Seller account",
     "sellerSectionBody": "Set this up if you plan to list properties. Companies must provide a name, address, and phone number — these are shown publicly so buyers can find and contact you.",
+    "phonePublicLabel": "Show my phone number publicly",
+    "phonePublicHelp": "Off by default. When on, your phone number appears on your public seller profile so buyers can call you directly. Otherwise it stays private and is only shared when you both agree inside a conversation. Add a phone number above for this to take effect.",
     "accountTypeIndividual": "Individual",
     "accountTypeCompany": "Company",
     "companyFieldsNote": "Shown publicly on your seller profile and listings — no privacy gate, since a business wants to be found.",

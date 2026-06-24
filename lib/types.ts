@@ -5,6 +5,7 @@ export type User = {
   email: string;
   full_name: string | null;
   phone: string | null;
+  phone_public: boolean;
   locale: Locale;
   is_admin: boolean;
   subscription_tier: string;
