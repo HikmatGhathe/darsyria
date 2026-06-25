@@ -329,63 +329,42 @@ Mit der Nutzung von DarSyria erkennen Sie diese Einschränkungen an und überneh
       en: `Information pursuant to § 5 DDG (German Digital Services Act).
 
 Service provider:
-[Full name of the operator]
-[Street and house number]
-[Postal code and city]
-[Country]
+Hikmat Ghathe
+Bergstr. 17
+32756 Detmold
+Germany
 
 Contact:
 Email: contact@darsyria.com
-Phone: [phone number — optional but recommended]
-
-If operated as a registered business:
-VAT identification number (§ 27a UStG): [VAT ID, if applicable]
-Commercial register: [register court and number, if applicable]
 
 Responsible for content under § 18 (2) MStV:
-[Name and address as above]
-
-Note for the operator: a legal notice (Impressum) is mandatory for commercial online services directed at Germany. Replace the placeholders above with your real details (a physical postal address is required — a P.O. box is not sufficient), and have this reviewed by a qualified lawyer before public launch.`,
+Hikmat Ghathe (address as above)`,
       de: `Angaben gemäß § 5 DDG (Digitale-Dienste-Gesetz).
 
 Diensteanbieter:
-[Vollständiger Name des Betreibers]
-[Straße und Hausnummer]
-[PLZ und Ort]
-[Land]
+Hikmat Ghathe
+Bergstr. 17
+32756 Detmold
+Deutschland
 
 Kontakt:
 E-Mail: contact@darsyria.com
-Telefon: [Telefonnummer — optional, aber empfohlen]
-
-Falls als Unternehmen registriert:
-Umsatzsteuer-Identifikationsnummer gemäß § 27a UStG: [USt-IdNr., falls vorhanden]
-Handelsregister: [Registergericht und Registernummer, falls vorhanden]
 
 Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV:
-[Name und Anschrift wie oben]
-
-Hinweis für den Betreiber: Ein Impressum ist für geschäftsmäßige Online-Dienste mit Bezug zu Deutschland Pflicht. Ersetzen Sie die obigen Platzhalter durch Ihre echten Angaben (eine ladungsfähige Anschrift ist erforderlich — ein Postfach genügt nicht) und lassen Sie das Impressum vor dem öffentlichen Start rechtlich prüfen.`,
+Hikmat Ghathe (Anschrift wie oben)`,
       ar: `بيانات وفقًا للمادة 5 من قانون الخدمات الرقمية الألماني (§ 5 DDG).
 
 مزوّد الخدمة:
-[الاسم الكامل للمشغّل]
-[الشارع ورقم المبنى]
-[الرمز البريدي والمدينة]
-[البلد]
+Hikmat Ghathe
+Bergstr. 17
+32756 Detmold
+ألمانيا
 
 التواصل:
 البريد الإلكتروني: contact@darsyria.com
-الهاتف: [رقم الهاتف — اختياري لكنه مُستحسَن]
-
-في حال التشغيل كشركة مسجّلة:
-رقم تعريف ضريبة القيمة المضافة (§ 27a UStG): [إن وُجد]
-السجل التجاري: [محكمة السجل ورقمه، إن وُجد]
 
 المسؤول عن المحتوى وفقًا للمادة 18 (2) من معاهدة الدولة للإعلام (§ 18 MStV):
-[الاسم والعنوان كما هو أعلاه]
-
-ملاحظة للمشغّل: البيان القانوني (Impressum) إلزامي للخدمات الإلكترونية التجارية الموجَّهة إلى ألمانيا. استبدل العناصر النائبة أعلاه ببياناتك الحقيقية (يلزم عنوان بريدي فعلي — صندوق البريد لا يكفي)، واعرضه على محامٍ مؤهّل قبل الإطلاق العام.`
+Hikmat Ghathe (العنوان كما هو أعلاه)`
     }
   }
 };
