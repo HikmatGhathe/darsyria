@@ -52,9 +52,13 @@
     "saved": "Gemerkt"
   },
   "Saved": {
-    "title": "Gemerkte Inserate",
-    "subtitle": "Von Ihnen gemerkte Immobilien. Nur Sie sehen diese Liste.",
+    "title": "Gemerkt",
+    "subtitle": "Ihre gespeicherten Suchen und Inserate. Nur Sie sehen das.",
     "loading": "Wird geladen...",
+    "searchesTitle": "Gespeicherte Suchen",
+    "listingsTitle": "Gemerkte Inserate",
+    "runSearch": "Ausführen",
+    "deleteSearch": "Gespeicherte Suche löschen",
     "empty": "Sie haben noch keine Inserate gemerkt.",
     "browseCta": "Immobilien durchsuchen"
   },
@@ -274,7 +278,9 @@
     "sortNewest": "Neueste zuerst",
     "sortOldest": "Älteste zuerst",
     "sortPriceAsc": "Preis: aufsteigend",
-    "sortPriceDesc": "Preis: absteigend"
+    "sortPriceDesc": "Preis: absteigend",
+    "saveSearch": "Diese Suche speichern",
+    "searchSaved": "Suche gespeichert ✓"
   },
   "PropertyForm": {
     "title": "Immobilie inserieren",

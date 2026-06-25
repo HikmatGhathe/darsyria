@@ -3,6 +3,8 @@
 import {useState} from 'react';
 import {useTranslations} from 'next-intl';
 import {useRouter} from '@/i18n/navigation';
+import {useAuth} from './AuthProvider';
+import {createSavedSearch, type SavedSearchInput} from '@/lib/saved-searches';
 import {propertyTypeKey} from '@/lib/property-display';
 
 const PROPERTY_TYPES = ['apartment', 'house', 'land', 'commercial'] as const;
@@ -28,6 +30,8 @@ export default function PropertyFilters({initial}: {initial: FilterValues}) {
   const t = useTranslations('PropertyBrowse');
   const tDisplay = useTranslations('PropertyDisplay');
   const router = useRouter();
+  const {user} = useAuth();
+  const [saveState, setSaveState] = useState<'idle' | 'saving' | 'saved'>('idle');
 
   const [filters, setFilters] = useState<FormFilters>({
     city: initial.city,
@@ -69,6 +73,34 @@ export default function PropertyFilters({initial}: {initial: FilterValues}) {
   function clear() {
     setFilters({city: '', seller: '', property_type: '', min_price: '', max_price: '', rooms: ''});
     router.push('/properties');
+  }
+
+  // Save the currently-applied filters (from the URL), not unsaved edits.
+  async function saveSearch() {
+    if (!user) {
+      router.push('/login');
+      return;
+    }
+    const input: SavedSearchInput = {};
+    if (initial.city) input.city = initial.city;
+    if (initial.seller) input.seller = initial.seller;
+    if (initial.property_type) input.property_type = initial.property_type;
+    const min = Number(initial.min_price);
+    if (initial.min_price && !Number.isNaN(min)) input.min_price = min;
+    const max = Number(initial.max_price);
+    if (initial.max_price && !Number.isNaN(max)) input.max_price = max;
+    const rooms = Number(initial.rooms);
+    if (initial.rooms && !Number.isNaN(rooms)) input.rooms = rooms;
+
+    setSaveState('saving');
+    try {
+      await createSavedSearch(input);
+      setSaveState('saved');
+      setTimeout(() => setSaveState('idle'), 3000);
+    } catch (e) {
+      console.error('Save search failed:', e);
+      setSaveState('idle');
+    }
   }
 
   const hasFilters = Object.values(filters).some((v) => v !== '');
@@ -190,6 +222,18 @@ export default function PropertyFilters({initial}: {initial: FilterValues}) {
           </button>
         )}
       </div>
+
+      <button
+        type="button"
+        onClick={saveSearch}
+        disabled={saveState === 'saving'}
+        className="w-full px-4 py-2 text-sm font-medium rounded-lg border border-border-subtle text-text-secondary hover:text-text-primary hover:bg-surface-page disabled:opacity-60 transition-colors flex items-center justify-center gap-2"
+      >
+        <svg width="14" height="14" viewBox="0 0 24 24" fill={saveState === 'saved' ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+          <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />
+        </svg>
+        {saveState === 'saved' ? t('searchSaved') : t('saveSearch')}
+      </button>
     </form>
   );
 }

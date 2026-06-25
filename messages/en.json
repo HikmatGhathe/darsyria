@@ -52,9 +52,13 @@
     "saved": "Saved"
   },
   "Saved": {
-    "title": "Saved listings",
-    "subtitle": "Properties you've saved. Only you can see this list.",
+    "title": "Saved",
+    "subtitle": "Your saved searches and listings. Only you can see this.",
     "loading": "Loading...",
+    "searchesTitle": "Saved searches",
+    "listingsTitle": "Saved listings",
+    "runSearch": "Run",
+    "deleteSearch": "Delete saved search",
     "empty": "You haven't saved any listings yet.",
     "browseCta": "Browse properties"
   },
@@ -274,7 +278,9 @@
     "sortNewest": "Newest first",
     "sortOldest": "Oldest first",
     "sortPriceAsc": "Price: low to high",
-    "sortPriceDesc": "Price: high to low"
+    "sortPriceDesc": "Price: high to low",
+    "saveSearch": "Save this search",
+    "searchSaved": "Search saved ✓"
   },
   "PropertyForm": {
     "title": "List your property",
