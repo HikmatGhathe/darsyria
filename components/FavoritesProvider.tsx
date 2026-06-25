@@ -8,7 +8,7 @@ import {listFavoriteIds, addFavorite, removeFavorite} from '@/lib/favorites';
 type FavoritesContextValue = {
   isFavorited: (propertyId: string) => boolean;
   toggle: (propertyId: string) => Promise<void>;
-  // True until the signed-in user's favorite IDs have loaded.
+  // True while the signed-in user's favorite IDs are still loading.
   isLoading: boolean;
 };
 
@@ -20,37 +20,45 @@ const FavoritesContext = createContext<FavoritesContextValue | null>(null);
 export function FavoritesProvider({children}: {children: ReactNode}) {
   const {user} = useAuth();
   const [ids, setIds] = useState<Set<string>>(new Set());
-  const [isLoading, setIsLoading] = useState(true);
+  // Which user the loaded ids belong to — guards against showing one user's
+  // favorites to another (or to a logged-out viewer) without a reset-in-effect.
+  const [loadedFor, setLoadedFor] = useState<string | null>(null);
 
   useEffect(() => {
+    if (!user) return;
     let cancelled = false;
-    if (!user) {
-      setIds(new Set());
-      setIsLoading(false);
-      return;
-    }
-    setIsLoading(true);
     listFavoriteIds()
       .then((list) => {
-        if (!cancelled) setIds(new Set(list));
+        if (!cancelled) {
+          setIds(new Set(list));
+          setLoadedFor(user.id);
+        }
       })
       .catch(() => {
-        if (!cancelled) setIds(new Set());
-      })
-      .finally(() => {
-        if (!cancelled) setIsLoading(false);
+        if (!cancelled) {
+          setIds(new Set());
+          setLoadedFor(user.id);
+        }
       });
     return () => {
       cancelled = true;
     };
   }, [user]);
 
-  const isFavorited = useCallback((id: string) => ids.has(id), [ids]);
+  // Favorites are only valid for the currently signed-in user; otherwise the
+  // effective set is empty (derived, so no stale data leaks on logout).
+  const valid = user != null && loadedFor === user.id;
+  const isLoading = user != null && !valid;
+
+  const isFavorited = useCallback(
+    (id: string) => valid && ids.has(id),
+    [valid, ids]
+  );
 
   const toggle = useCallback(
     async (id: string) => {
+      if (!user) return;
       const wasFavorited = ids.has(id);
-      // Optimistic update
       setIds((prev) => {
         const next = new Set(prev);
         if (wasFavorited) next.delete(id);
@@ -62,7 +70,6 @@ export function FavoritesProvider({children}: {children: ReactNode}) {
         else await addFavorite(id);
       } catch (e) {
         console.error('Favorite toggle failed:', e);
-        // Revert
         setIds((prev) => {
           const next = new Set(prev);
           if (wasFavorited) next.add(id);
@@ -71,7 +78,7 @@ export function FavoritesProvider({children}: {children: ReactNode}) {
         });
       }
     },
-    [ids]
+    [ids, user]
   );
 
   return (
