@@ -54,6 +54,7 @@ export default async function PropertiesBrowsePage({
   );
 
   const values: FilterValues = {
+    governorate: str(sp.governorate),
     city: str(sp.city),
     seller: str(sp.seller),
     property_type: str(sp.property_type),
@@ -65,6 +66,7 @@ export default async function PropertiesBrowsePage({
   const offset = Math.max(0, parseInt(str(sp.offset) || '0', 10) || 0);
 
   const apiFilters: ApiFilters = {limit: PAGE_SIZE, offset, sort: sort ?? 'newest'};
+  if (values.governorate) apiFilters.governorate = values.governorate;
   if (values.city) apiFilters.city = values.city;
   if (values.seller) apiFilters.seller = values.seller;
   if (values.property_type) apiFilters.property_type = values.property_type;
@@ -79,6 +81,7 @@ export default async function PropertiesBrowsePage({
 
   // Filters that narrow results (sort isn't one — it doesn't change the set).
   const hasFilters = [
+    values.governorate,
     values.city,
     values.seller,
     values.property_type,
@@ -93,6 +96,7 @@ export default async function PropertiesBrowsePage({
   // Preserve active filters + sort when paging.
   function pageHref(newOffset: number): string {
     const params = new URLSearchParams();
+    if (values.governorate) params.set('governorate', values.governorate);
     if (values.city) params.set('city', values.city);
     if (values.seller) params.set('seller', values.seller);
     if (values.property_type) params.set('property_type', values.property_type);

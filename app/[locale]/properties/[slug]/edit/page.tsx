@@ -5,6 +5,8 @@ import {useParams, useRouter} from 'next/navigation';
 import {useTranslations, useLocale} from 'next-intl';
 import Link from 'next/link';
 import {useAuth} from '@/components/AuthProvider';
+import PropertyMap from '@/components/PropertyMap';
+import {GOVERNORATE_KEYS, governorateCenter} from '@/lib/governorates';
 import {
   getProperty,
   updateProperty,
@@ -15,8 +17,11 @@ import {
 type FormState = {
   title: string;
   description: string;
+  governorate: string;
   city: string;
   neighborhood: string;
+  lat: number | null;
+  lng: number | null;
   property_type: 'apartment' | 'house' | 'land' | 'commercial';
   rooms: string;
   bathrooms: string;
@@ -30,8 +35,11 @@ function propertyToForm(p: Property): FormState {
   return {
     title: p.title,
     description: p.description,
+    governorate: p.governorate ?? '',
     city: p.city,
     neighborhood: p.neighborhood ?? '',
+    lat: p.latitude,
+    lng: p.longitude,
     property_type: p.property_type as FormState['property_type'],
     rooms: p.rooms != null ? String(p.rooms) : '',
     bathrooms: p.bathrooms != null ? String(p.bathrooms) : '',
@@ -51,6 +59,13 @@ function buildUpdatePayload(form: FormState, original: Property): PropertyUpdate
 
   if (form.title.trim() !== original.title) out.title = form.title.trim();
   if (form.description.trim() !== original.description) out.description = form.description.trim();
+  if (form.governorate && form.governorate !== (original.governorate ?? '')) {
+    out.governorate = form.governorate;
+  }
+  if (form.lat !== original.latitude || form.lng !== original.longitude) {
+    out.latitude = form.lat;
+    out.longitude = form.lng;
+  }
   if (form.city.trim() !== original.city) out.city = form.city.trim();
   if (form.neighborhood.trim() !== origNeighborhood) {
     out.neighborhood = form.neighborhood.trim() || undefined;
@@ -77,6 +92,7 @@ function buildUpdatePayload(form: FormState, original: Property): PropertyUpdate
 export default function EditPropertyPage() {
   const t = useTranslations('EditProperty');
   const tForm = useTranslations('PropertyForm');
+  const tGov = useTranslations('Governorates');
   const locale = useLocale();
   const router = useRouter();
   const params = useParams();
@@ -89,7 +105,10 @@ export default function EditPropertyPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [notFound, setNotFound] = useState(false);
-  const [notOwner, setNotOwner] = useState(false);
+
+  // Derived: don't sync into state inside an effect (cascading renders).
+  const notOwner =
+    !authLoading && !isLoading && original != null && user != null && original.owner_id !== user.id;
 
   useEffect(() => {
     let cancelled = false;
@@ -112,12 +131,6 @@ export default function EditPropertyPage() {
     load();
     return () => { cancelled = true; };
   }, [id]);
-
-  useEffect(() => {
-    if (!authLoading && !isLoading && original && user) {
-      if (original.owner_id !== user.id) setNotOwner(true);
-    }
-  }, [authLoading, isLoading, original, user]);
 
   function update<K extends keyof FormState>(key: K, value: FormState[K]) {
     setForm((prev) => (prev ? {...prev, [key]: value} : prev));
@@ -248,6 +261,26 @@ export default function EditPropertyPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium text-text-secondary mb-1">
+                {tForm('labelGovernorate')} *
+              </label>
+              <select
+                value={form.governorate}
+                onChange={(e) => update('governorate', e.target.value)}
+                required
+                className="w-full px-3 py-2 border border-border-subtle rounded-lg focus:outline-none focus:ring-1 focus:ring-brand-navy focus:border-brand-navy bg-surface-card text-text-primary"
+              >
+                <option value="" disabled>
+                  {tForm('governoratePlaceholder')}
+                </option>
+                {GOVERNORATE_KEYS.map((key) => (
+                  <option key={key} value={key}>
+                    {tGov(key)}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-text-secondary mb-1">
                 {tForm('labelCity')} *
               </label>
               <input
@@ -260,7 +293,7 @@ export default function EditPropertyPage() {
                 className="w-full px-3 py-2 border border-border-subtle rounded-lg focus:outline-none focus:ring-1 focus:ring-brand-navy focus:border-brand-navy bg-surface-card text-text-primary"
               />
             </div>
-            <div>
+            <div className="md:col-span-2">
               <label className="block text-sm font-medium text-text-secondary mb-1">
                 {tForm('labelNeighborhood')}
               </label>
@@ -271,6 +304,30 @@ export default function EditPropertyPage() {
                 maxLength={150}
                 className="w-full px-3 py-2 border border-border-subtle rounded-lg focus:outline-none focus:ring-1 focus:ring-brand-navy focus:border-brand-navy bg-surface-card text-text-primary"
               />
+            </div>
+          </div>
+          <div className="mt-4">
+            <label className="block text-sm font-medium text-text-secondary mb-1">
+              {tForm('mapLabel')}
+            </label>
+            <PropertyMap
+              interactive
+              lat={form.lat ?? undefined}
+              lng={form.lng ?? undefined}
+              centroid={governorateCenter(form.governorate || null)}
+              onPick={(lat, lng) => setForm((prev) => (prev ? {...prev, lat, lng} : prev))}
+            />
+            <div className="flex items-center justify-between mt-2">
+              <p className="text-xs text-text-tertiary">{tForm('mapHint')}</p>
+              {(form.lat != null || form.lng != null) && (
+                <button
+                  type="button"
+                  onClick={() => setForm((prev) => (prev ? {...prev, lat: null, lng: null} : prev))}
+                  className="text-xs text-brand-navy hover:underline"
+                >
+                  {tForm('clearPin')}
+                </button>
+              )}
             </div>
           </div>
         </section>

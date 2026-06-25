@@ -54,6 +54,7 @@ export const getSellerServer = cache(
 // Filter-only params (no sort/limit/offset) — shared by list and count.
 function propertyFilterParams(filters: PropertyFilters): URLSearchParams {
   const params = new URLSearchParams();
+  if (filters.governorate) params.set('governorate', filters.governorate);
   if (filters.city) params.set('city', filters.city);
   if (filters.property_type) params.set('property_type', filters.property_type);
   if (filters.min_price !== undefined) params.set('min_price', String(filters.min_price));

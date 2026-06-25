@@ -6,7 +6,9 @@ import FavoriteButton from '@/components/FavoriteButton';
 import ReportButton from '@/components/ReportButton';
 import OwnerPropertyControls from '@/components/OwnerPropertyControls';
 import OwnerImageManager from '@/components/OwnerImageManager';
+import PropertyMap from '@/components/PropertyMap';
 import type {Property} from '@/lib/properties';
+import {GOVERNORATE_KEYS, governorateCenter, type GovernorateKey} from '@/lib/governorates';
 import {
   formatPrice,
   propertyTypeKey,
@@ -23,7 +25,13 @@ import {
 export default function PropertyDetailView({property}: {property: Property}) {
   const t = useTranslations('PropertyDisplay');
   const tVerify = useTranslations('Properties.verification');
+  const tGov = useTranslations('Governorates');
   const locale = useLocale();
+
+  const govKey = property.governorate as GovernorateKey | null;
+  const govLabel = govKey && GOVERNORATE_KEYS.includes(govKey) ? tGov(govKey) : null;
+  const hasPin = property.latitude != null && property.longitude != null;
+  const showMap = hasPin || govLabel != null;
 
   const docInfo = documentStatusInfo(property.document_status);
   const badgeColors = {
@@ -61,6 +69,7 @@ export default function PropertyDetailView({property}: {property: Property}) {
             <circle cx="12" cy="10" r="3" />
           </svg>
           {formatLocation(property.city, property.neighborhood, locale)}
+          {govLabel && <span className="text-text-tertiary"> · {govLabel}</span>}
         </p>
         {property.seller_display_name && (
           <Link
@@ -119,6 +128,20 @@ export default function PropertyDetailView({property}: {property: Property}) {
           )}
         </dl>
       </section>
+
+      {/* Location map — pin if set, otherwise the governorate's general area.
+          Leaflet hydrates client-side; nothing renders server-side but the box. */}
+      {showMap && (
+        <section className="mb-8">
+          <h2 className="text-lg font-semibold text-text-primary mb-3">{t('locationSection')}</h2>
+          <PropertyMap
+            lat={property.latitude}
+            lng={property.longitude}
+            centroid={governorateCenter(govKey)}
+          />
+          {!hasPin && <p className="text-xs text-text-tertiary mt-2">{t('mapApproxNote')}</p>}
+        </section>
+      )}
 
       {/* Photos — read-only grid is server-rendered (crawlable); owner gets
           management controls below via the OwnerImageManager island. */}

@@ -138,8 +138,11 @@ export function getPropertyBySlug(slug: string): StaticProperty | undefined {
 export type PropertyCreateInput = {
   title: string;
   description: string;
+  governorate: string;
   city: string;
   neighborhood?: string;
+  latitude?: number;
+  longitude?: number;
   price_amount: number;
   price_currency: 'USD' | 'EUR' | 'SYP';
   property_type: 'apartment' | 'house' | 'land' | 'commercial';
@@ -166,8 +169,11 @@ export type ApiProperty = {
   title: string;
   description: string;
   country: string;
+  governorate: string | null;
   city: string;
   neighborhood: string | null;
+  latitude: number | null;
+  longitude: number | null;
   price_amount: string;
   price_currency: string;
   property_type: string;
@@ -189,6 +195,7 @@ export type ApiPropertyListItem = {
   id: string;
   owner_id: string;
   title: string;
+  governorate: string | null;
   city: string;
   neighborhood: string | null;
   price_amount: string;
@@ -207,6 +214,7 @@ export type ApiPropertyListItem = {
 export type PropertySort = 'newest' | 'oldest' | 'price_asc' | 'price_desc';
 
 export type PropertyFilters = {
+  governorate?: string;
   city?: string;
   property_type?: string;
   min_price?: number;
@@ -228,6 +236,7 @@ export async function createProperty(input: PropertyCreateInput): Promise<ApiPro
 
 export async function listProperties(filters: PropertyFilters = {}): Promise<ApiPropertyListItem[]> {
   const params = new URLSearchParams();
+  if (filters.governorate) params.set('governorate', filters.governorate);
   if (filters.city) params.set('city', filters.city);
   if (filters.property_type) params.set('property_type', filters.property_type);
   if (filters.min_price !== undefined) params.set('min_price', String(filters.min_price));
@@ -271,8 +280,11 @@ export async function unpublishProperty(id: string): Promise<ApiProperty> {
 export type PropertyUpdateInput = {
   title?: string;
   description?: string;
+  governorate?: string;
   city?: string;
   neighborhood?: string;
+  latitude?: number | null;
+  longitude?: number | null;
   price_amount?: number;
   price_currency?: 'USD' | 'EUR' | 'SYP';
   property_type?: 'apartment' | 'house' | 'land' | 'commercial';

@@ -6,12 +6,14 @@ import {useRouter} from '@/i18n/navigation';
 import {useAuth} from './AuthProvider';
 import {createSavedSearch, type SavedSearchInput} from '@/lib/saved-searches';
 import {propertyTypeKey} from '@/lib/property-display';
+import {GOVERNORATE_KEYS} from '@/lib/governorates';
 
 const PROPERTY_TYPES = ['apartment', 'house', 'land', 'commercial'] as const;
 const SORTS = ['newest', 'oldest', 'price_asc', 'price_desc'] as const;
 
 // The narrowing filters (everything except sort, which doesn't change the set).
 type FormFilters = {
+  governorate: string;
   city: string;
   seller: string;
   property_type: string;
@@ -29,11 +31,13 @@ export type FilterValues = FormFilters & {sort: string};
 export default function PropertyFilters({initial}: {initial: FilterValues}) {
   const t = useTranslations('PropertyBrowse');
   const tDisplay = useTranslations('PropertyDisplay');
+  const tGov = useTranslations('Governorates');
   const router = useRouter();
   const {user} = useAuth();
   const [saveState, setSaveState] = useState<'idle' | 'saving' | 'saved'>('idle');
 
   const [filters, setFilters] = useState<FormFilters>({
+    governorate: initial.governorate,
     city: initial.city,
     seller: initial.seller,
     property_type: initial.property_type,
@@ -48,6 +52,7 @@ export default function PropertyFilters({initial}: {initial: FilterValues}) {
 
   function buildHref(f: FormFilters, sort: string): string {
     const params = new URLSearchParams();
+    if (f.governorate) params.set('governorate', f.governorate);
     if (f.city.trim()) params.set('city', f.city.trim());
     if (f.seller.trim()) params.set('seller', f.seller.trim());
     if (f.property_type) params.set('property_type', f.property_type);
@@ -71,7 +76,7 @@ export default function PropertyFilters({initial}: {initial: FilterValues}) {
   }
 
   function clear() {
-    setFilters({city: '', seller: '', property_type: '', min_price: '', max_price: '', rooms: ''});
+    setFilters({governorate: '', city: '', seller: '', property_type: '', min_price: '', max_price: '', rooms: ''});
     router.push('/properties');
   }
 
@@ -125,6 +130,22 @@ export default function PropertyFilters({initial}: {initial: FilterValues}) {
           <option value="oldest">{t('sortOldest')}</option>
           <option value="price_asc">{t('sortPriceAsc')}</option>
           <option value="price_desc">{t('sortPriceDesc')}</option>
+        </select>
+      </div>
+
+      <div>
+        <label className="block text-sm font-medium text-text-secondary mb-1">{t('labelGovernorate')}</label>
+        <select
+          value={filters.governorate}
+          onChange={(e) => update('governorate', e.target.value)}
+          className="w-full px-3 py-2 text-sm bg-surface-card border border-border-subtle rounded-lg text-text-primary focus:outline-none focus:ring-1 focus:ring-brand-navy focus:border-brand-navy"
+        >
+          <option value="">{t('anyGovernorate')}</option>
+          {GOVERNORATE_KEYS.map((g) => (
+            <option key={g} value={g}>
+              {tGov(g)}
+            </option>
+          ))}
         </select>
       </div>
 

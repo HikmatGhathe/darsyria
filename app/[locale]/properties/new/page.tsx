@@ -6,12 +6,17 @@ import {useTranslations, useLocale} from 'next-intl';
 import {useAuth} from '@/components/AuthProvider';
 import {updateMe} from '@/lib/auth';
 import {createProperty, type PropertyCreateInput} from '@/lib/properties';
+import PropertyMap from '@/components/PropertyMap';
+import {GOVERNORATE_KEYS, governorateCenter} from '@/lib/governorates';
 
 type FormState = {
   title: string;
   description: string;
+  governorate: string;
   city: string;
   neighborhood: string;
+  lat: number | null;
+  lng: number | null;
   property_type: PropertyCreateInput['property_type'];
   rooms: string;
   bathrooms: string;
@@ -31,8 +36,11 @@ type SellerSetupState = {
 const initialState: FormState = {
   title: '',
   description: '',
+  governorate: '',
   city: '',
   neighborhood: '',
+  lat: null,
+  lng: null,
   property_type: 'apartment',
   rooms: '',
   bathrooms: '',
@@ -52,6 +60,7 @@ const initialSellerSetup: SellerSetupState = {
 export default function NewPropertyPage() {
   const t = useTranslations('PropertyForm');
   const tAccount = useTranslations('Account');
+  const tGov = useTranslations('Governorates');
   const locale = useLocale();
   const router = useRouter();
   const {user, isLoading: authLoading, refresh} = useAuth();
@@ -136,8 +145,11 @@ export default function NewPropertyPage() {
     const payload: PropertyCreateInput = {
       title: form.title.trim(),
       description: form.description.trim(),
+      governorate: form.governorate,
       city: form.city.trim(),
       neighborhood: form.neighborhood.trim() || undefined,
+      latitude: form.lat ?? undefined,
+      longitude: form.lng ?? undefined,
       property_type: form.property_type,
       price_amount: parseFloat(form.price_amount),
       price_currency: form.price_currency,
@@ -293,6 +305,22 @@ export default function NewPropertyPage() {
           <h2 className="text-lg font-semibold text-text-primary mb-4 pb-2 border-b border-border-subtle">
             {t('sectionLocation')}
           </h2>
+          <div className="mb-4">
+            <label className="block text-sm font-medium text-text-secondary mb-1">
+              {t('labelGovernorate')} *
+            </label>
+            <select
+              value={form.governorate}
+              onChange={(e) => update('governorate', e.target.value)}
+              required
+              className="w-full px-3 py-2 border border-border-subtle rounded-lg focus:outline-none focus:ring-1 focus:ring-brand-navy focus:border-brand-navy bg-surface-card text-text-primary"
+            >
+              <option value="" disabled>{t('governoratePlaceholder')}</option>
+              {GOVERNORATE_KEYS.map((g) => (
+                <option key={g} value={g}>{tGov(g)}</option>
+              ))}
+            </select>
+          </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium text-text-secondary mb-1">
@@ -322,6 +350,29 @@ export default function NewPropertyPage() {
                 className="w-full px-3 py-2 border border-border-subtle rounded-lg focus:outline-none focus:ring-1 focus:ring-brand-navy focus:border-brand-navy bg-surface-card text-text-primary"
               />
             </div>
+          </div>
+          {/* Optional map pin */}
+          <div className="mt-4">
+            <div className="flex items-center justify-between mb-1">
+              <label className="block text-sm font-medium text-text-secondary">{t('mapLabel')}</label>
+              {form.lat != null && (
+                <button
+                  type="button"
+                  onClick={() => setForm((prev) => ({...prev, lat: null, lng: null}))}
+                  className="text-xs text-text-tertiary hover:text-accent-danger underline"
+                >
+                  {t('clearPin')}
+                </button>
+              )}
+            </div>
+            <PropertyMap
+              interactive
+              lat={form.lat}
+              lng={form.lng}
+              centroid={governorateCenter(form.governorate || null)}
+              onPick={(lat, lng) => setForm((prev) => ({...prev, lat, lng}))}
+            />
+            <p className="text-xs text-text-tertiary mt-1">{t('mapHint')}</p>
           </div>
         </section>
 

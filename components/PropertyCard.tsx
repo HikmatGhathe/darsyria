@@ -4,6 +4,7 @@ import {useTranslations} from 'next-intl';
 import Link from 'next/link';
 import FavoriteButton from '@/components/FavoriteButton';
 import type {PropertyListItem} from '@/lib/properties';
+import {GOVERNORATE_KEYS, type GovernorateKey} from '@/lib/governorates';
 import {
   formatPrice,
   propertyTypeKey,
@@ -20,6 +21,9 @@ export default function PropertyCard({
 }) {
   const t = useTranslations('PropertyDisplay');
   const tVerify = useTranslations('Properties.verification');
+  const tGov = useTranslations('Governorates');
+  const govKey = property.governorate as GovernorateKey | null;
+  const govLabel = govKey && GOVERNORATE_KEYS.includes(govKey) ? tGov(govKey) : null;
   const docInfo = documentStatusInfo(property.document_status);
   const badgeColors = {
     blue: 'bg-surface-card text-brand-navy border-brand-navy/30',
@@ -88,6 +92,7 @@ export default function PropertyCard({
             <circle cx="12" cy="10" r="3" />
           </svg>
           {formatLocation(property.city, property.neighborhood, locale)}
+          {govLabel && <span className="text-text-tertiary"> · {govLabel}</span>}
         </p>
         <div className="flex items-center justify-between">
           <span className="text-lg font-semibold text-text-primary">
