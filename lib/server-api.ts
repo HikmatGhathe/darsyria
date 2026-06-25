@@ -51,9 +51,8 @@ export const getSellerServer = cache(
     serverFetchJson<SellerProfile>(`/sellers/${id}`)
 );
 
-export async function listPropertiesServer(
-  filters: PropertyFilters
-): Promise<ApiPropertyListItem[]> {
+// Filter-only params (no sort/limit/offset) — shared by list and count.
+function propertyFilterParams(filters: PropertyFilters): URLSearchParams {
   const params = new URLSearchParams();
   if (filters.city) params.set('city', filters.city);
   if (filters.property_type) params.set('property_type', filters.property_type);
@@ -61,6 +60,14 @@ export async function listPropertiesServer(
   if (filters.max_price !== undefined) params.set('max_price', String(filters.max_price));
   if (filters.rooms !== undefined) params.set('rooms', String(filters.rooms));
   if (filters.seller) params.set('seller', filters.seller);
+  return params;
+}
+
+export async function listPropertiesServer(
+  filters: PropertyFilters
+): Promise<ApiPropertyListItem[]> {
+  const params = propertyFilterParams(filters);
+  if (filters.sort) params.set('sort', filters.sort);
   if (filters.limit !== undefined) params.set('limit', String(filters.limit));
   if (filters.offset !== undefined) params.set('offset', String(filters.offset));
 
@@ -69,4 +76,12 @@ export async function listPropertiesServer(
     `/properties${qs ? `?${qs}` : ''}`
   );
   return data ?? [];
+}
+
+export async function countPropertiesServer(filters: PropertyFilters): Promise<number> {
+  const qs = propertyFilterParams(filters).toString();
+  const data = await serverFetchJson<{count: number}>(
+    `/properties/count${qs ? `?${qs}` : ''}`
+  );
+  return data?.count ?? 0;
 }

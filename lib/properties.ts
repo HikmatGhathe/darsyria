@@ -204,6 +204,8 @@ export type ApiPropertyListItem = {
   seller_verification_status: string | null;
 };
 
+export type PropertySort = 'newest' | 'oldest' | 'price_asc' | 'price_desc';
+
 export type PropertyFilters = {
   city?: string;
   property_type?: string;
@@ -211,6 +213,7 @@ export type PropertyFilters = {
   max_price?: number;
   rooms?: number;
   seller?: string;
+  sort?: PropertySort;
   limit?: number;
   offset?: number;
 };
@@ -231,6 +234,7 @@ export async function listProperties(filters: PropertyFilters = {}): Promise<Api
   if (filters.max_price !== undefined) params.set('max_price', String(filters.max_price));
   if (filters.rooms !== undefined) params.set('rooms', String(filters.rooms));
   if (filters.seller) params.set('seller', filters.seller);
+  if (filters.sort) params.set('sort', filters.sort);
   if (filters.limit !== undefined) params.set('limit', String(filters.limit));
   if (filters.offset !== undefined) params.set('offset', String(filters.offset));
 

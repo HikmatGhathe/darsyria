@@ -3,7 +3,7 @@ import Link from 'next/link';
 import {getTranslations} from 'next-intl/server';
 import PropertyCard from '@/components/PropertyCard';
 import PropertyFilters, {type FilterValues} from '@/components/PropertyFilters';
-import {listPropertiesServer} from '@/lib/server-api';
+import {listPropertiesServer, countPropertiesServer} from '@/lib/server-api';
 import type {PropertyFilters as ApiFilters} from '@/lib/properties';
 import {SITE_URL} from '@/lib/site';
 
@@ -48,17 +48,23 @@ export default async function PropertiesBrowsePage({
   const sp = await searchParams;
   const t = await getTranslations({locale, namespace: 'PropertyBrowse'});
 
+  const sortValue = str(sp.sort);
+  const sort = (['newest', 'oldest', 'price_asc', 'price_desc'] as const).find(
+    (s) => s === sortValue
+  );
+
   const values: FilterValues = {
     city: str(sp.city),
     seller: str(sp.seller),
     property_type: str(sp.property_type),
     min_price: str(sp.min_price),
     max_price: str(sp.max_price),
-    rooms: str(sp.rooms)
+    rooms: str(sp.rooms),
+    sort: sort ?? 'newest'
   };
   const offset = Math.max(0, parseInt(str(sp.offset) || '0', 10) || 0);
 
-  const apiFilters: ApiFilters = {limit: PAGE_SIZE, offset};
+  const apiFilters: ApiFilters = {limit: PAGE_SIZE, offset, sort: sort ?? 'newest'};
   if (values.city) apiFilters.city = values.city;
   if (values.seller) apiFilters.seller = values.seller;
   if (values.property_type) apiFilters.property_type = values.property_type;
@@ -66,11 +72,25 @@ export default async function PropertiesBrowsePage({
   if (values.max_price && !isNaN(Number(values.max_price))) apiFilters.max_price = Number(values.max_price);
   if (values.rooms && !isNaN(Number(values.rooms))) apiFilters.rooms = Number(values.rooms);
 
-  const properties = await listPropertiesServer(apiFilters);
+  const [properties, total] = await Promise.all([
+    listPropertiesServer(apiFilters),
+    countPropertiesServer(apiFilters)
+  ]);
 
-  const hasFilters = Object.values(values).some((v) => v !== '');
+  // Filters that narrow results (sort isn't one — it doesn't change the set).
+  const hasFilters = [
+    values.city,
+    values.seller,
+    values.property_type,
+    values.min_price,
+    values.max_price,
+    values.rooms
+  ].some((v) => v !== '');
 
-  // Preserve active filters when paging.
+  const totalPages = Math.max(1, Math.ceil(total / PAGE_SIZE));
+  const page = Math.floor(offset / PAGE_SIZE) + 1;
+
+  // Preserve active filters + sort when paging.
   function pageHref(newOffset: number): string {
     const params = new URLSearchParams();
     if (values.city) params.set('city', values.city);
@@ -79,13 +99,14 @@ export default async function PropertiesBrowsePage({
     if (values.min_price) params.set('min_price', values.min_price);
     if (values.max_price) params.set('max_price', values.max_price);
     if (values.rooms) params.set('rooms', values.rooms);
+    if (values.sort && values.sort !== 'newest') params.set('sort', values.sort);
     if (newOffset > 0) params.set('offset', String(newOffset));
     const qs = params.toString();
     return `/${locale}/properties${qs ? `?${qs}` : ''}`;
   }
 
-  const showPrev = offset > 0;
-  const showNext = properties.length === PAGE_SIZE;
+  const showPrev = page > 1;
+  const showNext = page < totalPages;
 
   return (
     <div className="max-w-7xl mx-auto px-6 py-8">
@@ -123,7 +144,8 @@ export default async function PropertiesBrowsePage({
           ) : (
             <>
               <p className="text-sm text-text-tertiary mb-4">
-                {t('resultCount', {count: properties.length})}
+                {t('resultCount', {count: total})}
+                {totalPages > 1 && <span> · {t('pageIndicator', {page, total: totalPages})}</span>}
               </p>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {properties.map((p) => (

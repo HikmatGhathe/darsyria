@@ -253,8 +253,14 @@
     "createListingCTA": "List your property",
     "errorLoading": "Could not load listings. Please try again.",
     "resultCount": "{count, plural, =1 {1 listing} other {# listings}}",
+    "pageIndicator": "Page {page} of {total}",
     "previous": "Previous",
-    "next": "Next"
+    "next": "Next",
+    "labelSort": "Sort by",
+    "sortNewest": "Newest first",
+    "sortOldest": "Oldest first",
+    "sortPriceAsc": "Price: low to high",
+    "sortPriceDesc": "Price: high to low"
   },
   "PropertyForm": {
     "title": "List your property",

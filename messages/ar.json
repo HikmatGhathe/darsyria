@@ -253,8 +253,14 @@
     "createListingCTA": "أضف عقارك",
     "errorLoading": "تعذر تحميل الإعلانات. حاول مرة أخرى.",
     "resultCount": "{count, plural, =0 {لا توجد إعلانات} =1 {إعلان واحد} =2 {إعلانان} few {# إعلانات} many {# إعلانًا} other {# إعلان}}",
+    "pageIndicator": "صفحة {page} من {total}",
     "previous": "السابق",
-    "next": "التالي"
+    "next": "التالي",
+    "labelSort": "ترتيب حسب",
+    "sortNewest": "الأحدث أولاً",
+    "sortOldest": "الأقدم أولاً",
+    "sortPriceAsc": "السعر: من الأقل إلى الأعلى",
+    "sortPriceDesc": "السعر: من الأعلى إلى الأقل"
   },
   "PropertyForm": {
     "title": "أضف عقارك",

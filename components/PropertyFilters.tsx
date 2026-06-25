@@ -6,8 +6,10 @@ import {useRouter} from '@/i18n/navigation';
 import {propertyTypeKey} from '@/lib/property-display';
 
 const PROPERTY_TYPES = ['apartment', 'house', 'land', 'commercial'] as const;
+const SORTS = ['newest', 'oldest', 'price_asc', 'price_desc'] as const;
 
-export type FilterValues = {
+// The narrowing filters (everything except sort, which doesn't change the set).
+type FormFilters = {
   city: string;
   seller: string;
   property_type: string;
@@ -16,31 +18,52 @@ export type FilterValues = {
   rooms: string;
 };
 
+export type FilterValues = FormFilters & {sort: string};
+
 // Client filter sidebar for the (server-rendered) browse page. Applying
 // filters pushes them to the URL query string, so the server re-renders the
-// matching listings and the filtered view is shareable/bookmarkable.
+// matching listings and the filtered view is shareable/bookmarkable. Sort is
+// kept separate (it applies instantly, independent of the Apply button).
 export default function PropertyFilters({initial}: {initial: FilterValues}) {
   const t = useTranslations('PropertyBrowse');
   const tDisplay = useTranslations('PropertyDisplay');
   const router = useRouter();
 
-  const [filters, setFilters] = useState<FilterValues>(initial);
+  const [filters, setFilters] = useState<FormFilters>({
+    city: initial.city,
+    seller: initial.seller,
+    property_type: initial.property_type,
+    min_price: initial.min_price,
+    max_price: initial.max_price,
+    rooms: initial.rooms
+  });
 
-  function update<K extends keyof FilterValues>(key: K, value: FilterValues[K]) {
+  function update<K extends keyof FormFilters>(key: K, value: FormFilters[K]) {
     setFilters((prev) => ({...prev, [key]: value}));
+  }
+
+  function buildHref(f: FormFilters, sort: string): string {
+    const params = new URLSearchParams();
+    if (f.city.trim()) params.set('city', f.city.trim());
+    if (f.seller.trim()) params.set('seller', f.seller.trim());
+    if (f.property_type) params.set('property_type', f.property_type);
+    if (f.min_price) params.set('min_price', f.min_price);
+    if (f.max_price) params.set('max_price', f.max_price);
+    if (f.rooms) params.set('rooms', f.rooms);
+    if (sort && sort !== 'newest') params.set('sort', sort);
+    const qs = params.toString();
+    return qs ? `/properties?${qs}` : '/properties';
   }
 
   function apply(e: {preventDefault(): void}) {
     e.preventDefault();
-    const params = new URLSearchParams();
-    if (filters.city.trim()) params.set('city', filters.city.trim());
-    if (filters.seller.trim()) params.set('seller', filters.seller.trim());
-    if (filters.property_type) params.set('property_type', filters.property_type);
-    if (filters.min_price) params.set('min_price', filters.min_price);
-    if (filters.max_price) params.set('max_price', filters.max_price);
-    if (filters.rooms) params.set('rooms', filters.rooms);
-    const qs = params.toString();
-    router.push(qs ? `/properties?${qs}` : '/properties');
+    router.push(buildHref(filters, initial.sort));
+  }
+
+  // Sort applies immediately, against the already-applied filters (not
+  // unsaved edits in the form), and resets to page 1.
+  function changeSort(sort: string) {
+    router.push(buildHref(initial, sort));
   }
 
   function clear() {
@@ -58,6 +81,20 @@ export default function PropertyFilters({initial}: {initial: FilterValues}) {
       <h2 className="text-sm font-semibold text-text-primary uppercase tracking-wide">
         {t('filtersHeading')}
       </h2>
+
+      <div className="pb-4 border-b border-border-subtle">
+        <label className="block text-sm font-medium text-text-secondary mb-1">{t('labelSort')}</label>
+        <select
+          value={SORTS.includes(initial.sort as (typeof SORTS)[number]) ? initial.sort : 'newest'}
+          onChange={(e) => changeSort(e.target.value)}
+          className="w-full px-3 py-2 text-sm bg-surface-card border border-border-subtle rounded-lg text-text-primary focus:outline-none focus:ring-1 focus:ring-brand-navy focus:border-brand-navy"
+        >
+          <option value="newest">{t('sortNewest')}</option>
+          <option value="oldest">{t('sortOldest')}</option>
+          <option value="price_asc">{t('sortPriceAsc')}</option>
+          <option value="price_desc">{t('sortPriceDesc')}</option>
+        </select>
+      </div>
 
       <div>
         <label className="block text-sm font-medium text-text-secondary mb-1">{t('labelCity')}</label>

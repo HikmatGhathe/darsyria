@@ -253,8 +253,14 @@
     "createListingCTA": "Immobilie inserieren",
     "errorLoading": "Inserate konnten nicht geladen werden. Bitte erneut versuchen.",
     "resultCount": "{count, plural, =1 {1 Inserat} other {# Inserate}}",
+    "pageIndicator": "Seite {page} von {total}",
     "previous": "Zurück",
-    "next": "Weiter"
+    "next": "Weiter",
+    "labelSort": "Sortieren nach",
+    "sortNewest": "Neueste zuerst",
+    "sortOldest": "Älteste zuerst",
+    "sortPriceAsc": "Preis: aufsteigend",
+    "sortPriceDesc": "Preis: absteigend"
   },
   "PropertyForm": {
     "title": "Immobilie inserieren",
