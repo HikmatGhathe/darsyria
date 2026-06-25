@@ -43,6 +43,7 @@ export default function Footer() {
               {t('sections.legal')}
             </h4>
             <ul className="space-y-2 text-sm text-text-secondary">
+              <li><Link href="/impressum" className="hover:text-text-primary">{t('links.impressum')}</Link></li>
               <li><Link href="/terms" className="hover:text-text-primary">{t('links.terms')}</Link></li>
               <li><Link href="/privacy" className="hover:text-text-primary">{t('links.privacy')}</Link></li>
               <li><Link href="/disclaimer" className="hover:text-text-primary">{t('links.disclaimer')}</Link></li>
