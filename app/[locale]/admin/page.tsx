@@ -8,6 +8,7 @@ import { useAuth } from '@/components/AuthProvider';
 import {
   adminListProperties,
   adminListUsers,
+  adminListReports,
   type AdminPropertyListItem,
   type AdminUserListItem,
 } from '@/lib/admin';
@@ -18,6 +19,7 @@ type Stats = {
   draftListings: number;
   rejectedListings: number;
   flaggedListings: number;
+  openReports: number;
   totalUsers: number;
   bannedUsers: number;
   adminUsers: number;
@@ -46,12 +48,13 @@ export default function AdminLandingPage() {
 
     async function load() {
       try {
-        const [props, users] = await Promise.all([
+        const [props, users, reports] = await Promise.all([
           adminListProperties({ limit: 200 }),
           adminListUsers({ limit: 200 }),
+          adminListReports('open'),
         ]);
         if (cancelled) return;
-        setStats(computeStats(props, users));
+        setStats(computeStats(props, users, reports.length));
       } catch (err) {
         if (!cancelled) {
           console.error('Admin stats load failed:', err);
@@ -103,6 +106,11 @@ export default function AdminLandingPage() {
             value={stats.flaggedListings}
             color={stats.flaggedListings > 0 ? 'amber' : 'gray'}
           />
+          <StatCard
+            label={t('stats.openReports')}
+            value={stats.openReports}
+            color={stats.openReports > 0 ? 'red' : 'gray'}
+          />
           <StatCard label={t('stats.totalUsers')} value={stats.totalUsers} />
           <StatCard label={t('stats.adminUsers')} value={stats.adminUsers} color="blue" />
           <StatCard
@@ -134,6 +142,12 @@ export default function AdminLandingPage() {
           buttonLabel={t('sections.openUsers')}
           href="/admin/users"
         />
+        <SectionCard
+          title={t('sections.reports')}
+          description={t('sections.reportsDesc')}
+          buttonLabel={t('sections.openReports')}
+          href="/admin/reports"
+        />
       </div>
     </main>
   );
@@ -143,7 +157,8 @@ export default function AdminLandingPage() {
 
 function computeStats(
   properties: AdminPropertyListItem[],
-  users: AdminUserListItem[]
+  users: AdminUserListItem[],
+  openReports: number
 ): Stats {
   return {
     totalListings: properties.length,
@@ -151,6 +166,7 @@ function computeStats(
     draftListings: properties.filter((p) => p.status === 'draft').length,
     rejectedListings: properties.filter((p) => p.status === 'rejected').length,
     flaggedListings: properties.filter((p) => p.flagged_at !== null).length,
+    openReports,
     totalUsers: users.length,
     bannedUsers: users.filter((u) => !u.is_active).length,
     adminUsers: users.filter((u) => u.is_admin).length,

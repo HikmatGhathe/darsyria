@@ -166,3 +166,41 @@ export async function adminUnverifyUser(id: string): Promise<AdminUserListItem> 
     authenticated: true,
   });
 }
+
+// ---------- Reports admin ----------
+
+export type AdminReportItem = {
+  id: string;
+  reason: string;
+  details: string | null;
+  status: string;
+  created_at: string;
+  reporter_email: string | null;
+  target_type: 'listing' | 'seller';
+  target_id: string;
+  target_label: string | null;
+  target_owner_id: string | null;
+};
+
+export async function adminListReports(
+  status: 'open' | 'resolved' | 'dismissed' = 'open'
+): Promise<AdminReportItem[]> {
+  return apiRequest<AdminReportItem[]>(`/admin/reports?status=${status}`, {
+    method: 'GET',
+    authenticated: true,
+  });
+}
+
+export async function adminResolveReport(id: string): Promise<AdminReportItem> {
+  return apiRequest<AdminReportItem>(`/admin/reports/${id}/resolve`, {
+    method: 'POST',
+    authenticated: true,
+  });
+}
+
+export async function adminDismissReport(id: string): Promise<AdminReportItem> {
+  return apiRequest<AdminReportItem>(`/admin/reports/${id}/dismiss`, {
+    method: 'POST',
+    authenticated: true,
+  });
+}

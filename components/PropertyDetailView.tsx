@@ -3,6 +3,7 @@ import Link from 'next/link';
 import ContactSellerButton from '@/components/ContactSellerButton';
 import FollowButton from '@/components/FollowButton';
 import FavoriteButton from '@/components/FavoriteButton';
+import ReportButton from '@/components/ReportButton';
 import OwnerPropertyControls from '@/components/OwnerPropertyControls';
 import OwnerImageManager from '@/components/OwnerImageManager';
 import type {Property} from '@/lib/properties';
@@ -173,10 +174,13 @@ export default function PropertyDetailView({property}: {property: Property}) {
         <FollowButton sellerId={property.owner_id} locale={locale} />
       </section>
 
-      {/* Listed date */}
-      <p className="text-xs text-text-tertiary mt-8">
-        {t('listedOn', {date: formatListedDate(property.created_at, locale)})}
-      </p>
+      {/* Listed date + report */}
+      <div className="mt-8 flex items-center justify-between gap-4">
+        <p className="text-xs text-text-tertiary">
+          {t('listedOn', {date: formatListedDate(property.created_at, locale)})}
+        </p>
+        <ReportButton propertyId={property.id} ownerId={property.owner_id} />
+      </div>
     </div>
   );
 }

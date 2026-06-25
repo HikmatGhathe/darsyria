@@ -51,6 +51,27 @@
     "save": "حفظ",
     "saved": "محفوظ"
   },
+  "Report": {
+    "report": "إبلاغ",
+    "title": "الإبلاغ عن مشكلة",
+    "subtitle": "أخبرنا بما هو خاطئ. سيراجعه فريقنا — البلاغات لا تنشر أي شيء.",
+    "reasonLabel": "السبب",
+    "reasons": {
+      "scam": "احتيال أو نصب",
+      "spam": "محتوى مكرر أو غير مرغوب",
+      "offensive": "مسيء أو غير لائق",
+      "inaccurate": "غير دقيق أو مضلّل",
+      "other": "شيء آخر"
+    },
+    "detailsLabel": "تفاصيل (اختياري)",
+    "detailsPlaceholder": "أضف أي شيء يساعدنا في المراجعة.",
+    "cancel": "إلغاء",
+    "submit": "إرسال البلاغ",
+    "submitting": "جارٍ الإرسال...",
+    "thanksTitle": "تم استلام البلاغ",
+    "thanksBody": "شكرًا لك. سيراجع فريقنا هذا.",
+    "close": "إغلاق"
+  },
   "Saved": {
     "title": "المحفوظة",
     "subtitle": "عمليات البحث والإعلانات المحفوظة. أنت وحدك من يراها.",
@@ -443,6 +464,7 @@
       "draftListings": "المسودات",
       "rejectedListings": "المرفوضة",
       "flaggedListings": "المعلّمة للمراجعة",
+      "openReports": "البلاغات المفتوحة",
       "totalUsers": "إجمالي المستخدمين",
       "bannedUsers": "المحظورون",
       "adminUsers": "المدراء"
@@ -452,8 +474,29 @@
       "listingsDesc": "مراجعة وموافقة ورفض وتعليم إعلانات العقارات.",
       "users": "المستخدمون",
       "usersDesc": "إدارة حسابات المستخدمين، حظر المسيئين، ترقية المدراء.",
+      "reports": "البلاغات",
+      "reportsDesc": "مراجعة الإعلانات والبائعين المبلَّغ عنهم من المستخدمين.",
       "openListings": "إدارة الإعلانات",
-      "openUsers": "إدارة المستخدمين"
+      "openUsers": "إدارة المستخدمين",
+      "openReports": "مراجعة البلاغات"
+    },
+    "reports": {
+      "title": "البلاغات",
+      "subtitle": "إعلانات وبائعون مبلَّغ عنهم من المستخدمين. مراجعة البلاغ لا تنشر أي شيء.",
+      "loading": "جارٍ التحميل...",
+      "empty": "لا توجد بلاغات {status}.",
+      "filterStatus": "الحالة",
+      "statusOpen": "مفتوحة",
+      "statusResolved": "معالجة",
+      "statusDismissed": "مرفوضة",
+      "targetListing": "إعلان",
+      "targetSeller": "بائع",
+      "view": "عرض",
+      "resolve": "معالجة",
+      "dismiss": "رفض",
+      "reportedBy": "أبلغ عنه {email}",
+      "noLabel": "(محذوف)",
+      "actionError": "فشل الإجراء. حاول مرة أخرى."
     },
     "listings": {
       "pageTitle": "الإعلانات",

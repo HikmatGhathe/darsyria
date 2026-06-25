@@ -51,6 +51,27 @@
     "save": "Merken",
     "saved": "Gemerkt"
   },
+  "Report": {
+    "report": "Melden",
+    "title": "Problem melden",
+    "subtitle": "Sagen Sie uns, was nicht stimmt. Unser Team prüft es — Meldungen veröffentlichen nichts.",
+    "reasonLabel": "Grund",
+    "reasons": {
+      "scam": "Betrug oder Täuschung",
+      "spam": "Spam oder Duplikat",
+      "offensive": "Anstößig oder unangemessen",
+      "inaccurate": "Falsch oder irreführend",
+      "other": "Etwas anderes"
+    },
+    "detailsLabel": "Details (optional)",
+    "detailsPlaceholder": "Ergänzen Sie alles, was uns bei der Prüfung hilft.",
+    "cancel": "Abbrechen",
+    "submit": "Meldung senden",
+    "submitting": "Wird gesendet...",
+    "thanksTitle": "Meldung erhalten",
+    "thanksBody": "Danke. Unser Team wird das prüfen.",
+    "close": "Schließen"
+  },
   "Saved": {
     "title": "Gemerkt",
     "subtitle": "Ihre gespeicherten Suchen und Inserate. Nur Sie sehen das.",
@@ -443,6 +464,7 @@
       "draftListings": "Entwürfe",
       "rejectedListings": "Abgelehnt",
       "flaggedListings": "Zur Überprüfung markiert",
+      "openReports": "Offene Meldungen",
       "totalUsers": "Nutzer insgesamt",
       "bannedUsers": "Gesperrte Nutzer",
       "adminUsers": "Admins"
@@ -452,8 +474,29 @@
       "listingsDesc": "Immobilieninserate prüfen, genehmigen, ablehnen und markieren.",
       "users": "Nutzer",
       "usersDesc": "Nutzerkonten verwalten, Missbrauch sperren, Admins ernennen.",
+      "reports": "Meldungen",
+      "reportsDesc": "Von Nutzern gemeldete Inserate und Verkäufer prüfen.",
       "openListings": "Inserate verwalten",
-      "openUsers": "Nutzer verwalten"
+      "openUsers": "Nutzer verwalten",
+      "openReports": "Meldungen prüfen"
+    },
+    "reports": {
+      "title": "Meldungen",
+      "subtitle": "Von Nutzern gemeldete Inserate und Verkäufer. Das Prüfen einer Meldung veröffentlicht nichts.",
+      "loading": "Wird geladen...",
+      "empty": "Keine {status} Meldungen.",
+      "filterStatus": "Status",
+      "statusOpen": "Offen",
+      "statusResolved": "Erledigt",
+      "statusDismissed": "Verworfen",
+      "targetListing": "Inserat",
+      "targetSeller": "Verkäufer",
+      "view": "Ansehen",
+      "resolve": "Erledigen",
+      "dismiss": "Verwerfen",
+      "reportedBy": "Gemeldet von {email}",
+      "noLabel": "(entfernt)",
+      "actionError": "Aktion fehlgeschlagen. Bitte erneut versuchen."
     },
     "listings": {
       "pageTitle": "Inserate",

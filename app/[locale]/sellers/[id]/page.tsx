@@ -4,6 +4,7 @@ import Link from 'next/link';
 import {getTranslations} from 'next-intl/server';
 import PropertyCard from '@/components/PropertyCard';
 import FollowButton from '@/components/FollowButton';
+import ReportButton from '@/components/ReportButton';
 import {getSellerServer} from '@/lib/server-api';
 import {formatListedDate} from '@/lib/property-display';
 import {SITE_URL} from '@/lib/site';
@@ -189,6 +190,12 @@ export default async function SellerProfilePage({params}: {params: Params}) {
           </div>
         )}
       </section>
+
+      {!seller.is_self && (
+        <div className="mt-10 pt-6 border-t border-border-subtle flex justify-end">
+          <ReportButton sellerId={seller.id} ownerId={seller.id} />
+        </div>
+      )}
     </div>
   );
 }

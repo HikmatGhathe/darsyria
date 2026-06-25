@@ -51,6 +51,27 @@
     "save": "Save",
     "saved": "Saved"
   },
+  "Report": {
+    "report": "Report",
+    "title": "Report a problem",
+    "subtitle": "Tell us what's wrong. Our team will review it — reports never publish anything.",
+    "reasonLabel": "Reason",
+    "reasons": {
+      "scam": "Scam or fraud",
+      "spam": "Spam or duplicate",
+      "offensive": "Offensive or inappropriate",
+      "inaccurate": "Inaccurate or misleading",
+      "other": "Something else"
+    },
+    "detailsLabel": "Details (optional)",
+    "detailsPlaceholder": "Add anything that helps us review this.",
+    "cancel": "Cancel",
+    "submit": "Submit report",
+    "submitting": "Submitting...",
+    "thanksTitle": "Report received",
+    "thanksBody": "Thank you. Our team will review this.",
+    "close": "Close"
+  },
   "Saved": {
     "title": "Saved",
     "subtitle": "Your saved searches and listings. Only you can see this.",
@@ -443,6 +464,7 @@
       "draftListings": "Drafts",
       "rejectedListings": "Rejected",
       "flaggedListings": "Flagged for review",
+      "openReports": "Open reports",
       "totalUsers": "Total users",
       "bannedUsers": "Banned users",
       "adminUsers": "Admins"
@@ -452,8 +474,29 @@
       "listingsDesc": "Review, approve, reject, and flag property listings.",
       "users": "Users",
       "usersDesc": "Manage user accounts, ban abusers, promote admins.",
+      "reports": "Reports",
+      "reportsDesc": "Review listings and sellers reported by users.",
       "openListings": "Manage listings",
-      "openUsers": "Manage users"
+      "openUsers": "Manage users",
+      "openReports": "Review reports"
+    },
+    "reports": {
+      "title": "Reports",
+      "subtitle": "Listings and sellers reported by users. Reviewing a report never publishes anything.",
+      "loading": "Loading...",
+      "empty": "No {status} reports.",
+      "filterStatus": "Status",
+      "statusOpen": "Open",
+      "statusResolved": "Resolved",
+      "statusDismissed": "Dismissed",
+      "targetListing": "Listing",
+      "targetSeller": "Seller",
+      "view": "View",
+      "resolve": "Resolve",
+      "dismiss": "Dismiss",
+      "reportedBy": "Reported by {email}",
+      "noLabel": "(removed)",
+      "actionError": "Action failed. Please try again."
     },
     "listings": {
       "pageTitle": "Listings",
