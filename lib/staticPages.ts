@@ -61,21 +61,21 @@ Die Plattform befindet sich in aktiver Entwicklung. Phase 1 startet mit dem KI-A
     body: {
       en: `For questions, feedback, or partnership inquiries, please reach out.
 
-Email: contact@darsyria.com
+Email: Hikmatghathe@outlook.de
 
 We aim to respond within 2 working days. For urgent listing-related issues, please mention "URGENT" in the subject line.
 
 DarSyria is an independent platform and is not affiliated with any government body, real estate agency, or political organization.`,
       de: `Für Fragen, Feedback oder Partnerschaftsanfragen kontaktieren Sie uns bitte.
 
-E-Mail: contact@darsyria.com
+E-Mail: Hikmatghathe@outlook.de
 
 Wir bemühen uns, innerhalb von 2 Werktagen zu antworten. Bei dringenden Fragen zu Immobilienangeboten verwenden Sie bitte "DRINGEND" im Betreff.
 
 DarSyria ist eine unabhängige Plattform und steht in keiner Verbindung zu Regierungsstellen, Immobilienagenturen oder politischen Organisationen.`,
       ar: `للأسئلة أو الملاحظات أو استفسارات الشراكة، يرجى التواصل معنا.
 
-البريد الإلكتروني: contact@darsyria.com
+البريد الإلكتروني: Hikmatghathe@outlook.de
 
 نحن نسعى للرد خلال يومي عمل. للقضايا العاجلة المتعلقة بالعقارات، يرجى ذكر "عاجل" في عنوان الرسالة.
 
@@ -335,7 +335,7 @@ Bergstr. 17
 Germany
 
 Contact:
-Email: contact@darsyria.com
+Email: Hikmatghathe@outlook.de
 
 Responsible for content under § 18 (2) MStV:
 Hikmat Ghathe (address as above)`,
@@ -348,7 +348,7 @@ Bergstr. 17
 Deutschland
 
 Kontakt:
-E-Mail: contact@darsyria.com
+E-Mail: Hikmatghathe@outlook.de
 
 Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV:
 Hikmat Ghathe (Anschrift wie oben)`,
@@ -361,7 +361,7 @@ Bergstr. 17
 ألمانيا
 
 التواصل:
-البريد الإلكتروني: contact@darsyria.com
+البريد الإلكتروني: Hikmatghathe@outlook.de
 
 المسؤول عن المحتوى وفقًا للمادة 18 (2) من معاهدة الدولة للإعلام (§ 18 MStV):
 Hikmat Ghathe (العنوان كما هو أعلاه)`
