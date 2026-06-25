@@ -2,6 +2,7 @@ import {useTranslations, useLocale} from 'next-intl';
 import Link from 'next/link';
 import ContactSellerButton from '@/components/ContactSellerButton';
 import FollowButton from '@/components/FollowButton';
+import FavoriteButton from '@/components/FavoriteButton';
 import OwnerPropertyControls from '@/components/OwnerPropertyControls';
 import OwnerImageManager from '@/components/OwnerImageManager';
 import type {Property} from '@/lib/properties';
@@ -168,6 +169,7 @@ export default function PropertyDetailView({property}: {property: Property}) {
             ownerId={property.owner_id}
           />
         </div>
+        <FavoriteButton propertyId={property.id} withLabel />
         <FollowButton sellerId={property.owner_id} locale={locale} />
       </section>
 

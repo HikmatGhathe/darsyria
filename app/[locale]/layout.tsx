@@ -3,6 +3,7 @@ import {NextIntlClientProvider, hasLocale} from 'next-intl';
 import {getTranslations} from 'next-intl/server';
 import {notFound} from 'next/navigation';
 import {AuthProvider} from '@/components/AuthProvider';
+import {FavoritesProvider} from '@/components/FavoritesProvider';
 import CookieNotice from '@/components/CookieNotice';
 import Footer from '@/components/Footer';
 import Header from '@/components/Header';
@@ -71,10 +72,12 @@ export default async function LocaleLayout({
         <ThemeInitializer />
         <NextIntlClientProvider>
           <AuthProvider>
-            <Header />
-            <main className="flex-1">{children}</main>
-            <Footer />
-            <CookieNotice />
+            <FavoritesProvider>
+              <Header />
+              <main className="flex-1">{children}</main>
+              <Footer />
+              <CookieNotice />
+            </FavoritesProvider>
           </AuthProvider>
         </NextIntlClientProvider>
       </body>

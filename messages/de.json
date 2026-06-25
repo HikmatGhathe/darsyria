@@ -42,7 +42,21 @@
     "home": "Startseite",
     "properties": "Immobilien",
     "knowledgeBase": "Wissensdatenbank",
-    "aiAssistant": "KI-Assistent"
+    "aiAssistant": "KI-Assistent",
+    "saved": "Gemerkt"
+  },
+  "Favorites": {
+    "add": "Inserat merken",
+    "remove": "Aus Gemerkten entfernen",
+    "save": "Merken",
+    "saved": "Gemerkt"
+  },
+  "Saved": {
+    "title": "Gemerkte Inserate",
+    "subtitle": "Von Ihnen gemerkte Immobilien. Nur Sie sehen diese Liste.",
+    "loading": "Wird geladen...",
+    "empty": "Sie haben noch keine Inserate gemerkt.",
+    "browseCta": "Immobilien durchsuchen"
   },
   "Theme": {
     "switchToDark": "Zu dunklem Modus wechseln",

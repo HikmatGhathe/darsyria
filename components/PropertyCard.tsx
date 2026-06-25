@@ -2,6 +2,7 @@
 
 import {useTranslations} from 'next-intl';
 import Link from 'next/link';
+import FavoriteButton from '@/components/FavoriteButton';
 import type {PropertyListItem} from '@/lib/properties';
 import {
   formatPrice,
@@ -72,6 +73,8 @@ export default function PropertyCard({
         >
           {t(docInfo.key as Parameters<typeof t>[0])}
         </span>
+
+        <FavoriteButton propertyId={property.id} className="absolute bottom-2 end-2 shadow-sm" />
       </div>
 
       {/* Card body */}

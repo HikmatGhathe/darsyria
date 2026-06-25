@@ -42,7 +42,21 @@
     "home": "Home",
     "properties": "Properties",
     "knowledgeBase": "Knowledge Base",
-    "aiAssistant": "AI Assistant"
+    "aiAssistant": "AI Assistant",
+    "saved": "Saved"
+  },
+  "Favorites": {
+    "add": "Save this listing",
+    "remove": "Remove from saved",
+    "save": "Save",
+    "saved": "Saved"
+  },
+  "Saved": {
+    "title": "Saved listings",
+    "subtitle": "Properties you've saved. Only you can see this list.",
+    "loading": "Loading...",
+    "empty": "You haven't saved any listings yet.",
+    "browseCta": "Browse properties"
   },
   "Theme": {
     "switchToDark": "Switch to dark mode",
