@@ -5,6 +5,7 @@ import {useTranslations, useLocale} from 'next-intl';
 import {useRouter} from '@/i18n/navigation';
 import {useAuth} from '@/components/AuthProvider';
 import {deleteMyAccount, exportMyData, updateMe} from '@/lib/auth';
+import CompanyVerificationCard from '@/components/CompanyVerificationCard';
 import type {UserUpdate} from '@/lib/auth';
 
 type FormState = {
@@ -400,6 +401,11 @@ export default function AccountPage() {
           {status === 'saving' ? t('saving') : t('save')}
         </button>
       </form>
+
+      {/* Company verification (renders only for company accounts) */}
+      <div className="mt-8">
+        <CompanyVerificationCard />
+      </div>
 
       {/* Data export + account deletion */}
       <div className="mt-12 pt-8 border-t border-border-subtle space-y-8">

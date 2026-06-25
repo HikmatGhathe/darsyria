@@ -182,6 +182,8 @@ export type ApiProperty = {
   area_sqm: number | null;
   status: string;
   document_status: string;
+  verification_status: string;
+  verification_rejection_reason: string | null;
   created_at: string;
   updated_at: string;
   images: PropertyImage[];
@@ -204,6 +206,7 @@ export type ApiPropertyListItem = {
   rooms: number | null;
   area_sqm: number | null;
   document_status: string;
+  verification_status: string;
   created_at: string;
   cover_image_url: string | null;
   seller_display_name: string | null;

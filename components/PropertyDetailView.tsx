@@ -7,6 +7,7 @@ import ReportButton from '@/components/ReportButton';
 import OwnerPropertyControls from '@/components/OwnerPropertyControls';
 import OwnerImageManager from '@/components/OwnerImageManager';
 import PropertyMap from '@/components/PropertyMap';
+import VerificationBadge from '@/components/VerificationBadge';
 import type {Property} from '@/lib/properties';
 import {GOVERNORATE_KEYS, governorateCenter, type GovernorateKey} from '@/lib/governorates';
 import {
@@ -24,7 +25,6 @@ import {
 // self-hides when not relevant to the viewer.
 export default function PropertyDetailView({property}: {property: Property}) {
   const t = useTranslations('PropertyDisplay');
-  const tVerify = useTranslations('Properties.verification');
   const tGov = useTranslations('Governorates');
   const locale = useLocale();
 
@@ -39,7 +39,6 @@ export default function PropertyDetailView({property}: {property: Property}) {
     amber: 'bg-accent-warning-bg text-accent-warning border-accent-warning/30',
     gray: 'bg-surface-card text-text-secondary border-border-subtle'
   };
-  const isActive = property.status === 'active';
   const images = property.images ?? [];
 
   return (
@@ -54,14 +53,11 @@ export default function PropertyDetailView({property}: {property: Property}) {
         </Link>
         <div className="flex flex-wrap items-center gap-3 mb-2">
           <h1 className="text-3xl font-semibold text-text-primary">{property.title}</h1>
-          {isActive && (
-            <span className="inline-flex items-center gap-1 px-2 py-0.5 text-[11px] font-medium text-white bg-accent-verified rounded-full">
-              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                <polyline points="20 6 9 17 4 12" />
-              </svg>
-              {tVerify('verified')}
-            </span>
-          )}
+          <VerificationBadge
+            verificationStatus={property.verification_status}
+            sellerAccountType={property.seller_account_type}
+            sellerVerificationStatus={property.seller_verification_status}
+          />
         </div>
         <p className="text-text-secondary flex items-center gap-1 mb-1">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="shrink-0" aria-hidden="true">

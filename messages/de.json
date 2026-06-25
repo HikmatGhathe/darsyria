@@ -194,7 +194,11 @@
     "verification": {
       "verified": "Verifiziert",
       "pending": "Verifizierung ausstehend",
-      "unverified": "Nicht verifiziert"
+      "unverified": "Nicht verifiziert",
+      "verifiedCompany": "Verifiziertes Unternehmen",
+      "verifiedCompanyTooltip": "Wir haben bestätigt, dass dies ein eingetragenes Unternehmen ist. Dies bestätigt nicht das Eigentum an dieser konkreten Immobilie.",
+      "ownershipVerified": "Eigentum verifiziert",
+      "ownershipVerifiedTooltip": "Ein Administrator hat die Eigentumsnachweise für dieses Inserat geprüft."
     },
     "types": {
       "apartment": "Wohnung",
@@ -503,7 +507,26 @@
       "reportsDesc": "Von Nutzern gemeldete Inserate und Verkäufer prüfen.",
       "openListings": "Inserate verwalten",
       "openUsers": "Nutzer verwalten",
-      "openReports": "Meldungen prüfen"
+      "openReports": "Meldungen prüfen",
+      "verifications": "Verifizierungen",
+      "verificationsDesc": "Dokumente zur Unternehmens- und Eigentumsverifizierung prüfen.",
+      "openVerifications": "Verifizierungen prüfen"
+    },
+    "backToDashboard": "Zurück zum Dashboard",
+    "verifications": {
+      "title": "Verifizierungen",
+      "subtitle": "Eingereichte Dokumente prüfen und genehmigen oder ablehnen. Bei Genehmigung wird das öffentliche Abzeichen gesetzt.",
+      "tabCompanies": "Unternehmen",
+      "tabListings": "Inserate",
+      "viewDocuments": "Dokumente ansehen",
+      "approve": "Genehmigen",
+      "reject": "Ablehnen",
+      "emptyCompanies": "Keine Unternehmen warten auf Verifizierung.",
+      "emptyListings": "Keine Inserate warten auf Verifizierung.",
+      "loadError": "Liste konnte nicht geladen werden. Bitte erneut versuchen.",
+      "noDocuments": "Keine Dokumente vorhanden.",
+      "rejectReasonPrompt": "Grund für die Ablehnung (optional):",
+      "documentCount": "{count, plural, one {# Dokument} other {# Dokumente}}"
     },
     "reports": {
       "title": "Meldungen",
@@ -643,5 +666,18 @@
     "website": "Webseite",
     "listingsHeading": "Inserate",
     "noListings": "Derzeit keine aktiven Inserate."
+  },
+  "Verification": {
+    "companyTitle": "Unternehmen verifizieren",
+    "companyIntro": "Laden Sie ein Dokument zur Unternehmensregistrierung hoch (z. B. Handelsregisterauszug). Ein Administrator prüft es, und nach Genehmigung zeigen Ihre Inserate das Abzeichen „Verifiziertes Unternehmen“.",
+    "listingTitle": "Eigentum verifizieren",
+    "listingIntro": "Laden Sie den Eigentumsnachweis (Tabu) für diese Immobilie hoch. Ein Administrator prüft ihn, und nach Genehmigung zeigt dieses Inserat das Abzeichen „Eigentum verifiziert“.",
+    "statusVerifiedCompany": "Ihr Unternehmen ist verifiziert.",
+    "statusPending": "Ihr Dokument wird geprüft.",
+    "statusListingVerified": "Das Eigentum für dieses Inserat ist verifiziert.",
+    "statusRejected": "Abgelehnt",
+    "uploading": "Wird hochgeladen…",
+    "uploadError": "Upload fehlgeschlagen. Bitte erneut versuchen.",
+    "accepted": "PDF, JPG, PNG oder WEBP — bis zu 15 MB. Privat gespeichert; nur Administratoren können es ansehen."
   }
 }

@@ -6,6 +6,7 @@ import {useTranslations, useLocale} from 'next-intl';
 import Link from 'next/link';
 import {useAuth} from '@/components/AuthProvider';
 import PropertyMap from '@/components/PropertyMap';
+import ListingVerificationCard from '@/components/ListingVerificationCard';
 import {GOVERNORATE_KEYS, governorateCenter} from '@/lib/governorates';
 import {
   getProperty,
@@ -490,6 +491,17 @@ export default function EditPropertyPage() {
           </button>
         </div>
       </form>
+
+      {original && (
+        <div className="mt-8">
+          <ListingVerificationCard
+            propertyId={id}
+            initialStatus={original.verification_status}
+            initialRejectionReason={original.verification_rejection_reason}
+            sellerAccountType={user?.account_type ?? null}
+          />
+        </div>
+      )}
     </div>
   );
 }

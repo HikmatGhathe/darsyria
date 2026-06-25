@@ -194,7 +194,11 @@
     "verification": {
       "verified": "موثق",
       "pending": "قيد التحقق",
-      "unverified": "غير موثق"
+      "unverified": "غير موثق",
+      "verifiedCompany": "شركة موثّقة",
+      "verifiedCompanyTooltip": "لقد أكّدنا أن هذه شركة مسجّلة. هذا لا يثبت ملكية هذا العقار تحديدًا.",
+      "ownershipVerified": "ملكية موثّقة",
+      "ownershipVerifiedTooltip": "راجع المشرف مستندات الملكية لهذا الإعلان."
     },
     "types": {
       "apartment": "شقة",
@@ -503,7 +507,26 @@
       "reportsDesc": "مراجعة الإعلانات والبائعين المبلَّغ عنهم من المستخدمين.",
       "openListings": "إدارة الإعلانات",
       "openUsers": "إدارة المستخدمين",
-      "openReports": "مراجعة البلاغات"
+      "openReports": "مراجعة البلاغات",
+      "verifications": "التوثيقات",
+      "verificationsDesc": "مراجعة مستندات توثيق الشركات والملكية.",
+      "openVerifications": "مراجعة التوثيقات"
+    },
+    "backToDashboard": "العودة إلى لوحة التحكم",
+    "verifications": {
+      "title": "التوثيقات",
+      "subtitle": "راجع المستندات المقدّمة ووافق عليها أو ارفضها. الموافقة تُظهر الشارة العامة.",
+      "tabCompanies": "الشركات",
+      "tabListings": "الإعلانات",
+      "viewDocuments": "عرض المستندات",
+      "approve": "موافقة",
+      "reject": "رفض",
+      "emptyCompanies": "لا توجد شركات بانتظار التوثيق.",
+      "emptyListings": "لا توجد إعلانات بانتظار التوثيق.",
+      "loadError": "تعذّر تحميل القائمة. حاول مرة أخرى.",
+      "noDocuments": "لا توجد مستندات.",
+      "rejectReasonPrompt": "سبب الرفض (اختياري):",
+      "documentCount": "{count, plural, zero {# مستند} one {# مستند} two {# مستندان} few {# مستندات} many {# مستندًا} other {# مستند}}"
     },
     "reports": {
       "title": "البلاغات",
@@ -643,5 +666,18 @@
     "website": "الموقع الإلكتروني",
     "listingsHeading": "الإعلانات",
     "noListings": "لا توجد إعلانات نشطة حاليًا."
+  },
+  "Verification": {
+    "companyTitle": "وثّق شركتك",
+    "companyIntro": "ارفع مستند تسجيل الشركة (مثل مستخرج السجل التجاري). يراجعه المشرف، وبعد الموافقة تظهر إعلاناتك بشارة «شركة موثّقة».",
+    "listingTitle": "وثّق الملكية",
+    "listingIntro": "ارفع سند الملكية (الطابو) لهذا العقار. يراجعه المشرف، وبعد الموافقة يظهر هذا الإعلان بشارة «ملكية موثّقة».",
+    "statusVerifiedCompany": "شركتك موثّقة.",
+    "statusPending": "مستندك قيد المراجعة.",
+    "statusListingVerified": "تم توثيق ملكية هذا الإعلان.",
+    "statusRejected": "مرفوض",
+    "uploading": "جارٍ الرفع…",
+    "uploadError": "فشل الرفع. حاول مرة أخرى.",
+    "accepted": "PDF أو JPG أو PNG أو WEBP — حتى ١٥ ميغابايت. يُخزَّن بشكل خاص؛ يمكن للمشرفين فقط الاطّلاع عليه."
   }
 }

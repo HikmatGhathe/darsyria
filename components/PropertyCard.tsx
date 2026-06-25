@@ -3,6 +3,7 @@
 import {useTranslations} from 'next-intl';
 import Link from 'next/link';
 import FavoriteButton from '@/components/FavoriteButton';
+import VerificationBadge from '@/components/VerificationBadge';
 import type {PropertyListItem} from '@/lib/properties';
 import {GOVERNORATE_KEYS, type GovernorateKey} from '@/lib/governorates';
 import {
@@ -20,7 +21,6 @@ export default function PropertyCard({
   locale: string;
 }) {
   const t = useTranslations('PropertyDisplay');
-  const tVerify = useTranslations('Properties.verification');
   const tGov = useTranslations('Governorates');
   const govKey = property.governorate as GovernorateKey | null;
   const govLabel = govKey && GOVERNORATE_KEYS.includes(govKey) ? tGov(govKey) : null;
@@ -64,13 +64,14 @@ export default function PropertyCard({
           </div>
         )}
 
-        {/* Verified badge — browse endpoint only ever returns active (admin-approved) listings */}
-        <span className="absolute top-2 start-2 inline-flex items-center gap-1 px-2 py-0.5 text-[11px] font-medium text-white bg-accent-verified rounded-full">
-          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-            <polyline points="20 6 9 17 4 12" />
-          </svg>
-          {tVerify('verified')}
-        </span>
+        {/* Trust badge — only shown for a verified company or an ownership-
+            verified individual listing; nothing otherwise. */}
+        <VerificationBadge
+          verificationStatus={property.verification_status}
+          sellerAccountType={property.seller_account_type}
+          sellerVerificationStatus={property.seller_verification_status}
+          className="absolute top-2 start-2"
+        />
 
         <span
           className={`absolute top-2 end-2 inline-block px-2 py-0.5 text-xs font-medium border rounded-full backdrop-blur-sm bg-opacity-90 ${badgeColors[docInfo.color]}`}
@@ -111,11 +112,6 @@ export default function PropertyCard({
               <path d="M4 21v-2a4 4 0 0 1 4-4h8a4 4 0 0 1 4 4v2" />
             </svg>
             {t('postedBy', {name: property.seller_display_name})}
-            {property.seller_account_type === 'company' && property.seller_verification_status === 'verified' && (
-              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="shrink-0 text-accent-verified" aria-hidden="true">
-                <polyline points="20 6 9 17 4 12" />
-              </svg>
-            )}
           </p>
         )}
       </div>

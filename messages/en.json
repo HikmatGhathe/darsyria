@@ -194,7 +194,11 @@
     "verification": {
       "verified": "Verified",
       "pending": "Pending verification",
-      "unverified": "Unverified"
+      "unverified": "Unverified",
+      "verifiedCompany": "Verified company",
+      "verifiedCompanyTooltip": "We confirmed this is a registered business. This does not verify the ownership of this specific property.",
+      "ownershipVerified": "Ownership verified",
+      "ownershipVerifiedTooltip": "An admin reviewed ownership documents for this listing."
     },
     "types": {
       "apartment": "Apartment",
@@ -503,7 +507,26 @@
       "reportsDesc": "Review listings and sellers reported by users.",
       "openListings": "Manage listings",
       "openUsers": "Manage users",
-      "openReports": "Review reports"
+      "openReports": "Review reports",
+      "verifications": "Verifications",
+      "verificationsDesc": "Review company and listing-ownership verification documents.",
+      "openVerifications": "Review verifications"
+    },
+    "backToDashboard": "Back to dashboard",
+    "verifications": {
+      "title": "Verifications",
+      "subtitle": "Review submitted documents and approve or reject. Approving sets the public badge.",
+      "tabCompanies": "Companies",
+      "tabListings": "Listings",
+      "viewDocuments": "View documents",
+      "approve": "Approve",
+      "reject": "Reject",
+      "emptyCompanies": "No companies awaiting verification.",
+      "emptyListings": "No listings awaiting verification.",
+      "loadError": "Could not load the queue. Please try again.",
+      "noDocuments": "No documents on file.",
+      "rejectReasonPrompt": "Reason for rejection (optional):",
+      "documentCount": "{count, plural, one {# document} other {# documents}}"
     },
     "reports": {
       "title": "Reports",
@@ -643,5 +666,18 @@
     "website": "Website",
     "listingsHeading": "Listings",
     "noListings": "No active listings right now."
+  },
+  "Verification": {
+    "companyTitle": "Verify your company",
+    "companyIntro": "Upload a business-registration document (e.g. commercial register extract). An admin reviews it, and once approved your listings show a \"Verified company\" badge.",
+    "listingTitle": "Verify ownership",
+    "listingIntro": "Upload the title deed (tabu) for this property. An admin reviews it, and once approved this listing shows an \"Ownership verified\" badge.",
+    "statusVerifiedCompany": "Your company is verified.",
+    "statusPending": "Your document is under review.",
+    "statusListingVerified": "Ownership is verified for this listing.",
+    "statusRejected": "Rejected",
+    "uploading": "Uploading…",
+    "uploadError": "Upload failed. Please try again.",
+    "accepted": "PDF, JPG, PNG, or WEBP — up to 15 MB. Stored privately; only admins can view it."
   }
 }
