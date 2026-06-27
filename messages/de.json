@@ -43,7 +43,8 @@
     "properties": "Immobilien",
     "knowledgeBase": "Wissensdatenbank",
     "aiAssistant": "KI-Assistent",
-    "saved": "Gemerkt"
+    "saved": "Gemerkt",
+    "myListings": "Meine Inserate"
   },
   "Governorates": {
     "damascus": "Damaskus",
@@ -712,5 +713,24 @@
     "status_unpaid": "Offen",
     "status_paid": "Bezahlt",
     "status_void": "Storniert"
+  },
+  "MyListings": {
+    "title": "Meine Inserate",
+    "subtitle": "Verwalten Sie alle von Ihnen erstellten Inserate, über alle Status hinweg.",
+    "newListing": "Neues Inserat",
+    "loading": "Wird geladen…",
+    "loadError": "Ihre Inserate konnten nicht geladen werden. Bitte erneut versuchen.",
+    "empty": "Sie haben noch keine Inserate erstellt.",
+    "view": "Ansehen",
+    "edit": "Bearbeiten",
+    "ownershipVerified": "Eigentum verifiziert",
+    "invoice": "Rechnung",
+    "invoice_unpaid": "Offen",
+    "invoice_paid": "Bezahlt",
+    "status_draft": "Entwurf",
+    "status_active": "Aktiv",
+    "status_sold": "Verkauft",
+    "status_rejected": "Abgelehnt",
+    "status_removed": "Entfernt"
   }
 }

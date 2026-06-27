@@ -259,6 +259,31 @@ export async function listProperties(filters: PropertyFilters = {}): Promise<Api
   });
 }
 
+// Owner's management view of their own listing (all statuses + invoice summary)
+export type MyListingItem = {
+  id: string;
+  title: string;
+  status: string;
+  verification_status: string;
+  governorate: string | null;
+  city: string;
+  price_amount: string;
+  price_currency: string;
+  created_at: string;
+  published_at: string | null;
+  cover_image_url: string | null;
+  invoice_status: string | null;
+  invoice_amount: string | null;
+  invoice_currency: string | null;
+};
+
+export async function listMyProperties(): Promise<MyListingItem[]> {
+  return apiRequest<MyListingItem[]>('/properties/mine', {
+    method: 'GET',
+    authenticated: true
+  });
+}
+
 export async function getApiProperty(id: string): Promise<ApiProperty> {
   return apiRequest<ApiProperty>(`/properties/${id}`, {
     method: 'GET',

@@ -43,7 +43,8 @@
     "properties": "العقارات",
     "knowledgeBase": "قاعدة المعرفة",
     "aiAssistant": "المساعد الذكي",
-    "saved": "المحفوظة"
+    "saved": "المحفوظة",
+    "myListings": "إعلاناتي"
   },
   "Governorates": {
     "damascus": "دمشق",
@@ -712,5 +713,24 @@
     "status_unpaid": "غير مدفوعة",
     "status_paid": "مدفوعة",
     "status_void": "ملغاة"
+  },
+  "MyListings": {
+    "title": "إعلاناتي",
+    "subtitle": "أدر جميع الإعلانات التي أنشأتها بمختلف حالاتها.",
+    "newListing": "إعلان جديد",
+    "loading": "جارٍ التحميل…",
+    "loadError": "تعذّر تحميل إعلاناتك. حاول مرة أخرى.",
+    "empty": "لم تنشئ أي إعلانات بعد.",
+    "view": "عرض",
+    "edit": "تعديل",
+    "ownershipVerified": "ملكية موثّقة",
+    "invoice": "فاتورة",
+    "invoice_unpaid": "غير مدفوعة",
+    "invoice_paid": "مدفوعة",
+    "status_draft": "مسودة",
+    "status_active": "نشط",
+    "status_sold": "مُباع",
+    "status_rejected": "مرفوض",
+    "status_removed": "محذوف"
   }
 }

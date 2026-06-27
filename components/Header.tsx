@@ -74,6 +74,9 @@ export default function Header() {
           <Link href="/knowledge" className="text-text-secondary hover:text-text-primary">{t('knowledgeBase')}</Link>
           <Link href="/assistant" className="text-text-secondary hover:text-text-primary">{t('aiAssistant')}</Link>
           {user && (
+            <Link href="/my-listings" className="text-text-secondary hover:text-text-primary">{t('myListings')}</Link>
+          )}
+          {user && (
             <Link href="/saved" className="text-text-secondary hover:text-text-primary">{t('saved')}</Link>
           )}
           {user && (

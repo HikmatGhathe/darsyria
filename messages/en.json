@@ -43,7 +43,8 @@
     "properties": "Properties",
     "knowledgeBase": "Knowledge Base",
     "aiAssistant": "AI Assistant",
-    "saved": "Saved"
+    "saved": "Saved",
+    "myListings": "My listings"
   },
   "Governorates": {
     "damascus": "Damascus",
@@ -712,5 +713,24 @@
     "status_unpaid": "Unpaid",
     "status_paid": "Paid",
     "status_void": "Void"
+  },
+  "MyListings": {
+    "title": "My listings",
+    "subtitle": "Manage every listing you've created, across all statuses.",
+    "newListing": "New listing",
+    "loading": "Loading…",
+    "loadError": "Could not load your listings. Please try again.",
+    "empty": "You haven't created any listings yet.",
+    "view": "View",
+    "edit": "Edit",
+    "ownershipVerified": "Ownership verified",
+    "invoice": "Invoice",
+    "invoice_unpaid": "Unpaid",
+    "invoice_paid": "Paid",
+    "status_draft": "Draft",
+    "status_active": "Active",
+    "status_sold": "Sold",
+    "status_rejected": "Rejected",
+    "status_removed": "Removed"
   }
 }
