@@ -6,6 +6,7 @@ import {useRouter} from '@/i18n/navigation';
 import {useAuth} from '@/components/AuthProvider';
 import {deleteMyAccount, exportMyData, updateMe} from '@/lib/auth';
 import CompanyVerificationCard from '@/components/CompanyVerificationCard';
+import SellerBillingCard from '@/components/SellerBillingCard';
 import type {UserUpdate} from '@/lib/auth';
 
 type FormState = {
@@ -405,6 +406,11 @@ export default function AccountPage() {
       {/* Company verification (renders only for company accounts) */}
       <div className="mt-8">
         <CompanyVerificationCard />
+      </div>
+
+      {/* Billing (renders only when the seller has invoices) */}
+      <div className="mt-8">
+        <SellerBillingCard />
       </div>
 
       {/* Data export + account deletion */}

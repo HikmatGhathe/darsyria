@@ -154,6 +154,12 @@ export default function AdminLandingPage() {
           buttonLabel={t('sections.openVerifications')}
           href="/admin/verifications"
         />
+        <SectionCard
+          title={t('sections.billing')}
+          description={t('sections.billingDesc')}
+          buttonLabel={t('sections.openBilling')}
+          href="/admin/billing"
+        />
       </div>
     </main>
   );

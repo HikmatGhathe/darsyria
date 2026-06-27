@@ -510,9 +510,34 @@
       "openReports": "Meldungen prüfen",
       "verifications": "Verifizierungen",
       "verificationsDesc": "Dokumente zur Unternehmens- und Eigentumsverifizierung prüfen.",
-      "openVerifications": "Verifizierungen prüfen"
+      "openVerifications": "Verifizierungen prüfen",
+      "billing": "Abrechnung",
+      "billingDesc": "Festlegen, ob Inserate kostenpflichtig sind, den Preis setzen und Rechnungen prüfen.",
+      "openBilling": "Abrechnung verwalten"
     },
     "backToDashboard": "Zurück zum Dashboard",
+    "billing": {
+      "title": "Abrechnung",
+      "subtitle": "Steuern, ob das Veröffentlichen eines Inserats kostenpflichtig ist, den Preis festlegen und Rechnungen prüfen.",
+      "paymentRequired": "Zahlung zum Veröffentlichen erforderlich",
+      "paymentRequiredHelp": "Solange aus, ist das Veröffentlichen kostenlos und es werden keine Rechnungen erstellt. Einschalten, um neue Inserate zu berechnen.",
+      "paymentOn": "Zahlung erforderlich",
+      "paymentOffFree": "Kostenlos (aus)",
+      "price": "Preis pro Inserat",
+      "currency": "Währung",
+      "savePrice": "Preis speichern",
+      "filter_unpaid": "Offen",
+      "filter_paid": "Bezahlt",
+      "filter_void": "Storniert",
+      "filter_all": "Alle",
+      "status_unpaid": "Offen",
+      "status_paid": "Bezahlt",
+      "status_void": "Storniert",
+      "markPaid": "Als bezahlt markieren",
+      "void": "Stornieren",
+      "emptyInvoices": "Keine Rechnungen hier.",
+      "loadError": "Abrechnung konnte nicht geladen werden. Bitte erneut versuchen."
+    },
     "verifications": {
       "title": "Verifizierungen",
       "subtitle": "Eingereichte Dokumente prüfen und genehmigen oder ablehnen. Bei Genehmigung wird das öffentliche Abzeichen gesetzt.",
@@ -679,5 +704,13 @@
     "uploading": "Wird hochgeladen…",
     "uploadError": "Upload fehlgeschlagen. Bitte erneut versuchen.",
     "accepted": "PDF, JPG, PNG oder WEBP — bis zu 15 MB. Privat gespeichert; nur Administratoren können es ansehen."
+  },
+  "Billing": {
+    "title": "Rechnungen",
+    "howToPay": "Begleichen Sie den fälligen Betrag, damit Ihr Inserat aktiv bleibt. Kontaktieren Sie uns zur Begleichung; Kartenzahlung folgt bald.",
+    "due": "Fällig am {date}",
+    "status_unpaid": "Offen",
+    "status_paid": "Bezahlt",
+    "status_void": "Storniert"
   }
 }

@@ -510,9 +510,34 @@
       "openReports": "Review reports",
       "verifications": "Verifications",
       "verificationsDesc": "Review company and listing-ownership verification documents.",
-      "openVerifications": "Review verifications"
+      "openVerifications": "Review verifications",
+      "billing": "Billing",
+      "billingDesc": "Set whether listings require payment, the price, and review invoices.",
+      "openBilling": "Manage billing"
     },
     "backToDashboard": "Back to dashboard",
+    "billing": {
+      "title": "Billing",
+      "subtitle": "Control whether publishing a listing requires payment, set the price, and review invoices.",
+      "paymentRequired": "Require payment to publish",
+      "paymentRequiredHelp": "While off, publishing is free and no invoices are created. Turn on to start charging new listings.",
+      "paymentOn": "Payment required",
+      "paymentOffFree": "Free (off)",
+      "price": "Price per listing",
+      "currency": "Currency",
+      "savePrice": "Save price",
+      "filter_unpaid": "Unpaid",
+      "filter_paid": "Paid",
+      "filter_void": "Void",
+      "filter_all": "All",
+      "status_unpaid": "Unpaid",
+      "status_paid": "Paid",
+      "status_void": "Void",
+      "markPaid": "Mark paid",
+      "void": "Void",
+      "emptyInvoices": "No invoices here.",
+      "loadError": "Could not load billing. Please try again."
+    },
     "verifications": {
       "title": "Verifications",
       "subtitle": "Review submitted documents and approve or reject. Approving sets the public badge.",
@@ -679,5 +704,13 @@
     "uploading": "Uploading…",
     "uploadError": "Upload failed. Please try again.",
     "accepted": "PDF, JPG, PNG, or WEBP — up to 15 MB. Stored privately; only admins can view it."
+  },
+  "Billing": {
+    "title": "Invoices",
+    "howToPay": "Pay the amount due to keep your listing active. Contact us to settle an invoice; card payment is coming soon.",
+    "due": "Due {date}",
+    "status_unpaid": "Unpaid",
+    "status_paid": "Paid",
+    "status_void": "Void"
   }
 }
