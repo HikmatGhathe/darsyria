@@ -1,38 +1,88 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# DarSyria — Syrian real-estate marketplace for the diaspora
 
-> New to the project? Read [docs/how-it-works.md](docs/how-it-works.md) for an overview of how the platform behaves across the buyer, seller, and admin roles, with a map of where each capability lives in the code.
+DarSyria is a full-stack, trilingual real-estate marketplace that connects
+real-estate companies in Syria with the Syrian diaspora in Europe. It is built
+for a real launch: passwordless auth, listing verification, trust & safety
+tooling, per-listing invoicing, an AI assistant, and EU (GDPR) compliance.
 
-## Getting Started
+This repository is the **web frontend**. The backend API lives in a separate
+repo: **[darsyria-api](https://github.com/USERNAME/darsyria-api)**.
 
-First, run the development server:
+> ⚠️ Personal/portfolio project. Screenshots and a live demo link go here.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+---
+
+## Highlights
+
+- **Trilingual + RTL** — English, German, and Arabic throughout, with full
+  right-to-left layout for Arabic (`next-intl`).
+- **SEO-ready SSR** — server-rendered listing pages with per-page metadata,
+  canonical/hreflang tags, Open Graph images, and a generated sitemap.
+- **Property listings** — create/edit with image upload, structured
+  governorate + an optional map pin (Leaflet + OpenStreetMap), and a browse
+  experience with filters, sorting, pagination, favorites, and saved searches
+  that send a combined daily email digest.
+- **Trust & safety** — user reporting of listings/sellers, an admin moderation
+  queue, and a two-track **verification** system: companies verify their
+  business once; individuals prove ownership per listing (documents stored
+  privately, viewed by admins via short-lived signed URLs). Distinct, honest
+  "Verified company" vs "Ownership verified" badges.
+- **Monetization** — per-listing **invoicing** with an admin "free mode" switch
+  (launch free, start charging later without a redeploy), behind a
+  payment-provider-agnostic seam ready for Visa/Mastercard via Stripe.
+- **Messaging** — buyer ↔ seller conversations with mutual-consent contact
+  reveal, so phone numbers stay private until both sides agree.
+- **AI assistant** — a retrieval-augmented chatbot answering questions over a
+  curated Syrian real-estate knowledge base (embeddings + pgvector).
+- **EU compliance** — Impressum, privacy/terms/cookies pages, cookie consent,
+  and GDPR self-service data export + account deletion.
+- **Production-grade ops** — rate limiting, Sentry error monitoring, and a
+  one-command Dockerized deploy with automatic HTTPS.
+
+## Tech stack
+
+**Frontend (this repo)**
+- Next.js 16 (App Router, React Server Components) · React 19 · TypeScript
+- `next-intl` (i18n + RTL) · Tailwind CSS · vanilla Leaflet + OpenStreetMap
+- Sentry (browser + SSR error monitoring)
+
+**Backend ([darsyria-api](https://github.com/USERNAME/darsyria-api))**
+- Python · FastAPI · SQLAlchemy · Alembic
+- PostgreSQL 16 + **pgvector** · Pydantic v2
+- fastembed (embeddings/RAG) · slowapi (rate limiting)
+- Cloudflare R2 (object storage) · Resend (transactional email)
+- Docker Compose + Caddy (automatic HTTPS)
+
+**Auth** — passwordless magic-link + Google OAuth, httpOnly cookies with
+refresh-token rotation.
+
+## Architecture
+
+```
+Browser ──HTTPS──> Caddy ──> Next.js (SSR + client islands)  ──REST──> FastAPI
+                              │                                          │
+                              └── server components fetch the API        ├── PostgreSQL + pgvector
+                                                                         ├── Cloudflare R2 (images, private docs)
+                                                                         └── Resend (email)
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Listing pages render on the server for SEO and hydrate interactive "islands"
+(maps, favorites, owner controls, messaging). The API is a stateless FastAPI
+service; a single in-process scheduler sends the daily digest.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Running locally
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Prerequisites: Node 22+, and the backend API running (see
+[darsyria-api](https://github.com/USERNAME/darsyria-api) — Docker Compose brings
+up Postgres + API in one command).
 
-## Learn More
+```bash
+npm install
+cp .env.example .env.local   # set NEXT_PUBLIC_API_URL etc.
+npm run dev                  # http://localhost:3000
+```
 
-To learn more about Next.js, take a look at the following resources:
+## Docs
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- [docs/how-it-works.md](docs/how-it-works.md) — how the platform behaves across
+  the buyer, seller, and admin roles, and where each capability lives in code.
