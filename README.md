@@ -6,7 +6,7 @@ for a real launch: passwordless auth, listing verification, trust & safety
 tooling, per-listing invoicing, an AI assistant, and EU (GDPR) compliance.
 
 This repository is the **web frontend**. The backend API lives in a separate
-repo: **[darsyria-api](https://github.com/USERNAME/darsyria-api)**.
+repo: **[darsyria-api](https://github.com/HikmatGhathe/darsyria-api)**.
 
 > ⚠️ Personal/portfolio project. Screenshots and a live demo link go here.
 
@@ -46,7 +46,7 @@ repo: **[darsyria-api](https://github.com/USERNAME/darsyria-api)**.
 - `next-intl` (i18n + RTL) · Tailwind CSS · vanilla Leaflet + OpenStreetMap
 - Sentry (browser + SSR error monitoring)
 
-**Backend ([darsyria-api](https://github.com/USERNAME/darsyria-api))**
+**Backend ([darsyria-api](https://github.com/HikmatGhathe/darsyria-api))**
 - Python · FastAPI · SQLAlchemy · Alembic
 - PostgreSQL 16 + **pgvector** · Pydantic v2
 - fastembed (embeddings/RAG) · slowapi (rate limiting)
@@ -73,7 +73,7 @@ service; a single in-process scheduler sends the daily digest.
 ## Running locally
 
 Prerequisites: Node 22+, and the backend API running (see
-[darsyria-api](https://github.com/USERNAME/darsyria-api) — Docker Compose brings
+[darsyria-api](https://github.com/HikmatGhathe/darsyria-api) — Docker Compose brings
 up Postgres + API in one command).
 
 ```bash
