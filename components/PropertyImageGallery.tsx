@@ -18,6 +18,9 @@ type Props = {
   propertyId: string;
   initialImages: PropertyImage[];
   onImagesChange?: (images: PropertyImage[]) => void;
+  // Reports whether one or more uploads are currently in flight, so a parent
+  // (e.g. the create flow) can block "Publish" until photos finish saving.
+  onBusyChange?: (busy: boolean) => void;
 };
 
 type UploadingItem = {
@@ -30,7 +33,8 @@ type UploadingItem = {
 export default function PropertyImageGallery({
   propertyId,
   initialImages,
-  onImagesChange
+  onImagesChange,
+  onBusyChange
 }: Props) {
   const t = useTranslations('PropertyDisplay');
 
@@ -48,6 +52,11 @@ export default function PropertyImageGallery({
   useEffect(() => {
     onImagesChange?.(images);
   }, [images, onImagesChange]);
+
+  // In-flight uploads are the non-error entries still in the uploading list.
+  useEffect(() => {
+    onBusyChange?.(uploading.some((u) => !u.error));
+  }, [uploading, onBusyChange]);
 
   // ---------- Upload ----------
 

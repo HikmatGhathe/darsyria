@@ -399,7 +399,8 @@
     "publishNow": "Publish now",
     "publishingLabel": "Publishing...",
     "finishDraft": "Save as draft & finish",
-    "publishError": "Could not publish your listing. Please try again."
+    "publishError": "Could not publish your listing. Please try again.",
+    "photosUploading": "Photos are still uploading — please wait a moment."
   },
   "EditProperty": {
     "title": "Edit listing",

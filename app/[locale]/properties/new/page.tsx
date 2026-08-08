@@ -77,6 +77,7 @@ export default function NewPropertyPage() {
   const [createdId, setCreatedId] = useState<string | null>(null);
   const [isPublishing, setIsPublishing] = useState(false);
   const [publishError, setPublishError] = useState<string | null>(null);
+  const [photosBusy, setPhotosBusy] = useState(false);
 
   if (authLoading) {
     return <div className="max-w-3xl mx-auto px-6 py-12 text-text-secondary">Loading...</div>;
@@ -180,12 +181,14 @@ export default function NewPropertyPage() {
   }
 
   async function handlePublish() {
-    if (!createdId || isPublishing) return;
+    if (!createdId || isPublishing || photosBusy) return;
     setIsPublishing(true);
     setPublishError(null);
     try {
       await publishProperty(createdId);
-      router.push(`/${locale}/properties/${createdId}`);
+      // Full reload (not client nav) so the published listing is server-
+      // rendered fresh — the just-uploaded photos are guaranteed to show.
+      window.location.assign(`/${locale}/properties/${createdId}`);
     } catch (err) {
       console.error('Publish failed:', err);
       setPublishError(t('publishError'));
@@ -194,8 +197,8 @@ export default function NewPropertyPage() {
   }
 
   function handleFinishDraft() {
-    if (!createdId) return;
-    router.push(`/${locale}/my-listings`);
+    if (!createdId || photosBusy) return;
+    window.location.assign(`/${locale}/my-listings`);
   }
 
   // Phase 2 — the listing is saved as a draft; add photos, then publish or finish.
@@ -211,7 +214,11 @@ export default function NewPropertyPage() {
         </header>
 
         <div className="mb-8">
-          <PropertyImageGallery propertyId={createdId} initialImages={[]} />
+          <PropertyImageGallery
+            propertyId={createdId}
+            initialImages={[]}
+            onBusyChange={setPhotosBusy}
+          />
         </div>
 
         {publishError && (
@@ -220,19 +227,23 @@ export default function NewPropertyPage() {
           </div>
         )}
 
+        {photosBusy && (
+          <p className="mb-3 text-sm text-text-tertiary text-center sm:text-end">{t('photosUploading')}</p>
+        )}
+
         <div className="flex flex-col-reverse sm:flex-row gap-3 sm:justify-end pt-4 border-t border-border-subtle">
           <button
             type="button"
             onClick={handleFinishDraft}
-            disabled={isPublishing}
-            className="px-6 py-3 bg-surface-card border border-border-subtle text-text-primary rounded-lg hover:bg-surface-page disabled:opacity-50 transition-colors font-medium"
+            disabled={isPublishing || photosBusy}
+            className="px-6 py-3 bg-surface-card border border-border-subtle text-text-primary rounded-lg hover:bg-surface-page disabled:opacity-50 disabled:cursor-not-allowed transition-colors font-medium"
           >
             {t('finishDraft')}
           </button>
           <button
             type="button"
             onClick={handlePublish}
-            disabled={isPublishing}
+            disabled={isPublishing || photosBusy}
             className="px-6 py-3 bg-brand-navy text-white rounded-lg hover:bg-brand-navy-hover disabled:opacity-50 disabled:cursor-not-allowed transition-colors font-medium"
           >
             {isPublishing ? t('publishingLabel') : t('publishNow')}

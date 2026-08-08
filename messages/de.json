@@ -399,7 +399,8 @@
     "publishNow": "Jetzt veröffentlichen",
     "publishingLabel": "Wird veröffentlicht...",
     "finishDraft": "Als Entwurf speichern & abschließen",
-    "publishError": "Inserat konnte nicht veröffentlicht werden. Bitte versuchen Sie es erneut."
+    "publishError": "Inserat konnte nicht veröffentlicht werden. Bitte versuchen Sie es erneut.",
+    "photosUploading": "Fotos werden noch hochgeladen — bitte einen Moment warten."
   },
   "EditProperty": {
     "title": "Inserat bearbeiten",
