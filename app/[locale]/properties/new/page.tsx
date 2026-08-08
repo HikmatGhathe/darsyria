@@ -5,8 +5,9 @@ import {useRouter} from 'next/navigation';
 import {useTranslations, useLocale} from 'next-intl';
 import {useAuth} from '@/components/AuthProvider';
 import {updateMe} from '@/lib/auth';
-import {createProperty, type PropertyCreateInput} from '@/lib/properties';
+import {createProperty, publishProperty, type PropertyCreateInput} from '@/lib/properties';
 import PropertyMap from '@/components/PropertyMap';
+import PropertyImageGallery from '@/components/PropertyImageGallery';
 import {GOVERNORATE_KEYS, governorateCenter} from '@/lib/governorates';
 
 type FormState = {
@@ -70,6 +71,12 @@ export default function NewPropertyPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [sellerSetupError, setSellerSetupError] = useState<string | null>(null);
+
+  // Two-phase flow: once the details are saved (as a draft), stay on this page
+  // and show the photo uploader + publish controls instead of navigating away.
+  const [createdId, setCreatedId] = useState<string | null>(null);
+  const [isPublishing, setIsPublishing] = useState(false);
+  const [publishError, setPublishError] = useState<string | null>(null);
 
   if (authLoading) {
     return <div className="max-w-3xl mx-auto px-6 py-12 text-text-secondary">Loading...</div>;
@@ -161,12 +168,78 @@ export default function NewPropertyPage() {
 
     try {
       const created = await createProperty(payload);
-      router.push(`/${locale}/properties/${created.id}`);
+      // Stay on the page and move to the photos + publish phase.
+      setCreatedId(created.id);
+      setIsSubmitting(false);
+      window.scrollTo({top: 0, behavior: 'smooth'});
     } catch (err) {
       console.error('Create property failed:', err);
       setError(t('errorGeneric'));
       setIsSubmitting(false);
     }
+  }
+
+  async function handlePublish() {
+    if (!createdId || isPublishing) return;
+    setIsPublishing(true);
+    setPublishError(null);
+    try {
+      await publishProperty(createdId);
+      router.push(`/${locale}/properties/${createdId}`);
+    } catch (err) {
+      console.error('Publish failed:', err);
+      setPublishError(t('publishError'));
+      setIsPublishing(false);
+    }
+  }
+
+  function handleFinishDraft() {
+    if (!createdId) return;
+    router.push(`/${locale}/my-listings`);
+  }
+
+  // Phase 2 — the listing is saved as a draft; add photos, then publish or finish.
+  if (createdId) {
+    return (
+      <div className="max-w-3xl mx-auto px-6 py-8">
+        <div className="mb-6 p-4 bg-surface-page border border-border-subtle rounded-lg">
+          <p className="text-sm font-medium text-text-primary">✓ {t('successMessage')}</p>
+        </div>
+        <header className="mb-6">
+          <h1 className="text-2xl font-semibold text-text-primary mb-2">{t('photosTitle')}</h1>
+          <p className="text-sm text-text-secondary">{t('photosHint')}</p>
+        </header>
+
+        <div className="mb-8">
+          <PropertyImageGallery propertyId={createdId} initialImages={[]} />
+        </div>
+
+        {publishError && (
+          <div className="mb-4 p-3 bg-accent-danger-bg border border-accent-danger/30 rounded-lg">
+            <p className="text-sm text-accent-danger">{publishError}</p>
+          </div>
+        )}
+
+        <div className="flex flex-col-reverse sm:flex-row gap-3 sm:justify-end pt-4 border-t border-border-subtle">
+          <button
+            type="button"
+            onClick={handleFinishDraft}
+            disabled={isPublishing}
+            className="px-6 py-3 bg-surface-card border border-border-subtle text-text-primary rounded-lg hover:bg-surface-page disabled:opacity-50 transition-colors font-medium"
+          >
+            {t('finishDraft')}
+          </button>
+          <button
+            type="button"
+            onClick={handlePublish}
+            disabled={isPublishing}
+            className="px-6 py-3 bg-brand-navy text-white rounded-lg hover:bg-brand-navy-hover disabled:opacity-50 disabled:cursor-not-allowed transition-colors font-medium"
+          >
+            {isPublishing ? t('publishingLabel') : t('publishNow')}
+          </button>
+        </div>
+      </div>
+    );
   }
 
   return (

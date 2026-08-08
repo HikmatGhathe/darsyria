@@ -393,7 +393,13 @@
     "submitHint": "Ihr Inserat wird als Entwurf gespeichert. Auf der nächsten Seite fügen Sie Fotos hinzu und veröffentlichen es.",
     "errorGeneric": "Inserat konnte nicht gespeichert werden. Bitte prüfen Sie die Angaben und versuchen Sie es erneut.",
     "errorAuth": "Bitte melden Sie sich an, um ein Inserat zu erstellen.",
-    "successMessage": "Inserat als Entwurf gespeichert."
+    "successMessage": "Inserat als Entwurf gespeichert.",
+    "photosTitle": "Fotos zu Ihrem Inserat hinzufügen",
+    "photosHint": "Ihr Inserat ist als Entwurf gespeichert — nur Sie sehen es bisher. Fügen Sie unten Fotos hinzu und veröffentlichen Sie es dann. Sie können auch jetzt abschließen und Fotos später hinzufügen.",
+    "publishNow": "Jetzt veröffentlichen",
+    "publishingLabel": "Wird veröffentlicht...",
+    "finishDraft": "Als Entwurf speichern & abschließen",
+    "publishError": "Inserat konnte nicht veröffentlicht werden. Bitte versuchen Sie es erneut."
   },
   "EditProperty": {
     "title": "Inserat bearbeiten",

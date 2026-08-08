@@ -393,7 +393,13 @@
     "submitHint": "Your listing is saved as a draft. On the next screen you'll add photos, then publish it.",
     "errorGeneric": "Could not save the listing. Please check your details and try again.",
     "errorAuth": "Please sign in before creating a listing.",
-    "successMessage": "Listing saved as draft."
+    "successMessage": "Listing saved as draft.",
+    "photosTitle": "Add photos to your listing",
+    "photosHint": "Your listing is saved as a draft — only you can see it for now. Add photos below, then publish it to make it live. You can also finish now and add photos later.",
+    "publishNow": "Publish now",
+    "publishingLabel": "Publishing...",
+    "finishDraft": "Save as draft & finish",
+    "publishError": "Could not publish your listing. Please try again."
   },
   "EditProperty": {
     "title": "Edit listing",
