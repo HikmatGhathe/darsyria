@@ -4,6 +4,7 @@ import {getTranslations} from 'next-intl/server';
 import {notFound} from 'next/navigation';
 import {AuthProvider} from '@/components/AuthProvider';
 import {FavoritesProvider} from '@/components/FavoritesProvider';
+import ChatWidget from '@/components/ChatWidget';
 import CookieNotice from '@/components/CookieNotice';
 import Footer from '@/components/Footer';
 import Header from '@/components/Header';
@@ -76,6 +77,7 @@ export default async function LocaleLayout({
               <Header />
               <main className="flex-1">{children}</main>
               <Footer />
+              <ChatWidget />
               <CookieNotice />
             </FavoritesProvider>
           </AuthProvider>

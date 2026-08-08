@@ -36,6 +36,11 @@
       "description": "Durchsuchen Sie Anzeigen, die Wissensdatenbank, oder stellen Sie dem KI-Assistenten Ihre erste Frage.",
       "ctaPrimary": "Immobilien durchsuchen",
       "ctaSecondary": "Assistenten öffnen"
+    },
+    "latest": {
+      "heading": "Neueste Inserate",
+      "subheading": "Frische Immobilien aus ganz Syrien",
+      "viewAll": "Alle Immobilien ansehen"
     }
   },
   "Navigation": {
@@ -183,7 +188,10 @@
       "fraud": "Was sind die wichtigsten Risiken von Immobilienbetrug?",
       "banking": "Wie überweise ich Geld nach Syrien nach der Aufhebung der Sanktionen?"
     },
-    "errorGeneric": "Etwas ist schiefgelaufen. Bitte versuchen Sie es erneut."
+    "errorGeneric": "Etwas ist schiefgelaufen. Bitte versuchen Sie es erneut.",
+    "widgetTitle": "DarSyria fragen",
+    "openChat": "Chat-Assistent öffnen",
+    "closeChat": "Chat schließen"
   },
   "Properties": {
     "title": "Immobilien",
@@ -293,7 +301,12 @@
     "deleteImageAction": "Foto löschen",
     "deleteImageError": "Foto konnte nicht gelöscht werden. Bitte erneut versuchen.",
     "reorderHint": "Ziehen Sie Fotos, um die Reihenfolge zu ändern. Das erste Foto erscheint in den Inseraten als Titelbild.",
-    "reorderError": "Die neue Reihenfolge konnte nicht gespeichert werden. Bitte erneut versuchen."
+    "reorderError": "Die neue Reihenfolge konnte nicht gespeichert werden. Bitte erneut versuchen.",
+    "galleryOpen": "Foto {index} von {total} öffnen",
+    "galleryCounter": "{current} / {total}",
+    "galleryClose": "Schließen",
+    "galleryPrev": "Vorheriges Foto",
+    "galleryNext": "Nächstes Foto"
   },
   "PropertyBrowse": {
     "title": "Immobilien durchsuchen",

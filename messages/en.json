@@ -36,6 +36,11 @@
       "description": "Browse listings, search the knowledge base, or ask the AI assistant your first question.",
       "ctaPrimary": "Browse properties",
       "ctaSecondary": "Open the assistant"
+    },
+    "latest": {
+      "heading": "Latest listings",
+      "subheading": "Fresh properties across Syria",
+      "viewAll": "View all properties"
     }
   },
   "Navigation": {
@@ -183,7 +188,10 @@
       "fraud": "What are the main property fraud risks?",
       "banking": "How do I transfer money to Syria after sanctions lifted?"
     },
-    "errorGeneric": "Sorry, something went wrong. Please try again."
+    "errorGeneric": "Sorry, something went wrong. Please try again.",
+    "widgetTitle": "Ask DarSyria",
+    "openChat": "Open chat assistant",
+    "closeChat": "Close chat"
   },
   "Properties": {
     "title": "Properties",
@@ -293,7 +301,12 @@
     "deleteImageAction": "Delete photo",
     "deleteImageError": "Could not delete this photo. Please try again.",
     "reorderHint": "Drag photos to reorder. The first photo is the cover image shown in listings.",
-    "reorderError": "Could not save the new order. Please try again."
+    "reorderError": "Could not save the new order. Please try again.",
+    "galleryOpen": "Open photo {index} of {total}",
+    "galleryCounter": "{current} / {total}",
+    "galleryClose": "Close",
+    "galleryPrev": "Previous photo",
+    "galleryNext": "Next photo"
   },
   "PropertyBrowse": {
     "title": "Browse properties",

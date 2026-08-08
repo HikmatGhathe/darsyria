@@ -6,6 +6,7 @@ import FavoriteButton from '@/components/FavoriteButton';
 import ReportButton from '@/components/ReportButton';
 import OwnerPropertyControls from '@/components/OwnerPropertyControls';
 import OwnerImageManager from '@/components/OwnerImageManager';
+import PropertyGallery from '@/components/PropertyGallery';
 import PropertyMap from '@/components/PropertyMap';
 import VerificationBadge from '@/components/VerificationBadge';
 import type {Property} from '@/lib/properties';
@@ -139,26 +140,12 @@ export default function PropertyDetailView({property}: {property: Property}) {
         </section>
       )}
 
-      {/* Photos — read-only grid is server-rendered (crawlable); owner gets
-          management controls below via the OwnerImageManager island. */}
+      {/* Photos — the gallery renders the crawlable grid (server-rendered even
+          as a client component) plus a click-to-open lightbox with prev/next.
+          The owner gets management controls below via the OwnerImageManager. */}
       <section className="mb-8">
         {images.length > 0 ? (
-          <div>
-            <h2 className="text-lg font-semibold text-text-primary mb-3">{t('imagesSection')}</h2>
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
-              {images.map((img) => (
-                <div key={img.id} className="relative aspect-square bg-surface-page rounded-lg overflow-hidden">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={img.public_url} alt={img.original_filename || property.title} className="w-full h-full object-cover" />
-                  {img.position === 0 && (
-                    <span className="absolute top-2 start-2 px-2 py-0.5 bg-brand-navy text-white text-xs font-medium rounded-full">
-                      {t('coverBadge')}
-                    </span>
-                  )}
-                </div>
-              ))}
-            </div>
-          </div>
+          <PropertyGallery images={images} title={property.title} />
         ) : (
           <div className="aspect-[2/1] w-full rounded-xl bg-surface-page flex items-center justify-center text-text-tertiary">
             <svg className="w-14 h-14" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="1.5">
