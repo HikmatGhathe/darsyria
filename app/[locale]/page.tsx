@@ -11,70 +11,52 @@ export default async function HomePage({
   const {locale} = await params;
   const t = await getTranslations('HomePage');
 
-  // Newest published listings, shown straight on the homepage so visitors see
-  // real properties immediately instead of only marketing copy.
-  const latest = await listPropertiesServer({limit: 6, offset: 0, sort: 'newest'});
+  // Newest published listings — shown right at the top so the platform opens
+  // straight onto real properties (no marketing hero to scroll past).
+  const latest = await listPropertiesServer({limit: 9, offset: 0, sort: 'newest'});
 
   return (
     <>
-      {/* Hero (compact — listings sit right below it) */}
-      <section className="relative overflow-hidden bg-surface-page">
-        <div className="max-w-5xl mx-auto px-6 py-16 md:py-20 text-center">
-          <h1 className="text-4xl md:text-5xl font-semibold mb-5 text-text-primary">
-            {t('hero.title')}
-          </h1>
-          <p className="text-lg md:text-xl text-text-secondary mb-4 font-medium">
-            {t('hero.tagline')}
-          </p>
-          <p className="text-base text-text-secondary max-w-2xl mx-auto mb-8">
-            {t('hero.description')}
-          </p>
-          <div className="flex flex-col sm:flex-row gap-3 justify-center">
+      {/* Listings first */}
+      <section className="py-10 md:py-12 bg-surface-page">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="flex flex-wrap items-end justify-between gap-4 mb-8">
+            <div>
+              <h1 className="text-2xl md:text-3xl font-semibold text-text-primary mb-1">
+                {t('latest.heading')}
+              </h1>
+              <p className="text-text-secondary">{t('latest.subheading')}</p>
+            </div>
             <Link
               href="/properties"
-              className="px-7 py-3 bg-brand-navy text-white rounded-lg hover:bg-brand-navy-hover transition-colors font-medium"
+              className="px-5 py-2.5 bg-brand-navy text-white rounded-lg hover:bg-brand-navy-hover transition-colors font-medium text-sm whitespace-nowrap"
             >
-              {t('hero.ctaPrimary')}
-            </Link>
-            <Link
-              href="/assistant"
-              className="px-7 py-3 border border-border-subtle bg-surface-card text-text-primary rounded-lg hover:bg-surface-page transition-colors font-medium"
-            >
-              {t('hero.ctaSecondary')}
+              {t('latest.viewAll')} →
             </Link>
           </div>
-        </div>
-      </section>
 
-      {/* Latest listings — the first thing a visitor sees after the hero */}
-      {latest.length > 0 && (
-        <section className="py-16 bg-surface-card">
-          <div className="max-w-7xl mx-auto px-6">
-            <div className="flex flex-wrap items-end justify-between gap-4 mb-8">
-              <div>
-                <h2 className="text-2xl md:text-3xl font-semibold text-text-primary mb-1">
-                  {t('latest.heading')}
-                </h2>
-                <p className="text-text-secondary">{t('latest.subheading')}</p>
-              </div>
-              <Link
-                href="/properties"
-                className="text-brand-navy font-medium hover:underline text-sm whitespace-nowrap"
-              >
-                {t('latest.viewAll')} →
-              </Link>
-            </div>
+          {latest.length > 0 ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {latest.map((p) => (
                 <PropertyCard key={p.id} property={p} locale={locale} />
               ))}
             </div>
-          </div>
-        </section>
-      )}
+          ) : (
+            <div className="text-center py-16 px-6 bg-surface-card border border-border-subtle rounded-xl">
+              <p className="text-text-secondary mb-4">{t('latest.empty')}</p>
+              <Link
+                href="/properties/new"
+                className="inline-block px-5 py-2.5 bg-brand-navy text-white rounded-lg hover:bg-brand-navy-hover transition-colors font-medium"
+              >
+                {t('pillars.properties.cta')}
+              </Link>
+            </div>
+          )}
+        </div>
+      </section>
 
       {/* Three pillars */}
-      <section className="py-20 bg-surface-page">
+      <section className="py-20 bg-surface-card">
         <div className="max-w-6xl mx-auto px-6">
           <div className="text-center mb-14">
             <h2 className="text-3xl md:text-4xl font-semibold mb-3 text-text-primary">{t('pillars.heading')}</h2>
@@ -108,7 +90,7 @@ export default async function HomePage({
       </section>
 
       {/* Trust / honesty section */}
-      <section className="py-20 bg-surface-card">
+      <section className="py-20 bg-surface-page">
         <div className="max-w-3xl mx-auto px-6 text-center">
           <h2 className="text-3xl md:text-4xl font-semibold mb-5 text-text-primary">{t('trust.heading')}</h2>
           <p className="text-lg text-text-secondary leading-relaxed mb-8">{t('trust.description')}</p>
@@ -122,7 +104,7 @@ export default async function HomePage({
       </section>
 
       {/* Final CTA */}
-      <section className="py-20 bg-surface-page">
+      <section className="py-20 bg-surface-card">
         <div className="max-w-3xl mx-auto px-6 text-center">
           <h2 className="text-3xl md:text-4xl font-semibold mb-3 text-text-primary">{t('footerCta.heading')}</h2>
           <p className="text-lg text-text-secondary mb-8">{t('footerCta.description')}</p>

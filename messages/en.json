@@ -40,7 +40,8 @@
     "latest": {
       "heading": "Latest listings",
       "subheading": "Fresh properties across Syria",
-      "viewAll": "View all properties"
+      "viewAll": "View all properties",
+      "empty": "No listings yet — be the first to post one."
     }
   },
   "Navigation": {
@@ -191,7 +192,8 @@
     "errorGeneric": "Sorry, something went wrong. Please try again.",
     "widgetTitle": "Ask DarSyria",
     "openChat": "Open chat assistant",
-    "closeChat": "Close chat"
+    "closeChat": "Close chat",
+    "greeting": "👋 Looking for property in Syria? Ask me anything."
   },
   "Properties": {
     "title": "Properties",

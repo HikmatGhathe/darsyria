@@ -40,7 +40,8 @@
     "latest": {
       "heading": "Neueste Inserate",
       "subheading": "Frische Immobilien aus ganz Syrien",
-      "viewAll": "Alle Immobilien ansehen"
+      "viewAll": "Alle Immobilien ansehen",
+      "empty": "Noch keine Inserate — seien Sie der Erste."
     }
   },
   "Navigation": {
@@ -191,7 +192,8 @@
     "errorGeneric": "Etwas ist schiefgelaufen. Bitte versuchen Sie es erneut.",
     "widgetTitle": "DarSyria fragen",
     "openChat": "Chat-Assistent öffnen",
-    "closeChat": "Chat schließen"
+    "closeChat": "Chat schließen",
+    "greeting": "👋 Suchen Sie eine Immobilie in Syrien? Fragen Sie mich."
   },
   "Properties": {
     "title": "Immobilien",

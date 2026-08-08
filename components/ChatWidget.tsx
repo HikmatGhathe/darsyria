@@ -15,6 +15,8 @@ export default function ChatWidget() {
   const pathname = usePathname();
 
   const [isOpen, setIsOpen] = useState(false);
+  const [hasOpened, setHasOpened] = useState(false);
+  const [showGreeting, setShowGreeting] = useState(false);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -34,6 +36,19 @@ export default function ChatWidget() {
   useEffect(() => {
     if (isOpen) inputRef.current?.focus();
   }, [isOpen]);
+
+  // Nudge first-time visitors toward the assistant shortly after the page loads.
+  useEffect(() => {
+    if (hasOpened) return;
+    const timer = setTimeout(() => setShowGreeting(true), 1800);
+    return () => clearTimeout(timer);
+  }, [hasOpened]);
+
+  function openChat() {
+    setIsOpen((v) => !v);
+    setHasOpened(true);
+    setShowGreeting(false);
+  }
 
   async function handleSend(messageText?: string) {
     const text = (messageText ?? input).trim();
@@ -162,14 +177,44 @@ export default function ChatWidget() {
         </div>
       )}
 
+      {/* First-visit greeting nudge (auto-appears, dismissible) */}
+      {showGreeting && !isOpen && !hasOpened && (
+        <div className="fixed bottom-24 end-4 z-50 w-[calc(100vw-2rem)] max-w-[260px]">
+          <div className="relative bg-surface-card border border-border-subtle rounded-2xl shadow-xl p-3 pe-8">
+            <button
+              type="button"
+              onClick={() => setShowGreeting(false)}
+              aria-label={t('closeChat')}
+              className="absolute top-2 end-2 w-6 h-6 flex items-center justify-center rounded-full text-text-tertiary hover:bg-surface-page transition-colors"
+            >
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M18 6 6 18M6 6l12 12" />
+              </svg>
+            </button>
+            <button type="button" onClick={openChat} className="block text-start">
+              <p className="text-sm text-text-primary leading-snug">{t('greeting')}</p>
+            </button>
+          </div>
+        </div>
+      )}
+
       {/* Floating button */}
       <button
         type="button"
-        onClick={() => setIsOpen((v) => !v)}
+        onClick={openChat}
         aria-label={isOpen ? t('closeChat') : t('openChat')}
         aria-expanded={isOpen}
         className="fixed bottom-4 end-4 z-50 w-14 h-14 flex items-center justify-center rounded-full bg-brand-navy text-white shadow-lg hover:bg-brand-navy-hover hover:scale-105 active:scale-95 transition-all"
       >
+        {/* Notification badge — shown until the chat is opened for the first time */}
+        {!hasOpened && (
+          <span className="absolute -top-1 -end-1 flex h-5 w-5">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent-danger opacity-60" />
+            <span className="relative inline-flex items-center justify-center h-5 w-5 rounded-full bg-accent-danger text-white text-[11px] font-bold">
+              1
+            </span>
+          </span>
+        )}
         {isOpen ? (
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <path d="M18 6 6 18M6 6l12 12" />
