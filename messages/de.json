@@ -388,8 +388,9 @@
     "docClaimed": "Ich habe Unterlagen, die noch geprüft werden müssen",
     "docProvided": "Ich kann Originaltitel und Registereinträge vorlegen",
     "docNote": "Wir verifizieren keine Dokumente. Käufer und deren Anwälte müssen alles unabhängig prüfen.",
-    "submit": "Als Entwurf speichern",
+    "submit": "Speichern & Fotos hinzufügen",
     "submitting": "Wird gespeichert...",
+    "submitHint": "Ihr Inserat wird als Entwurf gespeichert. Auf der nächsten Seite fügen Sie Fotos hinzu und veröffentlichen es.",
     "errorGeneric": "Inserat konnte nicht gespeichert werden. Bitte prüfen Sie die Angaben und versuchen Sie es erneut.",
     "errorAuth": "Bitte melden Sie sich an, um ein Inserat zu erstellen.",
     "successMessage": "Inserat als Entwurf gespeichert."

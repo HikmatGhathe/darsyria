@@ -388,8 +388,9 @@
     "docClaimed": "I have documents but they need verification",
     "docProvided": "I can provide original deed and registry records",
     "docNote": "We do not verify documents. Buyers and their lawyers must verify everything independently.",
-    "submit": "Save as draft",
+    "submit": "Save & add photos",
     "submitting": "Saving...",
+    "submitHint": "Your listing is saved as a draft. On the next screen you'll add photos, then publish it.",
     "errorGeneric": "Could not save the listing. Please check your details and try again.",
     "errorAuth": "Please sign in before creating a listing.",
     "successMessage": "Listing saved as draft."

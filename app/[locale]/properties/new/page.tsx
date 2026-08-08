@@ -519,11 +519,18 @@ export default function NewPropertyPage() {
           </div>
         )}
 
-        <div className="flex justify-end pt-4 border-t border-border-subtle">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 pt-4 border-t border-border-subtle">
+          <p className="text-sm text-text-tertiary flex items-start gap-2">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className="shrink-0 mt-0.5" aria-hidden="true">
+              <path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3Z" />
+              <circle cx="12" cy="13" r="3" />
+            </svg>
+            {t('submitHint')}
+          </p>
           <button
             type="submit"
             disabled={isSubmitting}
-            className="px-6 py-3 bg-brand-navy text-white rounded-lg hover:bg-brand-navy-hover disabled:opacity-50 disabled:cursor-not-allowed transition-colors font-medium"
+            className="px-6 py-3 bg-brand-navy text-white rounded-lg hover:bg-brand-navy-hover disabled:opacity-50 disabled:cursor-not-allowed transition-colors font-medium whitespace-nowrap"
           >
             {isSubmitting ? t('submitting') : t('submit')}
           </button>
