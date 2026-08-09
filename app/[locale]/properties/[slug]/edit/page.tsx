@@ -465,7 +465,6 @@ export default function EditPropertyPage() {
                 </label>
               ))}
             </div>
-            <p className="text-xs text-text-tertiary mt-3 italic">{tForm('docNote')}</p>
           </div>
         </section>
 

@@ -593,7 +593,6 @@ export default function NewPropertyPage() {
                 </label>
               ))}
             </div>
-            <p className="text-xs text-text-tertiary mt-3 italic">{t('docNote')}</p>
           </div>
         </section>
 
