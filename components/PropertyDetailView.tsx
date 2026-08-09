@@ -162,11 +162,6 @@ export default function PropertyDetailView({property}: {property: Property}) {
         <p className="text-text-secondary whitespace-pre-wrap leading-relaxed">{property.description}</p>
       </section>
 
-      {/* Verification disclaimer */}
-      <section className="mb-8 p-4 bg-accent-warning-bg border border-accent-warning/30 rounded-lg">
-        <p className="text-sm text-accent-warning">{t('docDisclaimer')}</p>
-      </section>
-
       {/* Contact + follow (client islands, each self-hides for the owner) */}
       <section className="pt-6 border-t border-border-subtle flex flex-wrap gap-3 items-start">
         <div className="flex-1 min-w-[200px]">
