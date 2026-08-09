@@ -89,22 +89,8 @@ export default async function HomePage({
         </div>
       </section>
 
-      {/* Trust / honesty section */}
-      <section className="py-20 bg-surface-page">
-        <div className="max-w-3xl mx-auto px-6 text-center">
-          <h2 className="text-3xl md:text-4xl font-semibold mb-5 text-text-primary">{t('trust.heading')}</h2>
-          <p className="text-lg text-text-secondary leading-relaxed mb-8">{t('trust.description')}</p>
-          <Link
-            href="/knowledge/property-fraud-risks"
-            className="inline-block px-6 py-3 border border-border-subtle bg-surface-card text-text-primary rounded-lg hover:bg-surface-page transition-colors font-medium"
-          >
-            {t('trust.cta')}
-          </Link>
-        </div>
-      </section>
-
       {/* Final CTA */}
-      <section className="py-20 bg-surface-card">
+      <section className="py-20 bg-surface-page">
         <div className="max-w-3xl mx-auto px-6 text-center">
           <h2 className="text-3xl md:text-4xl font-semibold mb-3 text-text-primary">{t('footerCta.heading')}</h2>
           <p className="text-lg text-text-secondary mb-8">{t('footerCta.description')}</p>
